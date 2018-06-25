@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using angular6DotnetCore.Models;
+using AuthenLib.Lib;
+using AuthenLib.Models;
+
 namespace angular6DotnetCore.Controllers
 {
     [Route("api/account")]
@@ -13,7 +15,7 @@ namespace angular6DotnetCore.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody]Account account)
         {
-            var result = VerifyAccount(account);
+            var result = Authen.VerifyAccount(account);
             if (result.Pass)
             {
                 return Ok(result);
@@ -24,25 +26,47 @@ namespace angular6DotnetCore.Controllers
             }
         }
 
-        public MessageExt VerifyAccount(Account account)
+        [HttpPost("api/register")]
+        public IActionResult Register([FromBody]Account account)
         {
-            MessageExt mes = new MessageExt();
-            if (account == null)
+            var result = Authen.VerifyAccount(account);
+            if (result.Pass)
             {
-                throw new ArgumentNullException(nameof(account));
+                return Ok(result);
             }
-            if (account.Password != account.ConfirmPassword)
+            else
             {
-                mes.Pass = false;
-                mes.Message += "Password or Confirm password invalid; ";
+                return BadRequest(result.Code = 400);
             }
+        }
 
-            if (account.Username == null || account.Username == "")
+        [HttpPost("api/logout")]
+        public IActionResult Logout([FromBody]Account account)
+        {
+            account.Logged = false;
+            var result = Authen.VerifyAccount(account);
+            if (result.Pass)
             {
-                mes.Pass = false;
-                mes.Message += "Username invalid; ";
+                return Ok(result);
             }
-            return mes;
+            else
+            {
+                return BadRequest(result.Code = 400);
+            }
+        }
+
+        [HttpPost("api/confirm")]
+        public IActionResult Confirm([FromBody]Account account)
+        {
+            var result = Authen.VerifyAccount(account);
+            if (result.Pass)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result.Code = 400);
+            }
         }
     }
 }
