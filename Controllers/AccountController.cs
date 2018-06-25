@@ -37,7 +37,7 @@ namespace angular6DotnetCore.Controllers
                 mes.Message += "Password or Confirm password invalid; ";
             }
 
-            if (account.Username != null || account.Username == "")
+            if (account.Username == null || account.Username == "")
             {
                 mes.Pass = false;
                 mes.Message += "Username invalid; ";
