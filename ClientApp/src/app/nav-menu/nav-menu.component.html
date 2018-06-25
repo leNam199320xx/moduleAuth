@@ -1,0 +1,19 @@
+<div class='main-nav'>
+    <ul class='nav flex-column'>
+        <li class='nav-item' [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a [routerLink]='["/"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-home'></span> Home
+                    </a>
+        </li>
+        <li class='nav-item' [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/counter"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-education'></span> Counter
+                    </a>
+        </li>
+        <li class='nav-item' [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
+                    </a>
+        </li>
+    </ul>
+</div>
