@@ -1,5 +1,6 @@
 export class AccountModel {
-    username: string;
-    password: string;
-    confirmPassword: string;
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  returnUrl: string;
 }
