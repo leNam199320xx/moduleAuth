@@ -12,6 +12,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AccountModule } from './account/acc.module';
 import { LoginComponent } from './account/login/login.component';
 import { CommonModule } from '@angular/common';
+import { RegisterComponent } from './account/register/register.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,9 @@ import { CommonModule } from '@angular/common';
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: 'login', component: LoginComponent }
+            { path: 'account/login', component: LoginComponent },
+            { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent }
         ])
     ],
     exports: [
