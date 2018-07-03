@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using static angular6DotnetCore.Areas.Identity.Pages.Account.LoginModel;
+using System.Web;
+using System;
+using System.Security.Claims;
+using System.Threading;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text.Encodings.Web;
 
 namespace angular6DotnetCore.Controllers
 {
@@ -14,38 +20,94 @@ namespace angular6DotnetCore.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly UserManager<IdentityUser> _userManager;
-        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ILogger<LoginModel> logger)
+        private readonly IEmailSender _emailSender;
+        public AccountController(
+            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+            ILogger<LoginModel> logger, IEmailSender emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _emailSender = emailSender;
         }
-        [HttpPost("getLoginInfo")]
-        public IActionResult GetLoginInfo()
+        [HttpPost("checkLogin")]
+        public IActionResult checkLogin()
         {
-            return Ok();
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var userName = _userManager.GetUserName(User);
+            return Ok(new
+            {
+                isSignedIn,
+                userName
+            });
         }
 
         [HttpPost("register")]
-        public IActionResult Register()
+        public async Task<IActionResult> Register([FromBody] angular6DotnetCore.Areas.Identity.Pages.Account.RegisterModel.InputModel account)
         {
-            return Ok();
+
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = account.Email, Email = account.Email };
+                var result = await _userManager.CreateAsync(user, account.Password);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { userId = user.Id, code = code },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(account.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    // await _signInManager.SignInAsync(user, isPersistent: false);
+                    return Ok(new
+                    {
+                        message = "Register Succeeded!"
+                    });
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return BadRequest(new
+            {
+                message = ModelState.Values
+            });
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok(
+                new
+                {
+                    isSignedIn = false
+                });
+        }
+
         [HttpPost("login")]
-        public async Task<object> Login([FromBody] InputModel account)
+        public async Task<object> Login([FromBody] angular6DotnetCore.Areas.Identity.Pages.Account.LoginModel.InputModel account)
         {
             //returnUrl = returnUrl ?? Url.Content("~/");
 
-            bool results = _signInManager.IsSignedIn(User);
+            var user = _userManager.GetUserName(User);
 
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(account.Email, account.Password, account.RememberMe, lockoutOnFailure: true);
+
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.GetUserAsync(User);
                     _logger.LogInformation("User logged in.");
                     return Ok(new
                     {
@@ -55,24 +117,8 @@ namespace angular6DotnetCore.Controllers
                         message = "User logged in."
                     });
                 }
-                //if (result.RequiresTwoFactor)
-                //{
-                //    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = account.RememberMe });
-                //}
-                //if (result.IsLockedOut)
-                //{
-                //    _logger.LogWarning("User account locked out.");
-                //    return RedirectToPage("./Lockout");
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                //    return Page();
-                //}
             }
 
-            // If we got this far, something failed, redisplay form
-            //return Page();
             return Ok(new
             {
                 succeeded = false,

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -11,8 +10,9 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AccountModule } from './account/acc.module';
 import { LoginComponent } from './account/login/login.component';
-import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './account/register/register.component';
+import { AuthGuardService } from './core/auth-guard.service';
+import { AuthService } from './core/auth.service';
 
 @NgModule({
     declarations: [
@@ -25,12 +25,10 @@ import { RegisterComponent } from './account/register/register.component';
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
-        FormsModule,
-        CommonModule,
         AccountModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'counter', component: CounterComponent },
+            { path: 'counter', component: CounterComponent, canActivate: [AuthGuardService] },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'account/login', component: LoginComponent },
             { path: 'login', component: LoginComponent },
@@ -39,7 +37,7 @@ import { RegisterComponent } from './account/register/register.component';
     ],
     exports: [
     ],
-    providers: [],
+    providers: [AuthGuardService, AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

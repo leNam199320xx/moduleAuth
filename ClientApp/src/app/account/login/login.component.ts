@@ -1,27 +1,24 @@
-import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnDestroy } from '@angular/core';
 import { AccountModel } from '../acc.model';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'my-auth-token'
-  })
-};
+import { AuthService } from '../../core/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: 'login.html'
+    selector: 'app-login',
+    templateUrl: 'login.html'
 })
-export class LoginComponent {
-  account: AccountModel = new AccountModel();
-  constructor(private http: HttpClient) { }
-  login() {
-    this.account.returnUrl = '/';
-    const resp = this.http.post('api/account/login',
-      this.account
-    ).subscribe(res => {
-      console.log(res);
-    });
-  }
+export class LoginComponent implements OnDestroy {
+    account: AccountModel = new AccountModel();
+    loginSubscription: Subscription;
+    constructor(private authService: AuthService) { }
+    login() {
+        this.account.returnUrl = '/';
+        this.loginSubscription = this.authService.login(this.account).subscribe(res => {
+            console.log(res);
+        });
+    }
+
+    ngOnDestroy() {
+        this.loginSubscription ? this.loginSubscription.unsubscribe() : this.loginSubscription = null;
+    }
 }

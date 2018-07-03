@@ -1,18 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { AuthService } from '../core/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+    selector: 'app-nav-menu',
+    templateUrl: './nav-menu.component.html',
+    styleUrls: ['./nav-menu.component.css']
 })
-export class NavMenuComponent {
-  isExpanded = false;
+export class NavMenuComponent implements OnDestroy {
+    isExpanded = false;
 
-  collapse() {
-    this.isExpanded = false;
-  }
+    logoutSubscription: Subscription;
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
+    constructor(private authService: AuthService) { }
+
+    collapse() {
+        this.isExpanded = false;
+    }
+
+    toggle() {
+        this.isExpanded = !this.isExpanded;
+    }
+
+    logout() {
+        this.logoutSubscription = this.authService.logout().subscribe(res => console.log(res));
+    }
+
+    ngOnDestroy() {
+        this.logoutSubscription ? this.logoutSubscription.unsubscribe() : this.logoutSubscription = null;
+    }
 }

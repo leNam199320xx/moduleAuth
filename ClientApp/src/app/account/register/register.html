@@ -1,9 +1,9 @@
 <div class='register'>
     <label class='title'>Đăng ký tài khoản mới</label>
-    <input class="email" placeholder="Email" type="email" required  />
-    <input class="tel" placeholder="Phone" type="tel" required  />
-    <input class="password" placeholder="Password" type="password" required  />
-    <input class="password" placeholder="Confirm password" type="password" required  />
+    <input class="email" placeholder="Email" type="email" required [(ngModel)]='registerAccount.email' />
+    <input class="password" placeholder="Password" type="password" required [(ngModel)]='registerAccount.password' />
+    <input class="password" placeholder="Confirm password" type="password" required [(ngModel)]='registerAccount.confirmPassword' />
 
     <button (click)='btnRegister()'>Register</button>
+        <a [routerLink]='["../login"]'>Login</a>
 </div>

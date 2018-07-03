@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AccountRegisterModel } from './register.model';
+import { Component, OnDestroy } from '@angular/core';
+import { AuthService } from '../../core/auth.service';
+import { AccountModel } from '../acc.model';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-register',
@@ -8,19 +9,19 @@ import { AccountRegisterModel } from './register.model';
     templateUrl: 'register.html'
 })
 
-export class RegisterComponent {
-    public accountRegister: AccountRegisterModel;
-    constructor(private http: HttpClient) {
+export class RegisterComponent implements OnDestroy {
+    registerAccount: AccountModel = new AccountModel();
+    registerSubscription: Subscription;
+    constructor(private authService: AuthService) {
 
     }
     btnRegister() {
-        this.http.post<any>('api/register', {
-            Email: this.accountRegister.email,
-            Phone: this.accountRegister.phone,
-            Password: this.accountRegister.password,
-            ConfirmPassword: this.accountRegister.confirmPassword
-        }).subscribe(res => {
+        this.registerSubscription = this.authService.register(this.registerAccount).subscribe(res => {
             console.log(res);
         });
+    }
+
+    ngOnDestroy() {
+        this.registerSubscription ? this.registerSubscription.unsubscribe() : this.registerSubscription = null;
     }
 }
