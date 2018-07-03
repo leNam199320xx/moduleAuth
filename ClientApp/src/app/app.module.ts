@@ -6,21 +6,21 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AccountModule } from './account/acc.module';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
-import { AuthGuardService } from './core/auth-guard.service';
+import { AuthGuardService, LoginAuthGuardService } from './core/auth-guard.service';
 import { AuthService } from './core/auth.service';
+import { NavFixedComponent } from './nav-fixed/nav-fixed.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
         HomeComponent,
-        CounterComponent,
-        FetchDataComponent
+        NavFixedComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,16 +28,14 @@ import { AuthService } from './core/auth.service';
         AccountModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'counter', component: CounterComponent, canActivate: [AuthGuardService] },
-            { path: 'fetch-data', component: FetchDataComponent },
-            { path: 'account/login', component: LoginComponent },
-            { path: 'login', component: LoginComponent },
-            { path: 'register', component: RegisterComponent }
+            { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService]  },
+            { path: 'register', component: RegisterComponent, canActivate: [LoginAuthGuardService] },
+            { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] }
         ])
     ],
     exports: [
     ],
-    providers: [AuthGuardService, AuthService],
+    providers: [AuthGuardService, AuthService, LoginAuthGuardService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

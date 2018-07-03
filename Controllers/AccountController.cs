@@ -34,11 +34,11 @@ namespace angular6DotnetCore.Controllers
         public IActionResult checkLogin()
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
-            var userName = _userManager.GetUserName(User);
+            var email = _userManager.GetUserName(User);
             return Ok(new
             {
                 isSignedIn,
-                userName
+                email
             });
         }
 
@@ -112,7 +112,7 @@ namespace angular6DotnetCore.Controllers
                     return Ok(new
                     {
                         returnUrl = account.ReturnUrl,
-                        succeeded = result.Succeeded,
+                        isSignedIn = result.Succeeded,
                         email = account.Email,
                         message = "User logged in."
                     });
@@ -121,7 +121,7 @@ namespace angular6DotnetCore.Controllers
 
             return Ok(new
             {
-                succeeded = false,
+                isSignedIn = false,
                 message = "login fail"
             });
         }

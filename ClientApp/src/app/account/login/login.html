@@ -1,20 +1,22 @@
 <div class="card">
-  <form class="card-body" (submit)='login()'>
-    <div class='card-title'>
-      LOGIN FORM
-    </div>
-    <div class="form-group">
-      <input class='form-control' type="text" placeholder="username" [(ngModel)]='account.email' [ngModelOptions]="{standalone: true}" />
-    </div>
-    <div class="form-group">
-      <input class='form-control' type="password" placeholder="password" [(ngModel)]='account.password' [ngModelOptions]="{standalone: true}" />
-    </div>
-    <div class="form-group">
-      <input class='form-control' type="checkbox" [(ngModel)]='account.rememberMe' [ngModelOptions]="{standalone: true}" />
-    </div>
-    <div class="form-group">
-      <button class='btn btn-outline-primary' type='submit'>Login</button>
-      <a class='btn btn-light' href="/">Register</a>
-    </div>
-  </form>
+    <form class="card-body" (submit)='login()'>
+        <div class='card-title'>
+            LOGIN FORM
+        </div>
+        <div class="form-group">
+            <input class='form-control' type="text" placeholder="username" [(ngModel)]='account.email' [ngModelOptions]="{standalone: true}"
+            />
+        </div>
+        <div class="form-group">
+            <input class='form-control' type="password" placeholder="password" [(ngModel)]='account.password' [ngModelOptions]="{standalone: true}"
+            />
+        </div>
+        <div class="form-group">
+            <input class='form-control' type="checkbox" [(ngModel)]='account.rememberMe' [ngModelOptions]="{standalone: true}" />
+        </div>
+        <div class="form-group">
+            <button class='btn btn-outline-primary' type='submit'>Login</button>
+            <a class='btn btn-light' href="/">Register</a>
+        </div>
+    </form>
 </div>

@@ -1,0 +1,28 @@
+<div class='navfixed black-light'>
+    <div class='navfixed-left'>
+        <div class='navfixed-item black-light-hover'>
+            <a [routerLink]="['/']">Home</a>
+        </div>
+        <div class='navfixed-item black-light-hover'>
+            <a [routerLink]="['/']">Tin tức</a>
+        </div>
+        <div class='navfixed-item black-light-hover'>
+            <a [routerLink]="['/']">Sản phẩm</a>
+        </div>
+    </div>
+    <div class='navfixed-right'>
+        <ng-container *ngIf='!loginResponse.isSignedIn'>
+            <div class='navfixed-item'>
+                <a [routerLink]="['/login']">Log In</a>
+            </div>
+            <div class='navfixed-item'>
+                <a [routerLink]="['/register']">Register</a>
+            </div>
+        </ng-container>
+        <ng-container *ngIf='loginResponse.isSignedIn'>
+            <div class='navfixed-item'>
+                {{loginResponse.username || loginResponse.email}}
+            </div>
+        </ng-container>
+    </div>
+</div>

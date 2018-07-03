@@ -3,7 +3,9 @@ export class ResponseModel {
     errors: any;
     results: any;
     succeeded: string;
-    returnUrl: string;
+    username: string;
+    email: string;
     code: string;
-    isSignedIn: boolean;
+    returnUrl = '/';
+    isSignedIn = false;
 }

@@ -1,0 +1,26 @@
+.navfixed {
+    height: 64px;
+    position: fixed;
+    display: flex;
+    top: 0;
+    width: 100%;
+    font-size: 1.25em;
+}
+
+.navfixed-item {
+    display: inline-block;
+    height: 100%;
+    padding: 0px 16px;
+    line-height: 64px;
+}
+
+.navfixed-right
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.navfixed-left{
+    width: 100%;
+}

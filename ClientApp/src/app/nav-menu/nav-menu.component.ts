@@ -12,7 +12,7 @@ export class NavMenuComponent implements OnDestroy {
 
     logoutSubscription: Subscription;
 
-    constructor(private authService: AuthService) { }
+    constructor(public authService: AuthService) { }
 
     collapse() {
         this.isExpanded = false;
@@ -23,7 +23,7 @@ export class NavMenuComponent implements OnDestroy {
     }
 
     logout() {
-        this.logoutSubscription = this.authService.logout().subscribe(res => console.log(res));
+        this.logoutSubscription = this.authService.logout().subscribe(res => this.authService.loginResponse = res);
     }
 
     ngOnDestroy() {

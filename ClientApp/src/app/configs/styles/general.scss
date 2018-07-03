@@ -1,0 +1,8 @@
+@import 'variables.scss';
+@import 'nav/navfixed.scss';
+@import 'nav/footer.scss';
+.black-light,
+.black-light-hover:hover {
+    background-color: $black-light;
+    color: aqua;    
+}
