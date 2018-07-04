@@ -1,0 +1,8 @@
+{
+    "routes": [
+        {
+            "path": "user-area",
+            "loadChildren": "./user-area/user-area.module#UserAreaModule" 
+        }
+    ]
+}

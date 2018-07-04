@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Route, Router } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -13,6 +13,14 @@ import { AuthGuardService, LoginAuthGuardService } from './core/auth-guard.servi
 import { AuthService } from './core/auth.service';
 import { NavFixedComponent } from './nav-fixed/nav-fixed.component';
 import { FooterComponent } from './footer/footer.component';
+import { RouterService } from './core/router.service';
+
+const routes: Route[] = [
+    { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
+    { path: 'register', component: RegisterComponent, canActivate: [LoginAuthGuardService] },
+    { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] }
+];
 
 @NgModule({
     declarations: [
@@ -26,16 +34,14 @@ import { FooterComponent } from './footer/footer.component';
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         AccountModule,
-        RouterModule.forRoot([
-            { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService]  },
-            { path: 'register', component: RegisterComponent, canActivate: [LoginAuthGuardService] },
-            { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] }
-        ])
+        RouterModule.forRoot(routes)
     ],
     exports: [
     ],
-    providers: [AuthGuardService, AuthService, LoginAuthGuardService],
+    providers: [AuthGuardService, AuthService, LoginAuthGuardService, RouterService],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor() {
+    }
+}
