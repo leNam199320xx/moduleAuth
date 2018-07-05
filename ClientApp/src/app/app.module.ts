@@ -14,9 +14,8 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterService } from './core/router.service';
 import { SharedModule } from './shared.module';
 import { HeaderModule } from './header/header.module';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { AccountModule } from './account/acc.module';
+import { ConfigsService } from './core/configs.service';
 const routes: Route[] = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
@@ -40,7 +39,7 @@ const routes: Route[] = [
     ],
     exports: [
     ],
-    providers: [AuthGuardService, AuthService, LoginAuthGuardService, RouterService],
+    providers: [AuthGuardService, AuthService, LoginAuthGuardService, RouterService, ConfigsService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

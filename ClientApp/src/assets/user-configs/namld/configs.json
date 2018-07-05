@@ -1,0 +1,12 @@
+{
+    "site": {
+        "clsWidth": "w-sm"
+    },
+    "header": {
+        "clsPosition": "pst-fixed",
+        "clsBgColor": "bg-blue-05",
+        "clsColor": "co-white-1"
+    },
+    "main": {},
+    "footer": {}
+}

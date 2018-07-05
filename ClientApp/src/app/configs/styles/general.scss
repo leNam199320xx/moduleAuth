@@ -9,9 +9,14 @@
 
 @mixin generateSizeWidth ($size, $name){
     .w-#{$name} {
-        width: $size;
+        max-width: $size;
         margin: 0 auto;
         position: relative;
+    }
+}
+@mixin generatePosition ($position){
+    .pst-#{$position} {
+        position: $position;
     }
 }
 
@@ -20,3 +25,6 @@
 @include generateSizeWidth($fixed-nm-width, "nm");
 @include generateSizeWidth($fixed-lg-width, "lg");
 @include generateSizeWidth($fixed-xl-width, "xl");
+
+@include generatePosition(fixed);
+@include generatePosition(absolute);
