@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { AuthService } from '../core/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({

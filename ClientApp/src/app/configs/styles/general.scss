@@ -6,3 +6,17 @@
     background-color: $black-light;
     color: aqua;    
 }
+
+@mixin generateSizeWidth ($size, $name){
+    .w-#{$name} {
+        width: $size;
+        margin: 0 auto;
+        position: relative;
+    }
+}
+
+@include generateSizeWidth($full-width, "full");
+@include generateSizeWidth($fixed-sm-width, "sm");
+@include generateSizeWidth($fixed-nm-width, "nm");
+@include generateSizeWidth($fixed-lg-width, "lg");
+@include generateSizeWidth($fixed-xl-width, "xl");

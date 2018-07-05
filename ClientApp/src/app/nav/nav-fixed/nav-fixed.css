@@ -1,7 +1,7 @@
 .navfixed {
-    height: 64px;
-    position: fixed;
+    height: 48px;
     display: flex;
+    position: relative;
     top: 0;
     width: 100%;
     font-size: 1.25em;
@@ -11,7 +11,7 @@
     display: inline-block;
     height: 100%;
     padding: 0px 16px;
-    line-height: 64px;
+    line-height: 48px;
 }
 
 .navfixed-right

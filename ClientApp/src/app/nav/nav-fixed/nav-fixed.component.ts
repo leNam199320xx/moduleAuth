@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { AuthService } from '../core/auth.service';
-import { ResponseModel } from '../core/response.model';
+import { AuthService } from '../../core/auth.service';
+import { ResponseModel } from '../../core/response.model';
 
 @Component({
     selector: 'app-nav-fixed',
