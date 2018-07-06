@@ -1,0 +1,13 @@
+<div class='admin'>
+    <div class='admin-menu'>
+        <ng-container *ngFor='let nav of this.navService.sourceNavLeft'>
+            <a routerLink='/admin/{{nav.url}}'>{{nav.value}}</a>
+        </ng-container>
+    </div>
+    <div class='admin-content'>
+        <app-admin-post *ngIf='routeName === "post"'></app-admin-post>
+        <app-admin-provider *ngIf='routeName === "provider"' ></app-admin-provider>
+        <app-admin-posttype *ngIf='routeName === "post-type"' ></app-admin-posttype>
+        <app-admin-history *ngIf='routeName === "post-type"' ></app-admin-history>
+    </div>
+</div>

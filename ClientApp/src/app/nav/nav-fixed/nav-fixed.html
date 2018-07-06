@@ -23,6 +23,9 @@
             <div class='navfixed-item'>
                 {{loginResponse.username || loginResponse.email}}
             </div>
+            <div class='navfixed-item'>
+                <button (click)="logout()">{{'Log Out'}}</button>
+            </div>
         </ng-container>
     </div>
 </div>

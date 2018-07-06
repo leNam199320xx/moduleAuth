@@ -7,10 +7,9 @@ import { Subscription } from 'rxjs';
     templateUrl: './nav-menu.component.html',
     styleUrls: ['./nav-menu.component.css']
 })
-export class NavMenuComponent implements OnDestroy {
+export class NavMenuComponent {
     isExpanded = false;
 
-    logoutSubscription: Subscription;
 
     constructor(public authService: AuthService) { }
 
@@ -22,11 +21,5 @@ export class NavMenuComponent implements OnDestroy {
         this.isExpanded = !this.isExpanded;
     }
 
-    logout() {
-        this.logoutSubscription = this.authService.logout().subscribe(res => this.authService.loginResponse = res);
-    }
 
-    ngOnDestroy() {
-        this.logoutSubscription ? this.logoutSubscription.unsubscribe() : this.logoutSubscription = null;
-    }
 }

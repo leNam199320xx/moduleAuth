@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { RouterService } from './core/router.service';
 import { Router } from '@angular/router';
 import { ConfigsService } from './core/configs.service';
+import { NavService } from './nav/nav.service';
 
 @Component({
     selector: 'app-root',
@@ -17,8 +18,11 @@ export class AppComponent implements OnDestroy, OnInit {
     configSubscription: Subscription;
     constructor(
         public authService: AuthService,
-        public configsService: ConfigsService
-    ) { }
+        public configsService: ConfigsService,
+        public navService: NavService
+    ) {
+        this.navService.sourceSubject.subscribe(res => console.log(1, res));
+    }
     ngOnInit() {
         this.logoutSubscription = this.authService.checkLoginNow().subscribe(res => {
             this.authService.loginResponse = res;

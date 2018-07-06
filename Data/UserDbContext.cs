@@ -15,5 +15,8 @@ namespace angular6DotnetCore.Models
         {
 
         }
+
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Type> Types { get; set; }
     }
 }

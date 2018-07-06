@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,6 +15,7 @@ import { ListIconComponent } from './common/list-icon/list-icon.component';
 import { ListLinkComponent } from './common/list-link/list-link.component';
 import { ListPostComponent } from './common/list-post/list-post.component';
 import { PostComponent } from './common/post/post.component';
+import { NavService } from './nav/nav.service';
 @NgModule({
     declarations: [
         ListButtonComponent,
@@ -36,9 +37,7 @@ import { PostComponent } from './common/post/post.component';
         BrowserModule,
         RouterModule
     ],
-    providers: [
-        PageService
-    ]
+    providers: []
 })
 export class SharedModule {
 

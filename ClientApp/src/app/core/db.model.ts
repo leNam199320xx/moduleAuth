@@ -34,7 +34,6 @@ export class Post {
     userAvatar: string;
     userCode: string;
 }
-
 // Type load from json file
 export class Type {
     id: number;
@@ -44,10 +43,21 @@ export class Type {
     updatedDate: string;
 }
 
+export class PostType extends Type {
+    category: Category;
+}
+
+
+// danh mục
+export class Category extends Type {
+
+}
+// đơn vị tiền tệ
 export class CurrencyUnit extends Type {
 
 }
 
+// trạng thái của post
 export class State extends Type {
     // state start, doing, done
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using angular6DotnetCore.Models;
 
 namespace angular6DotnetCore.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180706160416_IdentityVer1.1.0")]
+    partial class IdentityVer110
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +27,7 @@ namespace angular6DotnetCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("Activated");
+                    b.Property<bool>("Activated");
 
                     b.Property<DateTime?>("ActivatedDate");
 
@@ -43,15 +45,13 @@ namespace angular6DotnetCore.Migrations
 
                     b.Property<int?>("PostId");
 
-                    b.Property<int?>("ProviderId");
-
                     b.Property<int?>("Sale");
 
                     b.Property<string>("Short");
 
                     b.Property<int?>("Star");
 
-                    b.Property<int?>("StateId");
+                    b.Property<int>("StateId");
 
                     b.Property<string>("Tags");
 
@@ -73,38 +73,11 @@ namespace angular6DotnetCore.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.HasIndex("ProviderId");
-
                     b.HasIndex("StateId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Post");
-                });
-
-            modelBuilder.Entity("angular6DotnetCore.Models.Provider", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool?>("Activated");
-
-                    b.Property<DateTime?>("ActivatedDate");
-
-                    b.Property<string>("Address");
-
-                    b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<string>("ProviderCode");
-
-                    b.Property<string>("ProviderName");
-
-                    b.Property<DateTime?>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Provider");
                 });
 
             modelBuilder.Entity("angular6DotnetCore.Models.Type", b =>
@@ -126,8 +99,6 @@ namespace angular6DotnetCore.Migrations
                     b.Property<string>("Name");
 
                     b.Property<int?>("PostId");
-
-                    b.Property<string>("ThumbUrl");
 
                     b.Property<int?>("TopIndex");
 
@@ -319,13 +290,10 @@ namespace angular6DotnetCore.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("PostId");
 
-                    b.HasOne("angular6DotnetCore.Models.Provider", "Provider")
-                        .WithMany()
-                        .HasForeignKey("ProviderId");
-
                     b.HasOne("angular6DotnetCore.Models.Type", "State")
                         .WithMany()
-                        .HasForeignKey("StateId");
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()

@@ -1,0 +1,17 @@
+.admin {}
+
+.admin-menu {
+    width: 200px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-menu a {
+    padding: 10px;
+}
+
+.admin-content {
+    width: 100%;
+    padding-left: 200px;
+}

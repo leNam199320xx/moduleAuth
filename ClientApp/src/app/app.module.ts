@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Route } from '@angular/router';
 
@@ -16,11 +16,14 @@ import { SharedModule } from './shared.module';
 import { HeaderModule } from './header/header.module';
 import { AccountModule } from './account/acc.module';
 import { ConfigsService } from './core/configs.service';
+import { NavService } from './nav/nav.service';
+import { PageService } from './page/page.service';
 const routes: Route[] = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
     { path: 'register', component: RegisterComponent, canActivate: [LoginAuthGuardService] },
-    { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] }
+    { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] },
+    { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AuthGuardService] }
 ];
 
 @NgModule({
@@ -39,10 +42,15 @@ const routes: Route[] = [
     ],
     exports: [
     ],
-    providers: [AuthGuardService, AuthService, LoginAuthGuardService, RouterService, ConfigsService],
+    providers: [
+        AuthGuardService,
+        AuthService,
+        LoginAuthGuardService,
+        RouterService,
+        ConfigsService,
+        NavService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor() {
-    }
 }
