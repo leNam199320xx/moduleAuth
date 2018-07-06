@@ -14,28 +14,21 @@ export class AppComponent implements OnDestroy, OnInit {
     title = 'app';
 
     logoutSubscription: Subscription;
+    configSubscription: Subscription;
     constructor(
         public authService: AuthService,
-        private router: Router,
-        private routerService: RouterService,
         public configsService: ConfigsService
     ) { }
     ngOnInit() {
         this.logoutSubscription = this.authService.checkLoginNow().subscribe(res => {
             this.authService.loginResponse = res;
         });
-        this.routerService.getConfig().subscribe(rts => {
-            this.router.config = this.router.config.concat(rts);
-            this.router.resetConfig(this.router.config);
-        });
-        this.configsService.getConfigsFromJson().subscribe(cf => {
-            this.configsService.configs = cf;
-        }, error => {
-            console.log(error);
-        });
+
+        this.configSubscription = this.configsService.getConfigsFromJson();
     }
 
     ngOnDestroy() {
         this.logoutSubscription ? this.logoutSubscription.unsubscribe() : this.logoutSubscription = null;
+        this.configSubscription ? this.configSubscription.unsubscribe() : this.configSubscription = null;
     }
 }

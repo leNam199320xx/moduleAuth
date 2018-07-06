@@ -1,7 +1,18 @@
-$black-light: rgba(black, 0.5);
-
-$full-width: 100%;
-$fixed-xl-width: 13660px;
-$fixed-lg-width: 1280px;
-$fixed-nm-width: 1024px;
-$fixed-sm-width: 960px;
+$success: green;
+$warning: orange;
+$dangerous: red;
+$white: white;
+$black: black;
+$highlight: yellow;
+// define [ {name, main-width, header-height, font-size} ]
+$defines: ( 'xl', 1920px, 128px, 2rem),
+( 'lg', 1440px, 96px, 1.5rem),
+( 'nm', 1366px, 64px, 1rem),
+( 'sm', 1280px, 48px, 0.75rem),
+( 'xs', 1024px, 32px, 0.5rem);
+$defines-color:('success', $success),
+('highlight', $highlight),
+('warning', $warning),
+('dangerous', $dangerous),
+('black', $black),
+('white', $white);

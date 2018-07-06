@@ -5,7 +5,16 @@
     "header": {
         "clsPosition": "pst-fixed",
         "clsBgColor": "bg-blue-05",
-        "clsColor": "co-white-1"
+        "clsColor": "cl-white-1",
+        "clsHeight": "header-sm",
+        "clsFontSize": "fs-nm",
+        "children": [{
+            "name": "nav-top",
+            "clsPosition": "pst-fixed-bottom"
+        }, {
+            "name": "header-info",
+            "clsPosition": "pst-fixed-bottom"
+        }]
     },
     "main": {},
     "footer": {}

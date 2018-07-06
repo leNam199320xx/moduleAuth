@@ -1,30 +1,87 @@
 @import 'variables.scss';
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
-.black-light,
-.black-light-hover:hover {
-    background-color: $black-light;
-    color: aqua;    
-}
-
-@mixin generateSizeWidth ($size, $name){
+@mixin generateSizeWidth ($size, $name) {
     .w-#{$name} {
         max-width: $size;
-        margin: 0 auto;
-        position: relative;
+        width: 100%;
     }
 }
-@mixin generatePosition ($position){
+
+@mixin generatePosition ($position) {
     .pst-#{$position} {
         position: $position;
     }
 }
 
-@include generateSizeWidth($full-width, "full");
-@include generateSizeWidth($fixed-sm-width, "sm");
-@include generateSizeWidth($fixed-nm-width, "nm");
-@include generateSizeWidth($fixed-lg-width, "lg");
-@include generateSizeWidth($fixed-xl-width, "xl");
+@mixin generateHeaderHeight ($height, $name) {
+    .header-#{$name} {
+        height: $height;
+    }
+}
 
+@mixin generateFontSize($fs, $name) {
+    .fs-#{$name} {
+        font-size: $fs;
+    }
+}
+
+@mixin btnSize($fs, $name) {
+    .btn-#{$name} {
+        font-size: $fs;
+    }
+}
+
+@mixin btnColor($hostcl, $subcl, $name) {
+    .btn-#{$name} {
+        background-color: $cl;
+        color: $subcl;
+    }
+    .btn-outline-#{$name} {
+        color: $cl;
+        border: solid 2px $cl;
+        background-color: $subcl;
+    }
+}
+
+@include generateSizeWidth(100%, "full");
+@include generateSizeWidth(50%, "50");
+@include generateSizeWidth(25%, "25");
+@include generateSizeWidth(12.5%, "125");
 @include generatePosition(fixed);
 @include generatePosition(absolute);
+@include generatePosition(relative);
+@each $_val in $defines {
+    @include generateSizeWidth(nth($_val, 2), nth($_val, 1));
+    @include generateHeaderHeight(nth($_val, 3), nth($_val, 1));
+    @include generateFontSize(nth($_val, 4), nth($_val, 1));
+}
+
+@each $_val in $defines_color {
+    .txt-#{nth($_val, 1)} {
+        color: nth($_val, 2);
+    }
+    .bg-#{nth($_val, 1)} {
+        background-color: nth($_val, 2);
+    }
+    .cl-#{nth($_val, 1)} {
+        color: nth($_val, 2);
+    }
+    .bor-#{nth($_val, 1)} {
+        border-color: nth($_val, 2);
+        border-style: solid;
+    }
+}
+
+.txt-center {
+    text-align: center;
+}
+.txt-bold{
+    font-weight: bold;
+}
+.txt-italic {
+    font-style: italic;
+}
+.btn {
+    text-align: center;
+}

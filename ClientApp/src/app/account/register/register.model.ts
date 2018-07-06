@@ -1,6 +1,4 @@
-export interface AccountRegisterModel {
-    email: string;
-    password: string;
-    confirmPassword: string;
-    phone: string;
+import { Account } from '../../core/db.model';
+
+export class AccountRegisterModel extends Account {
 }

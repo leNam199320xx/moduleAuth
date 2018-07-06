@@ -1,7 +1,5 @@
-export class AccountModel {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  rememberMe: boolean;
-  returnUrl: string;
+import { Account } from '../core/db.model';
+
+export class AccountModel extends Account {
+
 }

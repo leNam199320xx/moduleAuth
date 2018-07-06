@@ -1,5 +1,5 @@
 .navfixed {
-    height: 48px;
+    height: 100%;
     display: flex;
     position: relative;
     top: 0;
@@ -11,16 +11,14 @@
     display: inline-block;
     height: 100%;
     padding: 0px 16px;
-    line-height: 48px;
 }
 
-.navfixed-right
-{
+.navfixed-right {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-.navfixed-left{
+.navfixed-left {
     width: 100%;
 }

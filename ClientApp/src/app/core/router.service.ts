@@ -10,15 +10,6 @@ export class RouterService {
     jsonObs: Observable<any> = new Observable();
     constructor(private http: HttpClient) { }
     getConfig() {
-        this.routes = [];
-        return this.http.get<any>('assets/jsons/routes.json').pipe(
-            map(res => {
-                res.routes.forEach(element => {
-                    console.log(element);
-                    this.routes.push({ path: element.path, loadChildren: element.loadChildren });
-                });
-                return this.routes;
-            })
-        );
+
     }
 }
