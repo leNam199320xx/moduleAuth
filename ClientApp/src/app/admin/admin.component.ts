@@ -37,6 +37,13 @@ export class AdminComponent implements OnInit {
             url: '/post-type',
             index: 3
         });
+        this.navService.sourceNavLeft.push({
+            value: 'Category',
+            icon: null,
+            positionIcon: 'left',
+            url: '/category',
+            index: 4
+        });
         this.navService.sourceSubject.next(this.navService.sourceNavLeft);
     }
 

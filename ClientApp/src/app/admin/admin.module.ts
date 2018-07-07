@@ -8,6 +8,9 @@ import { AdminHistoryComponent } from './history/history.component';
 import { AdminPostComponent } from './post/post.component';
 import { NavService } from '../nav/nav.service';
 import { CommonModule } from '../../../node_modules/@angular/common';
+import { AdminCategoryComponent } from './category/category.component';
+import { AdminService } from './admin.service';
+import { FormsModule } from '../../../node_modules/@angular/forms';
 
 @NgModule({
     declarations: [
@@ -15,11 +18,13 @@ import { CommonModule } from '../../../node_modules/@angular/common';
         AdminProviderComponent,
         AdminPostTypeComponent,
         AdminPostComponent,
+        AdminCategoryComponent,
         AdminHistoryComponent,
         AdminComponent
     ],
     imports: [
         CommonModule,
+        FormsModule,
         RouterModule.forChild(
         [
             { path: '', pathMatch: 'full', component: AdminComponent },
@@ -27,7 +32,7 @@ import { CommonModule } from '../../../node_modules/@angular/common';
 
         ]
     )],
-    providers: [NavService]
+    providers: [NavService, AdminService]
 })
 export class AdminModule {
 

@@ -8,13 +8,14 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-nav-fixed',
     templateUrl: 'nav-fixed.html',
-    styleUrls: ['nav-fixed.css']
+    styleUrls: ['nav-fixed.scss']
 })
 
 export class NavFixedComponent implements OnDestroy {
     loginResponse: ResponseModel = new ResponseModel();
     logoutSubscription: Subscription;
     configNav: GeneralConfigModel = new GeneralConfigModel();
+
     constructor(public authService: AuthService, public configsService: ConfigsService) {
         this.authService.loginSub.subscribe((res) => {
             this.loginResponse = res;

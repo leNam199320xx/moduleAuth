@@ -11,6 +11,7 @@
     display: inline-block;
     height: 100%;
     padding: 0px 16px;
+    cursor: pointer;
 }
 
 .navfixed-right {
@@ -21,4 +22,17 @@
 
 .navfixed-left {
     width: 100%;
+}
+
+.navfixed-popup {
+    position: absolute;
+    top: 100%;
+}
+
+.navfixed-username:active .navfixed-popup {
+    visibility: visible;
+}
+
+.navfixed-username:not(:hover) .navfixed-popup {
+    visibility: collapse;
 }

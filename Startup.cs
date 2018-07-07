@@ -1,6 +1,5 @@
 using angular6DotnetCore.Areas.Identity.Services;
 using angular6DotnetCore.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,9 +33,8 @@ namespace angular6DotnetCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<UserDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
 
             services.AddIdentity<IdentityUser, IdentityRole>(config =>
             {
@@ -84,7 +82,7 @@ namespace angular6DotnetCore
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-              
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

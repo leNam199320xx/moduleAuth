@@ -20,12 +20,20 @@
             </div>
         </ng-container>
         <ng-container *ngIf='loginResponse.isSignedIn'>
-            <div class='navfixed-item'>
-                {{loginResponse.username || loginResponse.email}}
+            <div class='navfixed-item navfixed-username'>
+                <a>
+                    {{loginResponse.username || loginResponse.email}}
+                </a>
+                <div class='navfixed-popup'>
+                    <div class='navfixed-item'>
+                        <a routerLink='/admin'>Manage your page</a>
+                    </div>
+                    <div class='navfixed-item'>
+                        <button (click)="logout()">{{'Log Out'}}</button>
+                    </div>
+                </div>
             </div>
-            <div class='navfixed-item'>
-                <button (click)="logout()">{{'Log Out'}}</button>
-            </div>
+
         </ng-container>
     </div>
 </div>
