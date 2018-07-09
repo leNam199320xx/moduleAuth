@@ -1,6 +1,6 @@
 <div class='admin-cate'>
     <button (click)='btnOpenAddForm()'>Thêm category</button>
-    <div class='admin-cateadd'>
+    <div *ngIf='visibleAddForm' class='admin-cateadd'>
         <div>
             <label>Tên category</label>
             <input placeholder="Nhập tên category" [(ngModel)]='categoryNew.name' />
@@ -8,7 +8,7 @@
         <div class="form-group">
             <div class="col-md-10">
                 <p>Upload one or more files using this form:</p>
-                <input type="file" name="files" multiple (change)='setFile($event)'/>
+                <input type="file" name="files" multiple (change)='setFile($event)' />
             </div>
         </div>
         <div class="form-group">
@@ -16,7 +16,24 @@
                 <button (click)='btnUpload()'>UPLOAD</button>
             </div>
         </div>
+        <button (click)='btnSave()'>Save</button>
         <button (click)='btnCloseAddForm()'>Đóng</button>
     </div>
-    <div class='admin-catelist'></div>
+    <div class='admin-catelist'>
+        <ng-container *ngFor='let cate of categories'>
+            <div>
+                <span>
+                    - {{cate.id}}
+                </span>
+                <span>
+                    - {{cate.name}}
+                </span>
+                <button (click)='btnBackTop(cate)'>
+                    <</button>
+                <button (click)='btnNextTop(cate)'>></button>
+                <button (click)='btnBlock(cate.id)'>Khóa tạm thời</button>
+
+            </div>
+        </ng-container>
+    </div>
 </div>

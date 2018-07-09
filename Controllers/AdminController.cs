@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
@@ -120,6 +121,36 @@ namespace angular6DotnetCore.Controllers
             }
         }
 
+        [HttpPost("blockCategory")]
+        public async Task<IActionResult> BlockCategory([FromBody]int id)
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel();
+            message.isSignedIn = isSignedIn;
+            if (!isSignedIn)
+            {
+                message.Message = "you need login to continue";
+                return BadRequest(message);
+            }
+            var category = await _context.Types.FindAsync(id);
+            category.Activated = false;
+            category.UploadedDate = DateTime.Now;
+            _context.Entry(category).State = EntityState.Modified;
+            var saveResult = await _context.SaveChangesAsync();
+            if (saveResult > 0)
+            {
+                message.Message = "save this category succeeded";
+                return Ok(message);
+            }
+            else
+            {
+                message.Message = "save this category failed";
+                return BadRequest(message);
+            }
+        }
+
+
+
         [HttpPost("UploadFiles")]
         public async Task<IActionResult> UploadFiles()
         {
@@ -138,10 +169,10 @@ namespace angular6DotnetCore.Controllers
 
             foreach (var formFile in files)
             {
-                
+
                 if (formFile.Length > 0)
                 {
-                    using (var stream = new FileStream(newPath +"\\"+ formFile.FileName, FileMode.Create))
+                    using (var stream = new FileStream(newPath + "\\" + formFile.FileName, FileMode.Create))
                     {
                         await formFile.CopyToAsync(stream);
                     }

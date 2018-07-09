@@ -37,8 +37,15 @@ export class Post {
 // Type load from json file
 export class Type {
     id: number;
+    typeParentId: number;
+    typeParent: Type;
     name: string;
+    class: string;
     imageUrl: string;
+    thumbUrl: string;
+    topIndex: number;
+    activated: boolean;
+    activatedDate: string;
     createdDate: string;
     updatedDate: string;
 }

@@ -7,7 +7,12 @@ import { map, tap, last, catchError } from '../../../node_modules/rxjs/Operators
 export class AdminService {
     constructor(private http: HttpClient) { }
     getCategories() {
-        return this.http.get<CategoryModel[]>('api/admin/getcategories', {});
+        return this.http.get<any>('api/admin/getcategories', {});
+    }
+    blockCategory(id: number) {
+        return this.http.post<any>('api/admin/blockcategory', {
+            id
+        });
     }
     saveCategory(category: CategoryModel) {
         return this.http.post<any>('api/admin/savecategory', category);

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Subscription } from 'rxjs';
 import { CategoryModel } from './category.model';
@@ -9,16 +9,22 @@ import { HttpRequest, HttpParams, HttpHeaders } from '../../../../node_modules/@
     templateUrl: 'category.html',
     styleUrls: ['category.scss']
 })
-export class AdminCategoryComponent implements OnDestroy {
+export class AdminCategoryComponent implements OnDestroy, OnInit {
     categoriesSub: Subscription;
     categorySub: Subscription;
     uploadSub: Subscription;
     categoryNew: CategoryModel = new CategoryModel();
     visibleAddForm = false;
     uploadReq: HttpRequest<FormData>;
+    categories: CategoryModel[] = [];
     constructor(public adminService: AdminService) {
+
+    }
+
+    ngOnInit() {
         this.categoriesSub = this.adminService.getCategories().subscribe(res => {
             console.log(res);
+            this.categories = res.results;
         });
     }
 
@@ -27,7 +33,7 @@ export class AdminCategoryComponent implements OnDestroy {
     }
 
     btnCloseAddForm() {
-        this.visibleAddForm = true;
+        this.visibleAddForm = false;
     }
 
     btnSave() {
@@ -35,7 +41,11 @@ export class AdminCategoryComponent implements OnDestroy {
             console.log(res);
         });
     }
-
+    btnBlock(id: number) {
+        this.categorySub = this.adminService.blockCategory(id).subscribe(res => {
+            console.log(res);
+        });
+    }
     btnUpload() {
         // this.uploadSub = this.adminService.uploadFiles().subscribe(res => {
         //     console.log('upload ' + res);
@@ -55,6 +65,15 @@ export class AdminCategoryComponent implements OnDestroy {
             , formData, {
                 reportProgress: true
             });
+    }
+
+    btnNextTop($cate: CategoryModel) {
+
+    }
+
+
+    btnBackTop($cate: CategoryModel) {
+
     }
 
     ngOnDestroy() {
