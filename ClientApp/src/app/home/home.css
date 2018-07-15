@@ -1,0 +1,17 @@
+.home {}
+
+.home-banner {
+    height: 300px;
+}
+
+.home-prd-type {
+    min-width: 48px;
+    max-width: 200px;
+    background: blue;
+}
+
+.home-prd-image {}
+
+.home-prd-news {}
+
+.home-prd-feature {}

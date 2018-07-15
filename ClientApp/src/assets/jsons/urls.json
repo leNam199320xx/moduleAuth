@@ -1,0 +1,12 @@
+[
+    {
+        "name": "news",
+        "url": "tin-tuc",
+        "children": []
+    },
+    {
+        "name": "products",
+        "url": "san-pham",
+        "children": []
+    }
+]

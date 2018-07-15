@@ -1,0 +1,18 @@
+button,
+a {
+    background: none;
+    padding: 0.5rem;
+    &.outline {
+        border-width: 2px;
+        border-style: solid;
+    }
+    &.notoutline {
+        border: none;
+    }
+    &.sm {
+        padding: 0.2rem;
+    }
+    * {
+        font-size: inherit;
+    }
+}

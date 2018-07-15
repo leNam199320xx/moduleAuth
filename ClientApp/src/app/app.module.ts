@@ -18,6 +18,7 @@ import { AccountModule } from './account/acc.module';
 import { ConfigsService } from './core/configs.service';
 import { NavService } from './nav/nav.service';
 import { PageService } from './page/page.service';
+import { AppService } from './app.service';
 const routes: Route[] = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
@@ -48,7 +49,8 @@ const routes: Route[] = [
         LoginAuthGuardService,
         RouterService,
         ConfigsService,
-        NavService
+        NavService,
+        AppService
     ],
     bootstrap: [AppComponent]
 })

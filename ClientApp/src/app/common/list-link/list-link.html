@@ -1,0 +1,7 @@
+<div *ngIf="listLink" class='list-link' [ngClass]='{"vertical": isVertial}'>
+    <ng-container *ngFor="let link of listLink">
+        <a [routerLink]='[link.url]'>
+            <i class='icons {{link.icon}}'>{{link.icon}}</i>{{link.text}}
+        </a>
+    </ng-container>
+</div>

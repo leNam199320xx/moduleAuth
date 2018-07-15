@@ -1,6 +1,11 @@
+@import 'input.scss';
+@import 'button.scss';
+@import 'form.scss';
+@import 'icons.scss';
 @import 'variables.scss';
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
+
 @mixin generateSizeWidth ($size, $name) {
     .w-#{$name} {
         max-width: $size;
@@ -76,12 +81,23 @@
 .txt-center {
     text-align: center;
 }
-.txt-bold{
+
+.txt-r {
+    text-align: right;
+}
+
+.txt-l {
+    text-align: left;
+}
+
+.txt-bold {
     font-weight: bold;
 }
+
 .txt-italic {
     font-style: italic;
 }
+
 .btn {
     text-align: center;
 }
@@ -89,4 +105,8 @@
 .center {
     margin-left: auto;
     margin-right: auto;
+}
+
+.row {
+    width: 100%;
 }

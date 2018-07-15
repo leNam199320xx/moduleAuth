@@ -11,6 +11,7 @@ import { CommonModule } from '../../../node_modules/@angular/common';
 import { AdminCategoryComponent } from './category/category.component';
 import { AdminService } from './admin.service';
 import { FormsModule } from '../../../node_modules/@angular/forms';
+import { AdminCategoryCreateComponent } from './category/create/create.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { FormsModule } from '../../../node_modules/@angular/forms';
         AdminPostTypeComponent,
         AdminPostComponent,
         AdminCategoryComponent,
+        AdminCategoryCreateComponent,
         AdminHistoryComponent,
         AdminComponent
     ],

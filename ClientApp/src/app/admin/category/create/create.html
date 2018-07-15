@@ -1,0 +1,43 @@
+<div class='admin-cateadd'>
+    <div class="grp">
+        <label class='txt-r'>Tên category</label>
+        <input placeholder="Nhập tên category" [(ngModel)]='category.name' />
+    </div>
+
+    <div class="grp">
+        <label class='txt-r'>Chọn đường dẫn</label>
+        <select [(ngModel)]='category.url'>
+            <ng-container *ngFor='let n of navs'>
+                <option value='{{n.url}}' selected='{{n.url === category.url}}'>{{n.name}}</option>
+            </ng-container>
+        </select>
+    </div>
+
+    <div class="grp">
+        <label class='txt-r'>Tên class</label>
+        <input placeholder="Nhập class" [(ngModel)]='category.class' />
+    </div>
+    <div class="grp">
+        <label class='txt-r'>Mở link (active)</label>
+        <input placeholder="Nhập class" type='checkbox' [(ngModel)]='category.activated' />
+    </div>
+
+    <div class="grp">
+        <label class='txt-r'>Chọn icon</label>
+        <div class="frm-r">
+            <i class='icons fs-xl'>face</i>
+        </div>
+    </div>
+    <div class="grp">
+        <label class='txt-r'>Chọn ảnh</label>
+        <div class="frm-r">
+            <input type="file" name="files" multiple (change)='setFile($event)' />
+            <button (click)='btnUpload()'><i class='icons'>cloud_upload</i> Upload</button>
+        </div>
+    </div>
+
+    <div class="grp txt-center">
+        <button (click)='btnSave()'><i class='icons'>save</i>Save</button>
+        <button (click)='btnCloseAddForm()'><i class='icons'>close</i>Close</button>
+    </div>
+</div>

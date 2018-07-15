@@ -1,0 +1,16 @@
+.grp {
+    margin-bottom: 5px;
+    label, .frm-l {
+        width: 200px;
+        display: inline-block;
+        padding-right: 5px;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+
+    .frm-r {
+        width: calc(100% - 200px);
+        display: inline-block;
+    }
+
+}

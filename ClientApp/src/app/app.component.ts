@@ -5,6 +5,8 @@ import { RouterService } from './core/router.service';
 import { Router } from '@angular/router';
 import { ConfigsService } from './core/configs.service';
 import { NavService } from './nav/nav.service';
+import { AppService } from './app.service';
+import { Type } from './core/db.model';
 
 @Component({
     selector: 'app-root',
@@ -19,7 +21,8 @@ export class AppComponent implements OnDestroy, OnInit {
     constructor(
         public authService: AuthService,
         public configsService: ConfigsService,
-        public navService: NavService
+        public navService: NavService,
+        public appService: AppService
     ) {
         this.navService.sourceSubject.subscribe(res => console.log(1, res));
     }
@@ -29,6 +32,11 @@ export class AppComponent implements OnDestroy, OnInit {
         });
 
         this.configSubscription = this.configsService.getConfigsFromJson();
+        this.appService.getNavConfig().subscribe(res => {
+            this.appService.navs = res;
+            this.appService.navsSub.next(res);
+        });
+
     }
 
     ngOnDestroy() {

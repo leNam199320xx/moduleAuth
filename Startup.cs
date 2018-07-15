@@ -33,8 +33,8 @@ namespace angular6DotnetCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
+            services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
 
             services.AddIdentity<IdentityUser, IdentityRole>(config =>
             {

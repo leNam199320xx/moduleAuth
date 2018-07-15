@@ -53,7 +53,7 @@ namespace angular6DotnetCore.Controllers
 
 
         [HttpGet("getCategories")]
-        public IActionResult GetCategories()
+        public IActionResult GetCategories(string category)
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
@@ -61,7 +61,9 @@ namespace angular6DotnetCore.Controllers
             if (isSignedIn)
             {
 
-                var types = _context.Types.Where(m => m.Class == "category").ToList();
+                var types = category != null
+                    ? _context.Types.Where(m => m.Class == category).ToList()
+                    : _context.Types.ToList();
                 message.Results = types;
                 message.Message = "get categories succeeded";
 
@@ -92,24 +94,53 @@ namespace angular6DotnetCore.Controllers
                 message.Message = "you need login to continue";
                 return BadRequest(message);
             }
-            category.CreatedDate = DateTime.Now;
-            category.Class = "Category";
-            category.Activated = true;
-            category.ActivatedDate = DateTime.Now;
+            category.CreatedDate = category.CreatedDate != null ? category.CreatedDate : DateTime.Now;
+            category.Class = category.Class != null ? category.Class : "Category";
+            category.Activated = category.Activated == false ? false : true;
+            if (category.Activated)
+            {
+                category.ActivatedDate = category.ActivatedDate != null ? category.ActivatedDate : DateTime.Now;
+            }
 
             if (ModelState.IsValid)
             {
 
-                _context.Types.Add(category);
-                var saveResult = await _context.SaveChangesAsync();
-                if (saveResult > 0)
+                try
                 {
-                    message.Message = "save this category succeeded";
-                    return Ok(message);
+                    var cateOld = await _context.Types.FindAsync(category.Id);
+                    if (cateOld != null)
+                    {
+                        cateOld.ImageUrl = category.ImageUrl;
+                        cateOld.Name = category.Name;
+                        cateOld.ThumbUrl = category.ThumbUrl;
+                        cateOld.TopIndex = category.TopIndex;
+                        cateOld.UploadedDate = DateTime.Now;
+                        cateOld.TypeParentId = category.TypeParentId;
+                        cateOld.Url = category.Url;
+                        cateOld.Activated = category.Activated;
+                        cateOld.ActivatedDate = category.ActivatedDate;
+                        cateOld.Class = category.Class;
+                        _context.Entry(cateOld).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        _context.Types.Add(category);
+                    }
+                    var saveResult = await _context.SaveChangesAsync();
+                    if (saveResult > 0)
+                    {
+                        message.Message = "save this category succeeded";
+                        return Ok(message);
+                    }
+                    else
+                    {
+                        message.Message = "save this category failed";
+                        return BadRequest(message);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    message.Message = "save this category failed";
+                    message.Message = "save this category failed, " + ex.Message;
                     return BadRequest(message);
                 }
             }
@@ -149,6 +180,31 @@ namespace angular6DotnetCore.Controllers
             }
         }
 
+        [HttpPost("deleteCategory")]
+        public async Task<IActionResult> DeleteCategory([FromBody]int id)
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel();
+            message.isSignedIn = isSignedIn;
+            if (!isSignedIn)
+            {
+                message.Message = "you need login to continue";
+                return BadRequest(message);
+            }
+            var category = await _context.Types.FindAsync(id);
+            _context.Types.Remove(category);
+            var saveResult = await _context.SaveChangesAsync();
+            if (saveResult > 0)
+            {
+                message.Message = "delete this category succeeded " + saveResult;
+                return Ok(message);
+            }
+            else
+            {
+                message.Message = "delete this category failed " + saveResult;
+                return BadRequest(message);
+            }
+        }
 
 
         [HttpPost("UploadFiles")]

@@ -1,0 +1,7 @@
+.list-link {
+    display: flex;
+}
+
+.list-link.vertical {
+    flex-direction: column;
+}

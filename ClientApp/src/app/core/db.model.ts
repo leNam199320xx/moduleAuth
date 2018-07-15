@@ -48,12 +48,16 @@ export class Type {
     activatedDate: string;
     createdDate: string;
     updatedDate: string;
+    url: string;
 }
-
 export class PostType extends Type {
     category: Category;
 }
 
+
+export class CategoryModel extends Type {
+    isEdit = false;
+}
 
 // danh mục
 export class Category extends Type {

@@ -11,8 +11,10 @@ namespace angular6DotnetCore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Url { get; set; }
         public string ImageUrl { get; set; }
         public string ThumbUrl { get; set; }
+        public string Icon { get; set; }
         public string Class { get; set; }
         public bool Activated { get; set; }
         public int? TopIndex { get; set; }

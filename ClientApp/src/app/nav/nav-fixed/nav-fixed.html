@@ -3,11 +3,8 @@
         <div class='navfixed-item black-light-hover'>
             <a [routerLink]="['/']">Home</a>
         </div>
-        <div class='navfixed-item black-light-hover'>
-            <a [routerLink]="['/']">Tin tức</a>
-        </div>
-        <div class='navfixed-item black-light-hover'>
-            <a [routerLink]="['/']">Sản phẩm</a>
+        <div *ngFor='let nv of categories' class='navfixed-item black-light-hover'>
+            <a [routerLink]="['/', nv.url]">{{nv.name}}</a>
         </div>
     </div>
     <div class='navfixed-right'>
