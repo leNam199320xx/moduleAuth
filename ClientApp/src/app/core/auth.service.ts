@@ -30,6 +30,10 @@ export class AuthService {
         return this.http.post<ResponseModel>('api/account/login', account);
     }
 
+    loginSocial(provider: string) {
+        return this.http.get<any>('api/account/sociallogin?Provider=Facebook');
+    }
+
     logout() {
         return this.http.post<ResponseModel>('api/account/logout', {});
     }

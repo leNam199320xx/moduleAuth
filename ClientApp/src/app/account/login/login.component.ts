@@ -22,6 +22,18 @@ export class LoginComponent implements OnDestroy {
         });
     }
 
+    loginSocial(provider: string) {
+        // this.loginSubscription = this.authService.loginSocial(provider).subscribe(res => {
+        //     console.log(1);
+        // }, errors => {
+        //     console.log(errors);
+        // });
+        const returnUrl = encodeURIComponent('/login');
+        console.log(returnUrl);
+        const requestUrl = '/api/account/sociallogin?provider=' + provider + '&returnUrl=' + returnUrl;
+        window.location.href = requestUrl;
+    }
+
     ngOnDestroy() {
         this.loginSubscription ? this.loginSubscription.unsubscribe() : this.loginSubscription = null;
     }

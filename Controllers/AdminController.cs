@@ -57,7 +57,7 @@ namespace angular6DotnetCore.Controllers
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
-            message.isSignedIn = isSignedIn;
+            message.IsSignedIn = isSignedIn;
             if (isSignedIn)
             {
 
@@ -88,7 +88,7 @@ namespace angular6DotnetCore.Controllers
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
-            message.isSignedIn = isSignedIn;
+            message.IsSignedIn = isSignedIn;
             if (!isSignedIn)
             {
                 message.Message = "you need login to continue";
@@ -157,7 +157,7 @@ namespace angular6DotnetCore.Controllers
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
-            message.isSignedIn = isSignedIn;
+            message.IsSignedIn = isSignedIn;
             if (!isSignedIn)
             {
                 message.Message = "you need login to continue";
@@ -185,7 +185,7 @@ namespace angular6DotnetCore.Controllers
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
-            message.isSignedIn = isSignedIn;
+            message.IsSignedIn = isSignedIn;
             if (!isSignedIn)
             {
                 message.Message = "you need login to continue";

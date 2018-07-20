@@ -1,15 +1,13 @@
 using angular6DotnetCore.Areas.Identity.Pages.Account;
+using System.Threading.Tasks;
+using System;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using static angular6DotnetCore.Areas.Identity.Pages.Account.LoginModel;
-using System.Web;
-using System;
-using System.Security.Claims;
-using System.Threading;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using System.Text.Encodings.Web;
 
 namespace angular6DotnetCore.Controllers
 {
@@ -21,7 +19,20 @@ namespace angular6DotnetCore.Controllers
         private readonly ILogger<LoginModel> _logger;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IHostingEnvironment _env;
+        [BindProperty]
+        public ExternalLoginModel.InputModel Input { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
+
+        public string LoginProvider { get; set; }
+
+        public string ReturnUrl { get; set; }
+
+        public System.Web.HttpUtility httpU { get; }
+
         public AccountController(
+            IHostingEnvironment env,
             SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
             ILogger<LoginModel> logger, IEmailSender emailSender)
         {
@@ -29,6 +40,7 @@ namespace angular6DotnetCore.Controllers
             _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
+            _env = env;
         }
         [HttpPost("checkLogin")]
         public IActionResult checkLogin()
@@ -109,22 +121,154 @@ namespace angular6DotnetCore.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return Ok(new
+                    return Ok(new Models.ViewModels.MessageModel
                     {
-                        returnUrl = account.ReturnUrl,
-                        isSignedIn = result.Succeeded,
-                        email = account.Email,
-                        message = "User logged in."
+                        ReturnUrl = account.ReturnUrl,
+                        IsSignedIn = result.Succeeded,
+                        Succeeded = result.Succeeded,
+                        Email = account.Email,
+                        Message = "User logged in."
                     });
                 }
             }
 
-            return Ok(new
+            return Ok(new Models.ViewModels.MessageModel
             {
-                isSignedIn = false,
-                message = "login fail"
+                Message = "login fail"
             });
         }
 
+        [HttpGet("sociallogin")]
+        public IActionResult LoginWithSocial([FromQuery]string Provider, [FromQuery]string ReturnUrl)
+        {
+            ReturnUrl = ReturnUrl ?? "";
+            return new ChallengeResult(Provider, _signInManager.ConfigureExternalAuthenticationProperties(
+                    Provider, CreateUrl("api/account/socialcallback", $"returnUrl={Uri.EscapeDataString(ReturnUrl)}")));
+        }
+
+        [HttpGet("socialcallback")]
+        public async Task<IActionResult> SocialCallbackAsync(string returnUrl = null, string remoteError = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/login");
+            if (remoteError != null)
+            {
+                ErrorMessage = $"Error from external provider: {remoteError}";
+                return BadRequest(new Models.ViewModels.MessageModel
+                {
+                    Message = ErrorMessage,
+                    ReturnUrl = returnUrl
+                });
+            }
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                ErrorMessage = "Error loading external login information.";
+                return BadRequest(new Models.ViewModels.MessageModel
+                {
+                    Message = ErrorMessage,
+                    ReturnUrl = returnUrl
+                });
+            }
+
+            // Sign in the user with this external login provider if the user already has a login.
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
+                return BadRequest(new Models.ViewModels.MessageModel
+                {
+                    Message = info.Principal.Identity.Name + "logged in with" + info.LoginProvider,
+                    ReturnUrl = returnUrl
+                });
+            }
+            if (result.IsLockedOut)
+            {
+                return BadRequest(new Models.ViewModels.MessageModel
+                {
+                    Message = "logout",
+                    ReturnUrl = returnUrl
+                });
+            }
+            else
+            {
+                // If the user does not have an account, then ask the user to create an account.
+                ReturnUrl = returnUrl;
+                LoginProvider = info.LoginProvider;
+                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+                {
+                    Input = new ExternalLoginModel.InputModel
+                    {
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                    };
+                }
+                return Ok(new Models.ViewModels.MessageModel
+                {
+                    IsSignedIn = true,
+                    Succeeded = true,
+                    Message = "login with facebook account",
+                    ReturnUrl = returnUrl,
+                    Email = Input.Email
+                });
+            }
+        }
+        [HttpPost("socialconfirm")]
+        public async Task<IActionResult> SocialConfirmationAsync(string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            // Get the information about the user from the external login provider
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                ErrorMessage = "Error loading external login information during confirmation.";
+                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+            }
+
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var result = await _userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    result = await _userManager.AddLoginAsync(user, info);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            LoginProvider = info.LoginProvider;
+            ReturnUrl = returnUrl;
+            return Ok(new
+            {
+                message = "confirm",
+                returnUrl
+            });
+        }
+
+        private string CreateUrl(string path, string query)
+        {
+            var uriBuilder = new UriBuilder
+            {
+                Scheme = Request.IsHttps ? Uri.UriSchemeHttps : Uri.UriSchemeHttp,
+                Host = Request.Host.Host,
+                Port = -1,
+                Path = $"{Request.PathBase}/{path ?? string.Empty}",
+                Query = query ?? string.Empty
+            };
+
+            if (_env.IsDevelopment())
+            {
+                uriBuilder.Port = Request.Host.Port ?? -1;
+            }
+
+            return uriBuilder.Uri.AbsoluteUri;
+        }
     }
 }

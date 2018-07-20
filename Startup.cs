@@ -63,7 +63,7 @@ namespace angular6DotnetCore
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
-                options.Cookie.HttpOnly = true;
+                options.Cookie.HttpOnly = false;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 // If the LoginPath isn't set, ASP.NET Core defaults 
                 // the path to /Account/Login.
@@ -82,7 +82,15 @@ namespace angular6DotnetCore
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
+            var appId = Configuration["Authentication:Facebook:AppId"];
+            var appSecret = Configuration["Authentication:Facebook:AppSecret"];
+            appId = "500288897006445";
+            appSecret = "3d2b2ff1b56d759715212da6901c2945";
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = appId;
+                options.AppSecret = appSecret;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
