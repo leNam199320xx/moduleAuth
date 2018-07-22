@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { AuthService } from './core/auth.service';
 import { Subscription } from 'rxjs';
 import { RouterService } from './core/router.service';
@@ -7,6 +7,7 @@ import { ConfigsService } from './core/configs.service';
 import { NavService } from './nav/nav.service';
 import { AppService } from './app.service';
 import { Type } from './core/db.model';
+import { WindowService } from './core/window.service';
 
 @Component({
     selector: 'app-root',
@@ -22,9 +23,13 @@ export class AppComponent implements OnDestroy, OnInit {
         public authService: AuthService,
         public configsService: ConfigsService,
         public navService: NavService,
-        public appService: AppService
+        public appService: AppService,
+        private windowService: WindowService
     ) {
         this.navService.sourceSubject.subscribe(res => console.log(1, res));
+    }
+    @HostListener('window:resize', ['$event']) onresize(_event: Event) {
+        this.windowService.setBreakpoint();
     }
     ngOnInit() {
         this.logoutSubscription = this.authService.checkLoginNow().subscribe(res => {

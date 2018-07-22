@@ -1,0 +1,22 @@
+.column {
+    display: inline-block;
+}
+
+.desktop {
+    .column {
+        @extend .w-125;
+    }
+}
+
+.tablet,
+.mobile.landscape {
+    .column {
+        @extend .w-25;
+    }
+}
+
+.mobile.portrait {
+    .column {
+        @extend .w-50;
+    }
+}

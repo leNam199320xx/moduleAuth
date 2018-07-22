@@ -5,7 +5,7 @@
 @import 'variables.scss';
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
-
+@import 'grid.scss';
 @mixin generateSizeWidth ($size, $name) {
     .w-#{$name} {
         max-width: $size;
@@ -28,6 +28,61 @@
 @mixin generateFontSize($fs, $name) {
     .fs-#{$name} {
         font-size: $fs;
+    }
+}
+
+@mixin generateMarginPadding ($posi, $level, $size) { 
+    .m#{$posi}-#{$level} {
+        @if $posi == "t" {
+            margin-left: $size;
+        }
+        @else if $posi == "l" {
+            margin-left: $size;
+        }
+        @else if $posi == "r" {
+            margin-right: $size;
+        }  
+        @else if $posi == "b" {
+            margin-bottom: $size;
+        }  
+        @else if $posi == "lr" {
+            margin-left: $size;
+            margin-right: $size;
+        }
+        @else if $posi == "tb" {
+            margin-top: $size;
+            margin-bottom: $size;
+        }
+        @else {
+            margin: $size;
+        }
+    
+    }
+    .p#{$posi}-#{$level} {
+        @if $posi == "t" {
+            padding-left: $size;
+        }
+        @else if $posi == "l" {
+            padding-left: $size;
+        }
+        @else if $posi == "r" {
+            padding-right: $size;
+        }  
+        @else if $posi == "b" {
+            padding-bottom: $size;
+        }  
+        @else if $posi == "lr" {
+            padding-left: $size;
+            padding-right: $size;
+        }
+        @else if $posi == "tb" {
+            padding-top: $size;
+            padding-bottom: $size;
+        }
+        @else {
+            padding: $size;
+        }
+    
     }
 }
 
@@ -60,6 +115,12 @@
     @include generateSizeWidth(nth($_val, 2), nth($_val, 1));
     @include generateHeaderHeight(nth($_val, 3), nth($_val, 1));
     @include generateFontSize(nth($_val, 4), nth($_val, 1));
+}
+
+@each $_val in $defines-pm {
+    @each $_valname in $defines-pmname {
+        @include generateMarginPadding($_valname, nth($_val, 1), nth($_val, 2));
+    }
 }
 
 @each $_val in $defines_color {
@@ -109,4 +170,19 @@
 
 .row {
     width: 100%;
+}
+
+.image {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.block {
+    display: inline-block;
 }

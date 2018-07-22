@@ -1,5 +1,4 @@
-button,
-a {
+button {
     background: none;
     padding: 0.5rem;
     &.outline {
@@ -15,4 +14,8 @@ a {
     * {
         font-size: inherit;
     }
+}
+
+a {
+    text-decoration: none;
 }

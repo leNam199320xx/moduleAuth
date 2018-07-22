@@ -1,0 +1,16 @@
+<div class='paging'>
+    <div class='paging-controls' *ngIf='!page.loadMore'>
+        <button (click)='btnBackClick()'>Back</button>
+        <button (click)='backPaging()' *ngIf='indexPaging > minIndexPaging'>...</button>
+
+        <ng-container *ngFor='let ix of pagings'>
+            <button (click)='btnGotoClick(ix + 1)'>{{ix + 1}}</button>
+        </ng-container>
+
+        <button (click)='nextPaging()' *ngIf='indexPaging < maxIndexPaging'>...</button>
+        <button (click)='btnNextClick()'>Next</button>
+    </div>
+    <div *ngIf='page.loadMore'>
+        <button (click)='btnNextClick(true)'>Load more</button>
+    </div>
+</div>
