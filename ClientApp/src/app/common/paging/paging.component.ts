@@ -3,33 +3,35 @@ import { PageModel } from './page.model';
 
 @Component({
     selector: 'app-paging',
-    templateUrl: 'paging.component.html'
+    templateUrl: 'paging.component.html',
+    styleUrls: ['paging.css']
 })
 
 export class PagingComponent implements OnInit {
     @Input() page: PageModel;
+    @Input() sizePaging = 5;
     @Output() backClick = new EventEmitter<any>();
     @Output() nextClick = new EventEmitter<any>();
     @Output() gotoClick = new EventEmitter<any>();
-    @Input() sizePaging = 5;
     indexPaging = 0;
     minIndexPaging = 0;
     maxIndexPaging = 0;
     pagings: number[] = [];
     ngOnInit() {
-        console.log(this.page);
         this.maxIndexPaging = Math.floor(this.page.pageLength / this.sizePaging);
         this.setNumberPaging(0, true);
     }
 
     btnBackClick() {
-        this.backClick.emit();
+        this.page.back();
         this.setIndexPaging();
+        this.backClick.emit(this);
     }
 
     btnNextClick() {
-        this.nextClick.emit();
+        this.page.next();
         this.setIndexPaging();
+        this.nextClick.emit(this);
     }
 
     setIndexPaging() {
@@ -38,12 +40,12 @@ export class PagingComponent implements OnInit {
     }
 
     btnGotoClick(_index: number) {
-        this.page.pageIndex = _index;
-        this.gotoClick.emit(this.page.pageIndex);
+        this.page.goto(_index);
+        this.gotoClick.emit(this);
     }
 
     setIndex() {
-        this.page.pageIndex = (this.page.pageIndex < this.page.maxPageIndex) ? +1
+        this.page.pageIndex = (this.page.pageIndex < this.page.maxPageIndex) ? 1
             : (this.page.pageIndex > this.page.minPageIndex ? -1 : 0);
     }
 

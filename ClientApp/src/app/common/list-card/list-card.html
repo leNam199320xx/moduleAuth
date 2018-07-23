@@ -1,14 +1,15 @@
 <div class="card-container w-full">
-    <ng-container *ngFor='let card of cards; let ix = index'>
+    <ng-container *ngFor='let card of displayCards'>        
         <div class='column p-2'>
-        <div class="card image block">
-            <div class="card-image image" [ngStyle]='{"background-image": "url("+card.imagesUrl+")"}'></div>
-            <div class='card-title mtb-2 pl-1c'>
-                <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
+            <div class="card image block">
+                <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}'></div>
+                <div class='card-title mtb-2 pl-1c'>
+                    <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
+                </div>
             </div>
-        </div></div>
+        </div>
     </ng-container>
 </div>
 <div class='card-paging'>
-    <app-paging [page]='pageConfig'></app-paging>
+    <app-paging [page]='pageConfig' (nextClick)='next($event)' (backClick)='back($event)' (gotoClick)='goto($event)'></app-paging>
 </div>

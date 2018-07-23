@@ -2,7 +2,8 @@
     display: inline-block;
 }
 
-.desktop {
+.desktop,
+.tablet.landscape {
     .column {
         @extend .w-125;
     }

@@ -16,17 +16,8 @@ export class HomeComponent {
         }
     ] as CardModel[];
     constructor(private activatedRoute: ActivatedRoute) {
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
-        this.cards.push(this.cards[0]);
+        for (let i = 0; i < 100; i++) {
+            this.cards.push(this.cards[0]);
+        }
     }
 }
