@@ -8,16 +8,17 @@ import { CardModel } from '../common/list-card/list-card.model';
     styleUrls: ['home.css']
 })
 export class HomeComponent {
-    cards = [
-        {
-            url: '/',
-            title: 'Máy ảnh canon',
-            imagesUrl: '/assets/images/canon200x200.jpg'
-        }
-    ] as CardModel[];
+    cards: CardModel[] = [];
+
     constructor(private activatedRoute: ActivatedRoute) {
         for (let i = 0; i < 100; i++) {
-            this.cards.push(this.cards[0]);
+            const card = {
+                url: '/',
+                title: 'Máy ảnh canon',
+                imagesUrl: '/assets/images/canon200x200.jpg'
+            } as CardModel;
+            card.title += ' - ' + i;
+            this.cards.push(card);
         }
     }
 }

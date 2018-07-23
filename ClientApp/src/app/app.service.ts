@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Type, CategoryModel } from './core/db.model';
-import { Subject } from '../../node_modules/rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class AppService {

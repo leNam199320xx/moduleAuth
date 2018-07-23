@@ -1,7 +1,9 @@
-.headerpanel{
+.headerpanel {
     top: 0px;
     width: 100%;
+    z-index: 99999;
 }
+
 .header {
     margin: 0 auto;
 }

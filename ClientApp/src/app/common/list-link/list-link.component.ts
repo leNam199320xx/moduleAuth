@@ -1,16 +1,16 @@
-import { Component, Input } from '@angular/core';
-import { ListItemModel } from '../common-list.model';
+import { Component } from '@angular/core';
+import { ListCommonComponent } from '../list-common/list-common.component';
+import { CardModel } from '../list-common/list-common.model';
 
 @Component({
     selector: 'app-list-link',
     templateUrl: 'list-link.html',
-    styleUrls: ['list-link.css']
+    styleUrls: ['list-link.scss']
 })
 
-export class ListLinkComponent {
-    @Input() listLink: ListItemModel[] = [];
-    @Input() isVertial = false;
-    constructor() {
-
-    }
+export class ListLinkComponent extends ListCommonComponent {
+    title = {
+        title: 'Danh sách dường dẫn',
+        url: '/'
+    } as CardModel;
 }

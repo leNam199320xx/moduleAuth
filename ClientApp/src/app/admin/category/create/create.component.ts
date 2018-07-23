@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '../../../../../node_modules/@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 
-import { HttpRequest } from '../../../../../node_modules/@angular/common/http';
-import { Subscription } from '../../../../../node_modules/rxjs';
+import { HttpRequest } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 import { AdminService } from '../../admin.service';
 import { CategoryModel } from '../../../core/db.model';
 

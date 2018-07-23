@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavService } from '../nav/nav.service';
 import { NavModel } from '../nav/nav.model';
-import { ActivatedRoute } from '../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-admin',

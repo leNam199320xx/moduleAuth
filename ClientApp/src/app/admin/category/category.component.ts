@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Subscription } from 'rxjs';
-import { HttpRequest, HttpParams, HttpHeaders } from '../../../../node_modules/@angular/common/http';
+import { HttpRequest } from '@angular/common/http';
 import { CategoryModel } from '../../core/db.model';
 
 @Component({

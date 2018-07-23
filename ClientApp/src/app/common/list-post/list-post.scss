@@ -1,0 +1,28 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;    
+}
+
+.card {
+    width: 100%;
+    background-color: #e3e3e3;
+}
+
+.card-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(transparent, rgba(black, 0.25));
+    color: white;
+    font-weight: bold;
+    &:hover{
+        background: linear-gradient(transparent, rgba(black, 0.5));
+    }
+}
+
+.card-image {
+    padding-top: 60%;
+    position: relative;
+}
+
+.card-link {}

@@ -84,6 +84,31 @@
         }
     
     }
+    .b#{$posi}-#{$level} {
+        @if $posi == "t" {
+            border-left-width: $level + px !important;
+        }
+        @else if $posi == "l" {
+            border-left-width: $level + px !important;
+        }
+        @else if $posi == "r" {
+            border-right-width: $level + px !important;
+        }  
+        @else if $posi == "b" {
+            border-bottom-width: $level + px !important;
+        }  
+        @else if $posi == "lr" {
+            border-left-width: $level + px !important;
+            border-right-width: $level + px !important;
+        }
+        @else if $posi == "tb" {
+            border-top-width: $level + px !important;
+            border-bottom-width: $level + px !important;
+        }
+        @else {
+            border-width: $level + px !important;
+        }
+    }
 }
 
 @mixin btnSize($fs, $name) {
@@ -136,6 +161,7 @@
     .bor-#{nth($_val, 1)} {
         border-color: nth($_val, 2);
         border-style: solid;
+        border-width: 0;
     }
 }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavModel } from './nav.model';
-import { Subject } from '../../../node_modules/rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class NavService {

@@ -7,10 +7,10 @@ import { AdminPostTypeComponent } from './post-type/post-type.component';
 import { AdminHistoryComponent } from './history/history.component';
 import { AdminPostComponent } from './post/post.component';
 import { NavService } from '../nav/nav.service';
-import { CommonModule } from '../../../node_modules/@angular/common';
+import { CommonModule } from '@angular/common';
 import { AdminCategoryComponent } from './category/category.component';
 import { AdminService } from './admin.service';
-import { FormsModule } from '../../../node_modules/@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AdminCategoryCreateComponent } from './category/create/create.component';
 
 @NgModule({

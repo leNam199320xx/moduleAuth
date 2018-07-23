@@ -17,7 +17,7 @@ export class PageModel {
         this.pageSize = _pageSize;
         this.count = _count;
         this.displayCount = (_count < _pageSize) ? _pageSize : _count;
-        this.pageLength = Math.round(this.displayCount / this.pageSize);
+        this.pageLength = Math.ceil(this.displayCount / this.pageSize);
         this.pageIndex = this.page - 1;
         this.maxPageIndex = this.pageLength - 1;
         this.pageLengths = Array.from(Array(this.pageLength).keys());

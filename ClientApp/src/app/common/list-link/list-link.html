@@ -1,7 +1,15 @@
-<div *ngIf="listLink" class='list-link' [ngClass]='{"vertical": isVertial}'>
-    <ng-container *ngFor="let link of listLink">
-        <a [routerLink]='[link.url]'>
-            <i class='icons {{link.icon}}'>{{link.icon}}</i>{{link.text}}
-        </a>
+<div class="card-container w-full pb-2">
+    <div class='card-container-title fs-lg bl-2 pl-2 bor-black' *ngIf='title'>
+        <div class="title">
+            <a [routerLink]='title.url'>{{title.title}}</a>
+        </div>
+    </div>
+    <ng-container *ngFor='let card of displayCards'>
+        <div class='ptb-2 pl-1c bor-black bb-1'>
+            <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
+        </div>
     </ng-container>
+</div>
+<div class='card-paging' *ngIf='hasPaging'>
+    <app-paging [page]='pageConfig' (nextClick)='next($event)' (backClick)='back($event)' (gotoClick)='goto($event)'></app-paging>
 </div>

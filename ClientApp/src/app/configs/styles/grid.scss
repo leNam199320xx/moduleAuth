@@ -7,17 +7,25 @@
     .column {
         @extend .w-125;
     }
+
+    .column-large{
+        @extend .w-25;
+    }
 }
 
-.tablet,
+.tablet.portrait,
 .mobile.landscape {
     .column {
         @extend .w-25;
+    }
+
+    .column-large{
+        @extend .w-50;
     }
 }
 
 .mobile.portrait {
     .column {
-        @extend .w-50;
+        @extend .w-full;
     }
 }
