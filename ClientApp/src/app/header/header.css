@@ -2,8 +2,10 @@
     top: 0px;
     width: 100%;
     z-index: 99999;
+    background-color: white;
 }
 
 .header {
     margin: 0 auto;
+    height: 100%;
 }

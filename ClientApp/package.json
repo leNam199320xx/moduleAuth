@@ -14,11 +14,13 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "6.0.9",
+    "@angular/cdk": "^6.4.1",
     "@angular/common": "6.0.9",
     "@angular/compiler": "6.0.9",
     "@angular/core": "6.0.9",
     "@angular/forms": "^6.0.9",
     "@angular/http": "6.0.9",
+    "@angular/material": "^6.4.1",
     "@angular/platform-browser": "6.0.9",
     "@angular/platform-browser-dynamic": "6.0.9",
     "@angular/platform-server": "6.0.9",
@@ -46,9 +48,9 @@
     "karma-coverage-istanbul-reporter": "^2.0.1",
     "karma-jasmine": "^1.1.2",
     "karma-jasmine-html-reporter": "^1.2.0",
-    "protractor": "^5.3.2",
+    "protractor": "^5.4.0",
     "ts-node": "^7.0.0",
-    "tslint": "^5.10.0"
+    "tslint": "^5.11.0"
   },
   "optionalDependencies": {
     "node-sass": "^4.9.0"

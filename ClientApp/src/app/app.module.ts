@@ -20,6 +20,7 @@ import { NavService } from './nav/nav.service';
 import { PageService } from './page/page.service';
 import { AppService } from './app.service';
 import { WindowService } from './core/window.service';
+import { MaterialModule } from './material.module';
 const routes: Route[] = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
@@ -38,6 +39,7 @@ const routes: Route[] = [
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         SharedModule,
+        MaterialModule,
         HeaderModule,
         AccountModule,
         RouterModule.forRoot(routes)
