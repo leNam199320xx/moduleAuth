@@ -2,7 +2,7 @@
     <ng-container *ngFor='let card of displayCards'>
         <div class='column-large p-2'>
             <div class="card image block">
-                <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}'>                        
+                <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (click)='openDialog()'>
                     <div class='card-title p-1'>
                         <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
                     </div>

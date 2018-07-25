@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Post } from '../../core/db.model';
 import { ListCardComponent } from '../list-card/list-card.component';
+import { MatDialog } from '../../../../node_modules/@angular/material';
 
 @Component({
     selector: 'app-list-post',
@@ -8,4 +8,8 @@ import { ListCardComponent } from '../list-card/list-card.component';
     styleUrls: ['list-post.scss']
 })
 export class ListPostComponent extends ListCardComponent {
+    constructor(_dialog: MatDialog) {
+        super();
+        this.dialog = _dialog;
+    }
 }

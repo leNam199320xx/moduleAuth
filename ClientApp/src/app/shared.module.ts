@@ -16,6 +16,7 @@ import { ListPostComponent } from './common/list-post/list-post.component';
 import { PostComponent } from './common/post/post.component';
 import { PagingComponent } from './common/paging/paging.component';
 import { ListCommonComponent } from './common/list-common/list-common.component';
+import { ListDialogComponent } from './common/list-common/dialog/dialog.component';
 @NgModule({
     declarations: [
         ListButtonComponent,
@@ -24,6 +25,7 @@ import { ListCommonComponent } from './common/list-common/list-common.component'
         ListLinkComponent,
         ListPostComponent,
         ListCommonComponent,
+        ListDialogComponent,
         PostComponent,
         PageHomeComponent,
         PageSearchComponent,
@@ -37,13 +39,15 @@ import { ListCommonComponent } from './common/list-common/list-common.component'
         ListCardComponent,
         ListPostComponent,
         ListLinkComponent,
+        ListDialogComponent,
         HttpClientModule,
         CommonModule,
         FormsModule,
         BrowserModule,
         RouterModule
     ],
-    providers: []
+    providers: [],
+    entryComponents: [ListDialogComponent]
 })
 export class SharedModule {
 
