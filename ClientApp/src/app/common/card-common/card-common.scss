@@ -1,3 +1,10 @@
 .card-common {
     background-color: white;
+    box-shadow: 8px 8px 10px -4px rgba(0,0,0,0.5);
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+.card-content {
+    min-width: 300px;
 }

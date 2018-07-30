@@ -6,6 +6,7 @@
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
 @import 'grid.scss';
+@import 'scrollbar.scss';
 @mixin generateSizeWidth ($size, $name) {
     .w-#{$name} {
         max-width: $size;
@@ -131,6 +132,10 @@
 @include generateSizeWidth(50%, "50");
 @include generateSizeWidth(25%, "25");
 @include generateSizeWidth(12.5%, "125");
+@include generateSizeWidth(600px, "600");
+@include generateSizeWidth(500px, "500");
+@include generateSizeWidth(400px, "400");
+@include generateSizeWidth(300px, "300");
 @include generatePosition(fixed);
 @include generatePosition(absolute);
 @include generatePosition(relative);
@@ -208,6 +213,10 @@
 }
 
 .block {
+    display: block;
+}
+
+.iblock {
     display: inline-block;
 }
 

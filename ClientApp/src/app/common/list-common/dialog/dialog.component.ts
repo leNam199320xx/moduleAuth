@@ -8,10 +8,16 @@ import { CardModel } from '../list-common.model';
 })
 export class ListDialogComponent {
     @Input() card: CardModel;
+    @Input() isFullscreen = false;
     constructor() {
         console.log(this.card);
     }
     btnClose() {
         this.card.enabledDialog = false;
+    }
+
+    btnFullscreen() {
+        this.isFullscreen = !this.isFullscreen;
+        console.log(1);
     }
 }

@@ -8,7 +8,7 @@ import { CardModel } from '../list-common/list-common.model';
 })
 export class CardCommonComponent {
     @Input() card: CardModel;
-    btnClose() {
+    @Input() isFullscreen = false;
 
-    }
+    btnClose() { }
 }
