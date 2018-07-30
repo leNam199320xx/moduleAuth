@@ -7,12 +7,16 @@
     <ng-container *ngFor='let card of displayCards'>
         <div class='column p-2'>
             <div class="common image block">
-                <div class="common-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}'></div>
+                <div class="common-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (dblclick)='openDialog()'></div>
                 <div class='common-title mtb-2 pl-1c'>
                     <a class='common-link' [routerLink]='card.url'>{{card.title}}</a>
                 </div>
             </div>
         </div>
+
+        <ng-container *ngIf='card && card.enabledDialog'>
+            <app-list-dialog [card]='card'></app-list-dialog>
+        </ng-container>
     </ng-container>
 </div>
 <div class='common-paging'>

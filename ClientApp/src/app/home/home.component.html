@@ -6,11 +6,11 @@
             <div class='btn'>Điện tử</div>
         </div>
         <div class='home-prd-images'>
-            <app-list-card [cards]='cards' [pageSize]='16'></app-list-card>
-            <app-list-post [cards]='cards' [pageSize]='8'></app-list-post>
+            <app-list-card [cards]='setNewCards()' [pageSize]='16'></app-list-card>
+            <app-list-post [cards]='setNewCards()' [pageSize]='8'></app-list-post>
         </div>
         <div class='home-prd-news'>
-            <app-list-link [cards]='cards' [pageSize]='8' [hasPaging]='false'></app-list-link>
+            <app-list-link [cards]='setNewCards()' [pageSize]='8' [hasPaging]='false'></app-list-link>
         </div>
     </div>
     <div class='row home-prd-feature'>

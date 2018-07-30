@@ -8,6 +8,9 @@
                 </div>
             </div>
         </div>
+        <div class='popup' *ngIf='card && card.enabledDialog'>
+            <app-list-dialog [card]='card'></app-list-dialog>
+        </div>
     </ng-container>
 </div>
 <div class='card-paging'>

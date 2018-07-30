@@ -4,7 +4,11 @@ export class CardModel {
     imagesUrl: string;
     tags: CardModel[] = [];
     categories: CardModel[] = [];
-
+    enabledDialog = false;
+    message: string;
+    constructor() {
+        this.enabledDialog = false;
+    }
     convertImagesUrlToArray() {
         return this.imagesUrl.split(',');
     }

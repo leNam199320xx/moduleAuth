@@ -10,6 +10,5 @@ import { MatDialog } from '../../../../node_modules/@angular/material';
 export class ListPostComponent extends ListCardComponent {
     constructor(_dialog: MatDialog) {
         super();
-        this.dialog = _dialog;
     }
 }

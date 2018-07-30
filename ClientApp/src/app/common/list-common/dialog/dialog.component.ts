@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, Input } from '@angular/core';
+import { CardModel } from '../list-common.model';
 
 @Component({
     selector: 'app-list-dialog',
@@ -7,5 +7,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
     styleUrls: ['dialog.scss']
 })
 export class ListDialogComponent {
-    constructor(public dialogRef: MatDialogRef<ListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Input() card: CardModel;
+    constructor() {
+        console.log(this.card);
+    }
+    btnClose() {
+        this.card.enabledDialog = false;
+    }
 }

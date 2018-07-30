@@ -18,6 +18,8 @@ import { PagingComponent } from './common/paging/paging.component';
 import { ListCommonComponent } from './common/list-common/list-common.component';
 import { ListDialogComponent } from './common/list-common/dialog/dialog.component';
 import { PostSimpleComponent } from './common/post-simple/post-simple.component';
+import { ListExtendPanelComponent } from './common/list-common/extend-panel/extend-panel.component';
+import { CardCommonComponent } from './common/card-common/card-common.component';
 @NgModule({
     declarations: [
         ListButtonComponent,
@@ -27,6 +29,8 @@ import { PostSimpleComponent } from './common/post-simple/post-simple.component'
         ListPostComponent,
         ListCommonComponent,
         ListDialogComponent,
+        ListExtendPanelComponent,
+        CardCommonComponent,
         PostComponent,
         PostSimpleComponent,
         PageHomeComponent,
@@ -42,6 +46,8 @@ import { PostSimpleComponent } from './common/post-simple/post-simple.component'
         ListPostComponent,
         ListLinkComponent,
         ListDialogComponent,
+        ListExtendPanelComponent,
+        CardCommonComponent,
         PostSimpleComponent,
         HttpClientModule,
         CommonModule,

@@ -1,0 +1,19 @@
+<div class='card-common'>
+    <!-- <div class='card-title'>
+        <button (click)='btnClose()'><i class='icons'>close</i></button>
+    </div> -->
+
+    <div class='card-content'>
+        <div class="card image block">
+            <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}'></div>
+            <div class='card-title mtb-2 pl-1'>
+                <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
+            </div>
+
+            <div class='card-message mtb-2 pl-1'>
+                {{card.message}}
+            </div>
+        </div>
+    </div>
+    <button>Buy</button>
+</div>

@@ -21,4 +21,18 @@ export class HomeComponent {
             this.cards.push(card);
         }
     }
+
+    setNewCards() {
+        const newCards: CardModel[] = [];
+        this.cards.forEach(item => {
+            const c = new CardModel();
+            c.categories = item.categories;
+            c.imagesUrl = item.imagesUrl;
+            c.tags = item.tags;
+            c.title = item.title;
+            c.url = item.url;
+            newCards.push(c);
+        });
+        return newCards;
+    }
 }

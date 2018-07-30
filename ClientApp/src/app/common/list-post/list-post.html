@@ -2,13 +2,17 @@
     <ng-container *ngFor='let card of displayCards'>
         <div class='column-large p-2'>
             <div class="card image block">
-                <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (click)='openDialog()'>
+                <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (dblclick)='openExtendPanelOrDialog(card)'>
                     <div class='card-title p-1'>
                         <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <ng-container *ngIf='card && card.enabledDialog'>
+            <app-list-extend-panel class='w-full' [card]='card'></app-list-extend-panel>
+        </ng-container>
     </ng-container>
 </div>
 <div class='card-paging'>
