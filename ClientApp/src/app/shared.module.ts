@@ -20,6 +20,8 @@ import { ListDialogComponent } from './common/list-common/dialog/dialog.componen
 import { PostSimpleComponent } from './common/post-simple/post-simple.component';
 import { ListExtendPanelComponent } from './common/list-common/extend-panel/extend-panel.component';
 import { CardCommonComponent } from './common/card-common/card-common.component';
+import { SizeCommonComponent } from './common/size-common.component';
+import { ConfigLayoutComponent } from './common/config-layout.component';
 @NgModule({
     declarations: [
         ListButtonComponent,
@@ -37,7 +39,9 @@ import { CardCommonComponent } from './common/card-common/card-common.component'
         PageSearchComponent,
         PageDetailComponent,
         PageListComponent,
-        PagingComponent
+        PagingComponent,
+        SizeCommonComponent,
+        ConfigLayoutComponent
     ],
     imports: [CommonModule, FormsModule, RouterModule],
     exports: [

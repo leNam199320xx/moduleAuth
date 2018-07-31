@@ -35,13 +35,11 @@ export class AdminCategoryComponent implements OnDestroy, OnInit {
 
     btnBlock(id: number) {
         this.categoryBlockSub = this.adminService.blockCategory(id).subscribe(res => {
-            console.log(res);
         });
     }
 
     btnDelete(id: number) {
       this.categoryBlockSub = this.adminService.deleteCategory(id).subscribe(res => {
-        console.log(res);
       });
     }
 

@@ -1,16 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { CardModel } from '../list-common.model';
+import { ConfigLayoutComponent } from '../../config-layout.component';
 
 @Component({
     selector: 'app-list-dialog',
     templateUrl: 'dialog.html',
     styleUrls: ['dialog.scss']
 })
-export class ListDialogComponent {
+export class ListDialogComponent extends ConfigLayoutComponent {
     @Input() card: CardModel;
     @Input() isFullscreen = false;
     constructor() {
-        console.log(this.card);
+        super();
     }
     btnClose() {
         this.card.enabledDialog = false;
@@ -18,6 +19,5 @@ export class ListDialogComponent {
 
     btnFullscreen() {
         this.isFullscreen = !this.isFullscreen;
-        console.log(1);
     }
 }

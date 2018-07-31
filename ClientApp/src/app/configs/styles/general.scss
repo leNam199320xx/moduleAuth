@@ -235,6 +235,26 @@
     justify-content: flex-start;
 }
 
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
 .h-full {
     height: 100%;
+}
+
+.h-full-64 {
+    height: calc(100% - 64px);
+}
+
+.h-64 {
+    height: 64px;
+}
+
+.h-600 {
+    height: 600px;
 }

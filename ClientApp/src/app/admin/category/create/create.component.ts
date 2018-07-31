@@ -51,9 +51,7 @@ export class AdminCategoryCreateComponent implements OnInit, OnDestroy {
         this.adminService.uploadFiles(this.uploadReq);
     }
     btnSave() {
-        this.categorySub = this.adminService.saveCategory(this.category).subscribe(res => {
-            console.log(res);
-        });
+        this.categorySub = this.adminService.saveCategory(this.category).subscribe(res => { });
     }
     btnCloseAddForm() {
         this.closeForm.emit(true);

@@ -13,7 +13,6 @@ export class NavService {
     sourceSubject: Subject<NavModel[]> = new Subject();
     constructor() {
         this.sourceSubject.subscribe(res => {
-            console.log(res);
         });
     }
 }

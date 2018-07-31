@@ -1,15 +1,18 @@
 <div class='extend-panel ps-relative'>
     <div class='extend-panel-background ps-absolute w-full h-full' (click)='btnClose()'></div>
-    <div class='extend-panel-title p-1 flex-right'>
-        <button class='extend-panel-close b-2 b-white txt-white mr-1 fs-xl sm' (click)='btnFullscreen()'>
-            <i class="icons flex">{{!isFullscreen ? 'fullscreen' : 'fullscreen_exit'}}</i>
-        </button>
-        <button class='extend-panel-close b-2 b-white txt-white fs-xl sm' (click)='btnClose()'>
-            <i class="icons flex">close</i>
-        </button>
+    <div class='extend-panel-title h-64'>
+        <div class='w-full bg-black-05 iblock'>
+            <div class='p-2 float-right'>
+                <button *ngIf='hasFullscreen' class='extend-panel-close b-2 b-white txt-white mr-1 fs-xl sm' (click)='btnFullscreen()'>
+                    <i class="icons flex">{{!isFullscreen ? 'fullscreen' : 'fullscreen_exit'}}</i>
+                </button>
+                <button class='extend-panel-close b-2 b-white txt-white fs-xl sm' (click)='btnClose()'>
+                    <i class="icons flex">close</i>
+                </button>
+            </div>
+        </div>
     </div>
-
-    <div class="extend-panel-content p-5">
-        <app-card-common [card]='card' [isFullscreen]='isFullscreen'></app-card-common>
+    <div class="extend-panel-content p-5 h-full-64">
+        <app-card-common [card]='card' [isFullscreen]='isFullscreen' [widthCls]='widthCls' [heightCls]='heightCls'></app-card-common>
     </div>
 </div>

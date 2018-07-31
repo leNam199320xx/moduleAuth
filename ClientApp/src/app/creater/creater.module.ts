@@ -12,7 +12,4 @@ import { RouterModule } from '@angular/router';
 })
 
 export class CreaterModule {
-    constructor() {
-        console.log(1);
-    }
 }

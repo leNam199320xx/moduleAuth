@@ -17,7 +17,6 @@ export class RegisterComponent implements OnDestroy {
     }
     btnRegister() {
         this.registerSubscription = this.authService.register(this.registerAccount).subscribe(res => {
-            console.log(res);
         });
     }
 

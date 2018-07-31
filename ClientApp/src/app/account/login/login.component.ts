@@ -16,20 +16,13 @@ export class LoginComponent implements OnDestroy {
         this.account.returnUrl = '/';
         this.loginSubscription = this.authService.login(this.account).subscribe(res => {
             this.router.navigateByUrl(res.returnUrl).then(() => {
-                console.log('nav', res);
                 this.authService.loginResponse = res;
             });
         });
     }
 
     loginSocial(provider: string) {
-        // this.loginSubscription = this.authService.loginSocial(provider).subscribe(res => {
-        //     console.log(1);
-        // }, errors => {
-        //     console.log(errors);
-        // });
         const returnUrl = encodeURIComponent('/login');
-        console.log(returnUrl);
         const requestUrl = '/api/account/sociallogin?provider=' + provider + '&returnUrl=' + returnUrl;
         window.location.href = requestUrl;
     }

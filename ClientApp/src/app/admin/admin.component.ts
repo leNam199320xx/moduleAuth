@@ -51,7 +51,6 @@ export class AdminComponent implements OnInit {
         this.activatedRoute.params.subscribe(res => {
             const param = this.activatedRoute.snapshot.paramMap.get('page');
             this.routeName = param ? param.toLowerCase() : '';
-            console.log(this.routeName);
         });
     }
 }

@@ -1,4 +1,4 @@
-<div class='card-common pb-4 center' [ngClass]='{"w-full": isFullscreen, "w-600" : !isFullscreen }'>
+<div class='card-common pb-4 center {{widthCls ? widthCls : ""}} {{heightCls ? heightCls : ""}}'>
     <div class="w-full">
         <img class='center block' src='{{card.imagesUrl}}' />
     </div>
@@ -7,6 +7,88 @@
             <h2>{{card.title}}</h2>
         </div>
         <div class='card-message'>
+            <p>{{ card.message || 'Hãy bắt đầu với cái tên Kaido. Nếu tách chúng ra, ta sẽ có được 3 ký tự: Kai, D và O (hoặc
+                Ou). Kai trong bộ Kanji có nghĩa là biển. Ou trong bộ Kanji có nghĩa là vua.' + ' Ghép chúng lại, chúng ta
+                có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea King với
+                ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của 2 loài
+                - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng lại,
+                chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea
+                King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của
+                2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng
+                lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là
+                Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp
+                của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép
+                chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido
+                sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự
+                lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' +
+                ' Ghép chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này,
+                Kaido sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này
+                là sự lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.'
+                }}
+
+            </p>
+
+            <p>{{ card.message || 'Hãy bắt đầu với cái tên Kaido. Nếu tách chúng ra, ta sẽ có được 3 ký tự: Kai, D và O (hoặc
+                Ou). Kai trong bộ Kanji có nghĩa là biển. Ou trong bộ Kanji có nghĩa là vua.' + ' Ghép chúng lại, chúng ta
+                có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea King với
+                ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của 2 loài
+                - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng lại,
+                chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea
+                King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của
+                2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng
+                lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là
+                Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp
+                của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép
+                chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido
+                sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự
+                lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' +
+                ' Ghép chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này,
+                Kaido sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này
+                là sự lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.'
+                }}
+
+            </p>
+
+            <p>{{ card.message || 'Hãy bắt đầu với cái tên Kaido. Nếu tách chúng ra, ta sẽ có được 3 ký tự: Kai, D và O (hoặc
+                Ou). Kai trong bộ Kanji có nghĩa là biển. Ou trong bộ Kanji có nghĩa là vua.' + ' Ghép chúng lại, chúng ta
+                có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea King với
+                ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của 2 loài
+                - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng lại,
+                chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea
+                King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của
+                2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng
+                lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là
+                Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp
+                của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép
+                chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido
+                sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự
+                lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' +
+                ' Ghép chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này,
+                Kaido sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này
+                là sự lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.'
+                }}
+
+            </p>
+            <p>{{ card.message || 'Hãy bắt đầu với cái tên Kaido. Nếu tách chúng ra, ta sẽ có được 3 ký tự: Kai, D và O (hoặc
+                Ou). Kai trong bộ Kanji có nghĩa là biển. Ou trong bộ Kanji có nghĩa là vua.' + ' Ghép chúng lại, chúng ta
+                có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea King với
+                ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của 2 loài
+                - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng lại,
+                chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea
+                King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp của
+                2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép chúng
+                lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là
+                Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự lai tạp
+                của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' + ' Ghép
+                chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido
+                sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này là sự
+                lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.' +
+                ' Ghép chúng lại, chúng ta có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này,
+                Kaido sẽ là Sea King với ký tự D. Điều này sao có thể xảy ra? Rất có thể, sinh vật mạnh nhất thế giới này
+                là sự lai tạp của 2 loài - người cá và vua biển. Nó giải thích được lý do vì sao Kaido lại khổng lồ đến vậy.'
+                }}
+
+            </p>
             <p>{{ card.message || 'Hãy bắt đầu với cái tên Kaido. Nếu tách chúng ra, ta sẽ có được 3 ký tự: Kai, D và O (hoặc
                 Ou). Kai trong bộ Kanji có nghĩa là biển. Ou trong bộ Kanji có nghĩa là vua.' + ' Ghép chúng lại, chúng ta
                 có được cụm "vua biển". Bạn đọc đã thấy ngạc nhiên chưa? Nếu đi theo hướng này, Kaido sẽ là Sea King với
