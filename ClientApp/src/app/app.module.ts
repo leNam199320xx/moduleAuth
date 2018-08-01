@@ -38,7 +38,7 @@ const routes: Route[] = [
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         BrowserAnimationsModule,
-        SharedModule,
+        SharedModule.forRoot(),
         MaterialModule,
         HeaderModule,
         AccountModule,
