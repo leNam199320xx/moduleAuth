@@ -1,9 +1,17 @@
 .card-common {
     background-color: white;
-    box-shadow: 8px 8px 10px -4px rgba(0,0,0,0.5);
+    box-shadow: 8px 8px 10px -4px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
 }
 
 .card-content {
     min-width: 300px;
+}
+
+.guide-box,
+.time-box,
+.sale-box,
+.price-box,
+.preferential-box {
+    border: solid 1px rgba(black, 0.1);
 }

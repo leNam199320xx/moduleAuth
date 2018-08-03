@@ -13,15 +13,12 @@
         width: 100%;
         max-width: $size;
     }
-
     .h-#{$name} {
         height: $size;
     }
-
     .w-full-#{$name} {
         width: calc(100% - #{$size});
     }
-
     .h-full-#{$name} {
         height: calc(100% - #{$size});
     }
@@ -173,6 +170,12 @@
     }
     .bg-#{nth($_val, 1)} {
         background-color: nth($_val, 2);
+    }
+    .tag-#{nth($_val, 1)} {
+        background-color: nth($_val, 2);
+        padding: 2px 4px;
+        border-radius: 4px;
+        color: white;
     }
     .cl-#{nth($_val, 1)} {
         color: nth($_val, 2);

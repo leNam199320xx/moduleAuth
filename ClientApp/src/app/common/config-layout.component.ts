@@ -7,7 +7,10 @@ import { CardModel } from './list-common/list-common.model';
 })
 export class ConfigLayoutComponent {
     @Input() hasFullscreen = true;
+    @Input() hasOrder = false;
+    @Input() hasPay = false;
     @Input() isFullscreen = false;
+    @Input() isProduct = false;
     @Input() card: CardModel;
     @Input() widthCls: string;
     @Input() heightCls: string;

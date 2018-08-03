@@ -1,5 +1,6 @@
 $success: green;
 $warning: orange;
+$orange: orange;
 $dangerous: red;
 $white: white;
 $black: black;
@@ -14,6 +15,7 @@ $defines-color:('success', $success),
 ('highlight', $highlight),
 ('warning', $warning),
 ('dangerous', $dangerous),
+('orange', $orange),
 ('black', $black),
 ('black-05', rgba($black, 0.5)),
 ('white', $white);
