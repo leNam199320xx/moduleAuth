@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavService } from '../nav/nav.service';
-import { NavModel } from '../nav/nav.model';
 import { ActivatedRoute } from '@angular/router';
+import { NavService } from '../header/nav/nav.service';
 
 @Component({
     selector: 'app-admin',
-    templateUrl: 'admin.html',
-    styleUrls: ['admin.css']
+    templateUrl: 'admin.html'
 })
 export class AdminComponent implements OnInit {
     public routeName: string;

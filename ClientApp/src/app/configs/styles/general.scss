@@ -1,16 +1,29 @@
+@import 'icons.scss';
+@import 'body.scss';
 @import 'input.scss';
 @import 'button.scss';
 @import 'form.scss';
-@import 'icons.scss';
 @import 'variables.scss';
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
 @import 'grid.scss';
 @import 'scrollbar.scss';
-@mixin generateSizeWidth ($size, $name) {
+@mixin generateSize ($size, $name) {
     .w-#{$name} {
-        max-width: $size;
         width: 100%;
+        max-width: $size;
+    }
+
+    .h-#{$name} {
+        height: $size;
+    }
+
+    .w-full-#{$name} {
+        width: calc(100% - #{$size});
+    }
+
+    .h-full-#{$name} {
+        height: calc(100% - #{$size});
     }
 }
 
@@ -128,19 +141,22 @@
     }
 }
 
-@include generateSizeWidth(100%, "full");
-@include generateSizeWidth(50%, "50");
-@include generateSizeWidth(25%, "25");
-@include generateSizeWidth(12.5%, "125");
-@include generateSizeWidth(600px, "600");
-@include generateSizeWidth(500px, "500");
-@include generateSizeWidth(400px, "400");
-@include generateSizeWidth(300px, "300");
+@include generateSize(100%, "full");
+@include generateSize(50%, "50p");
+@include generateSize(25%, "25p");
+@include generateSize(12.5%, "12-5p");
+@include generateSize(600px, "600px");
+@include generateSize(800px, "800px");
+@include generateSize(1000px, "1000px");
+@include generateSize(500px, "500px");
+@include generateSize(400px, "400px");
+@include generateSize(300px, "300px");
+@include generateSize(64px, "64px");
 @include generatePosition(fixed);
 @include generatePosition(absolute);
 @include generatePosition(relative);
 @each $_val in $defines {
-    @include generateSizeWidth(nth($_val, 2), nth($_val, 1));
+    @include generateSize(nth($_val, 2), nth($_val, 1));
     @include generateHeaderHeight(nth($_val, 3), nth($_val, 1));
     @include generateFontSize(nth($_val, 4), nth($_val, 1));
 }
@@ -168,93 +184,6 @@
     }
 }
 
-.txt-center {
-    text-align: center;
-}
-
-.txt-r {
-    text-align: right;
-}
-
-.txt-l {
-    text-align: left;
-}
-
-.txt-bold {
-    font-weight: bold;
-}
-
-.txt-italic {
-    font-style: italic;
-}
-
-.btn {
-    text-align: center;
-}
-
-.center {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.row {
-    width: 100%;
-}
-
-.image {
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.block {
-    display: block;
-}
-
-.iblock {
-    display: inline-block;
-}
-
-.flex {
-    display: flex;
-    justify-content: center;
-}
-
-.flex-right {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.flex-left {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.float-right {
-    float: right;
-}
-
-.float-left {
-    float: left;
-}
-
-.h-full {
-    height: 100%;
-}
-
-.h-full-64 {
-    height: calc(100% - 64px);
-}
-
-.h-64 {
-    height: 64px;
-}
-
-.h-600 {
-    height: 600px;
-}
+@import '../../common/common.scss';
+@import '../../admin/admin.scss';
+@import '../../account/acc.scss';

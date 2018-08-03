@@ -1,6 +1,6 @@
 <div class='extend-panel ps-relative'>
     <div class='extend-panel-background ps-absolute w-full h-full' (click)='btnClose()'></div>
-    <div class='extend-panel-title h-64'>
+    <div class='extend-panel-title h-64px'>
         <div class='w-full bg-black-05 iblock'>
             <div class='p-2 float-right'>
                 <button *ngIf='hasFullscreen' class='extend-panel-close b-2 b-white txt-white mr-1 fs-xl sm' (click)='btnFullscreen()'>
@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div class="extend-panel-content p-5 h-full-64">
+    <div class="extend-panel-content p-5 h-full-64px">
         <app-card-common [card]='card' [isFullscreen]='isFullscreen' [widthCls]='widthCls' [heightCls]='heightCls'></app-card-common>
     </div>
 </div>

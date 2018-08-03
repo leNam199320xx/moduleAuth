@@ -1,16 +1,15 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
-import { ResponseModel } from '../../core/response.model';
-import { ConfigsService } from '../../core/configs.service';
-import { GeneralConfigModel } from '../../core/config.model';
 import { Subscription } from 'rxjs';
-import { AppService } from '../../app.service';
-import { Type, CategoryModel } from '../../core/db.model';
+import { GeneralConfigModel } from '../../../core/config.model';
+import { ResponseModel } from '../../../core/response.model';
+import { CategoryModel, Type } from '../../../core/db.model';
+import { AuthService } from '../../../core/auth.service';
+import { ConfigsService } from '../../../core/configs.service';
+import { AppService } from '../../../app.service';
 
 @Component({
     selector: 'app-nav-fixed',
-    templateUrl: 'nav-fixed.html',
-    styleUrls: ['nav-fixed.scss']
+    templateUrl: 'nav-fixed.html'
 })
 
 export class NavFixedComponent implements OnDestroy {
@@ -27,6 +26,7 @@ export class NavFixedComponent implements OnDestroy {
     ) {
         this.authService.loginSub.subscribe((res) => {
             this.loginResponse = res;
+            console.log(res);
         });
         this.configsService.configsSubject.subscribe(res => {
             // this.configNav = res.header.children[0] || new GeneralConfigModel();

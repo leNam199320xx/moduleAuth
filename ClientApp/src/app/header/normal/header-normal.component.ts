@@ -2,8 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     templateUrl: 'header-normal.html',
-    selector: 'app-header-normal',
-    styleUrls: ['header-normal.css']
+    selector: 'app-header-normal'
 
 })
 

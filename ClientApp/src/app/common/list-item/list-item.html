@@ -1,0 +1,6 @@
+<div class="item image block">
+    <div class="item-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (click)='openExtendPanelOrDialog()'></div>
+    <div class='item-title ptb-2 plr-1'>
+        <a class='item-link' [routerLink]='card.url'>{{card.title}}</a>
+    </div>
+</div>

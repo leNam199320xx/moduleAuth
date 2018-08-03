@@ -1,23 +1,25 @@
-import { Component, Input } from '@angular/core';
-import { CardModel } from '../list-common.model';
-import { ListDialogComponent } from '../dialog/dialog.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { ConfigLayoutComponent } from '../../config-layout.component';
 
 @Component({
     selector: 'app-list-extend-panel',
-    templateUrl: 'extend-panel.html',
-    styleUrls: ['extend-panel.scss']
+    templateUrl: 'extend-panel.html'
 })
-export class ListExtendPanelComponent extends ListDialogComponent {
-    @Input() card: CardModel;
-
+export class ListExtendPanelComponent extends ConfigLayoutComponent implements OnInit {
+    heightClsFixed: string;
+    widthClsFixed: string;
+    ngOnInit() {
+        this.heightClsFixed = this.heightCls;
+        this.widthClsFixed = this.widthCls;
+    }
     btnFullscreen() {
         this.isFullscreen = !this.isFullscreen;
         if (this.isFullscreen) {
             this.heightCls = 'h-full';
             this.widthCls = 'w-full';
         } else {
-            this.heightCls = 'h-600';
-            this.widthCls = 'w-600';
+            this.heightCls = this.heightClsFixed;
+            this.widthCls = this.widthClsFixed;
         }
     }
 }

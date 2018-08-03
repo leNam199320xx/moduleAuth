@@ -3,8 +3,7 @@ import { ConfigsService } from '../core/configs.service';
 
 @Component({
     selector: 'app-header',
-    templateUrl: 'header.html',
-    styleUrls: ['header.css']
+    templateUrl: 'header.html'
 })
 export class HeaderComponent {
     constructor(public configsService: ConfigsService) {

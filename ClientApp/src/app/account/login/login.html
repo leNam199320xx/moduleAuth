@@ -1,24 +1,24 @@
-<div class="card">
-    <form class="card-body" (submit)='login()'>
-        <div class='card-title'>
+<div class="login">
+    <form class="login-body" (submit)='login()'>
+        <div class='login-title'>
             LOGIN FORM
         </div>
         <div class="form-group">
-            <input class='form-control' type="text" placeholder="username" [(ngModel)]='account.email' [ngModelOptions]="{standalone: true}" />
+            <input type="text" placeholder="username" [(ngModel)]='account.email' [ngModelOptions]="{standalone: true}" />
         </div>
         <div class="form-group">
-            <input class='form-control' type="password" placeholder="password" [(ngModel)]='account.password' [ngModelOptions]="{standalone: true}" />
+            <input type="password" placeholder="password" [(ngModel)]='account.password' [ngModelOptions]="{standalone: true}" />
         </div>
         <div class="form-group">
-            <input class='form-control' type="checkbox" [(ngModel)]='account.rememberMe' [ngModelOptions]="{standalone: true}" />
+            <input type="checkbox" [(ngModel)]='account.rememberMe' [ngModelOptions]="{standalone: true}" />
         </div>
         <div class="form-group">
-            <button class='btn btn-outline-primary' type='submit'>Login</button>
-            <a class='btn btn-light' href="/">Register</a>
+            <button type='submit'>Login</button>
+            <a href="/register">Register</a>
         </div>
     </form>
     <div class="form-group">
-        <button class="btn btn-primary" (click)="loginSocial('Facebook')">Login with facebook</button>
-        <button class="btn btn-danger" (click)="loginSocial('Google')">Login with google</button>
+        <button (click)="loginSocial('Facebook')">Login with facebook</button>
+        <button (click)="loginSocial('Google')">Login with google</button>
     </div>
 </div>

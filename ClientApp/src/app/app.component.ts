@@ -1,18 +1,14 @@
 import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { AuthService } from './core/auth.service';
 import { Subscription } from 'rxjs';
-import { RouterService } from './core/router.service';
-import { Router } from '@angular/router';
 import { ConfigsService } from './core/configs.service';
-import { NavService } from './nav/nav.service';
 import { AppService } from './app.service';
-import { Type } from './core/db.model';
 import { WindowService } from './core/window.service';
+import { NavService } from './header/nav/nav.service';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    templateUrl: './app.component.html'
 })
 export class AppComponent implements OnDestroy, OnInit {
     title = 'app';

@@ -3,8 +3,7 @@ import { PageModel } from './page.model';
 
 @Component({
     selector: 'app-paging',
-    templateUrl: 'paging.component.html',
-    styleUrls: ['paging.css']
+    templateUrl: 'paging.component.html'
 })
 
 export class PagingComponent implements OnInit {

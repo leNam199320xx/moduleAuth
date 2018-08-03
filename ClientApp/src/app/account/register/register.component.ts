@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-register',
-    styleUrls: ['register.css'],
     templateUrl: 'register.html'
 })
 

@@ -1,17 +1,17 @@
-<div class="card-container w-full">
+<div class="post-card-container w-full">
     <ng-container *ngFor='let card of displayCards'>
         <div class='column-large p-2'>
-            <div class="card image block">
-                <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (dblclick)='openExtendPanelOrDialog(card)'>
-                    <div class='card-title p-1'>
-                        <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
+            <div class="post-card">
+                <div class="post-card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (dblclick)='openExtendPanelOrDialog(card)'>
+                    <div class='p-1'>
+                        <a class='post-card-link' [routerLink]='card.url'>{{card.title}}</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <ng-container *ngIf='card && card.enabledDialog'>
-            <app-list-extend-panel class='w-full' [card]='card' [widthCls]='"w-600"' [heightCls]='"h-600"'></app-list-extend-panel>
+            <app-list-extend-panel class='w-full' [card]='card' [widthCls]='"w-1000px"' [heightCls]='"h-600px"'></app-list-extend-panel>
         </ng-container>
     </ng-container>
 </div>

@@ -5,27 +5,31 @@
 .desktop,
 .tablet.landscape {
     .column {
-        @extend .w-125;
+        @extend .w-12-5p;
     }
 
     .column-large{
-        @extend .w-25;
+        @extend .w-25p;
     }
 }
 
 .tablet.portrait,
 .mobile.landscape {
     .column {
-        @extend .w-25;
+        @extend .w-25p;
     }
 
     .column-large{
-        @extend .w-50;
+        @extend .w-50p;
     }
 }
 
 .mobile.portrait {
     .column {
+        @extend .w-50p;
+    }
+
+    .column-large{
         @extend .w-full;
     }
 }

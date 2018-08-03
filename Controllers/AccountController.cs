@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using angular6DotnetCore.Models;
 
 namespace angular6DotnetCore.Controllers
 {
@@ -20,8 +21,8 @@ namespace angular6DotnetCore.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly IHostingEnvironment _env;
-        [BindProperty]
-        public ExternalLoginModel.InputModel Input { get; set; }
+        //[BindProperty]
+        public RegisterInputEmail Input { get; set; }
         [TempData]
         public string ErrorMessage { get; set; }
 
@@ -29,7 +30,7 @@ namespace angular6DotnetCore.Controllers
 
         public string ReturnUrl { get; set; }
 
-        public System.Web.HttpUtility httpU { get; }
+        public System.Web.HttpUtility http { get; }
 
         public AccountController(
             IHostingEnvironment env,
@@ -55,7 +56,7 @@ namespace angular6DotnetCore.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] angular6DotnetCore.Areas.Identity.Pages.Account.RegisterModel.InputModel account)
+        public async Task<IActionResult> Register([FromBody] RegisterInput account)
         {
 
             if (ModelState.IsValid)
@@ -106,14 +107,14 @@ namespace angular6DotnetCore.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<object> Login([FromBody] angular6DotnetCore.Areas.Identity.Pages.Account.LoginModel.InputModel account)
+        public async Task<object> Login([FromBody] LoginInput account)
         {
             //returnUrl = returnUrl ?? Url.Content("~/");
 
-            var user = _userManager.GetUserName(User);
-
             if (ModelState.IsValid)
             {
+                var user = _userManager.GetUserName(User);
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(account.Email, account.Password, account.RememberMe, lockoutOnFailure: true);
@@ -132,8 +133,10 @@ namespace angular6DotnetCore.Controllers
                 }
             }
 
-            return Ok(new Models.ViewModels.MessageModel
+            return BadRequest(new Models.ViewModels.MessageModel
             {
+                ReturnUrl = account.ReturnUrl,
+                Email = account.Email,
                 Message = "login fail"
             });
         }
@@ -196,7 +199,7 @@ namespace angular6DotnetCore.Controllers
                 LoginProvider = info.LoginProvider;
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 {
-                    Input = new ExternalLoginModel.InputModel
+                    Input = new RegisterInputEmail
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email)
                     };

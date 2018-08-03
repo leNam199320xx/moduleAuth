@@ -4,8 +4,7 @@ import { CardModel } from '../common/list-card/list-card.model';
 
 @Component({
     selector: 'app-home',
-    templateUrl: 'home.component.html',
-    styleUrls: ['home.css']
+    templateUrl: 'home.component.html'
 })
 export class HomeComponent {
     cards: CardModel[] = [];

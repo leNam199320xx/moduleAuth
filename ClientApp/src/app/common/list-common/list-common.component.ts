@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { CardModel } from './list-common.model';
 import { PageModel } from '../paging/page.model';
-import { ListDialogComponent } from './dialog/dialog.component';
+import { ConfigLayoutComponent } from '../config-layout.component';
 
 @Component(
     {
@@ -10,7 +10,7 @@ import { ListDialogComponent } from './dialog/dialog.component';
         styleUrls: ['list-common.css']
     }
 )
-export class ListCommonComponent implements OnInit {
+export class ListCommonComponent extends ConfigLayoutComponent implements OnInit  {
     @Input() cards: CardModel[] = [];
     @Input() pageSize = 8;
     @Input() currentPage = 1;

@@ -1,14 +1,14 @@
-.card-container {
+.post-card-container {
     display: flex;
     flex-wrap: wrap;    
 }
 
-.card {
+.post-card {
     width: 100%;
     background-color: #e3e3e3;
 }
 
-.card-title {
+.post-card-title {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -20,9 +20,9 @@
     }
 }
 
-.card-image {
+.post-card-image {
     padding-top: 60%;
     position: relative;
 }
 
-.card-link {}
+.post-card-link {}

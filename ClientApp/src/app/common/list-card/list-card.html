@@ -1,16 +1,9 @@
-<div class="card-container w-full">
+<div class="list-card-container w-full">
     <ng-container *ngFor='let card of displayCards'>        
         <div class='column p-2'>
-            <div class="card image block">
-                <div class="card-image image" [ngStyle]='{"background-image": "url("+  card.imagesUrl+")"}' (click)='openExtendPanelOrDialog(card)'></div>
-                <div class='card-title ptb-2 plr-1'>
-                    <a class='card-link' [routerLink]='card.url'>{{card.title}}</a>
-                </div>
-            </div>
+            <app-list-item [card]='card' (openEvent)='openExtendPanelOrDialog($event)'></app-list-item>
         </div>
-        <div class='popup' *ngIf='card && card.enabledDialog'>
-            <app-list-dialog [card]='card'></app-list-dialog>
-        </div>
+        <app-list-dialog *ngIf='card && card.enabledDialog' [card]='card' [widthCls]='widthCls'></app-list-dialog>
     </ng-container>
 </div>
 <div class='card-paging'>

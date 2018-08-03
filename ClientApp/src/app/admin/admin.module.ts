@@ -6,7 +6,6 @@ import { AdminComponent } from './admin.component';
 import { AdminPostTypeComponent } from './post-type/post-type.component';
 import { AdminHistoryComponent } from './history/history.component';
 import { AdminPostComponent } from './post/post.component';
-import { NavService } from '../nav/nav.service';
 import { CommonModule } from '@angular/common';
 import { AdminCategoryComponent } from './category/category.component';
 import { AdminService } from './admin.service';
@@ -34,7 +33,7 @@ import { AdminCategoryCreateComponent } from './category/create/create.component
 
         ]
     )],
-    providers: [NavService, AdminService]
+    providers: [AdminService]
 })
 export class AdminModule {
 
