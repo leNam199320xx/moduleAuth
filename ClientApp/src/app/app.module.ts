@@ -11,7 +11,7 @@ import { AuthGuardService, LoginAuthGuardService } from './core/auth-guard.servi
 import { AuthService } from './core/auth.service';
 import { FooterComponent } from './footer/footer.component';
 import { RouterService } from './core/router.service';
-import { SharedModule } from './shared.module';
+import { SharedModule } from './shared/shared.module';
 import { HeaderModule } from './header/header.module';
 import { AccountModule } from './account/acc.module';
 import { ConfigsService } from './core/configs.service';
@@ -25,7 +25,8 @@ const routes: Route[] = [
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
     { path: 'register', component: RegisterComponent, canActivate: [LoginAuthGuardService] },
     { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] },
-    { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AuthGuardService] }
+    { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AuthGuardService] },
+    { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' }
 ];
 
 @NgModule({

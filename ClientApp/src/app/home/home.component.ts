@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CardModel } from '../common/list-card/list-card.model';
+import { CardModel } from '../common/list-common/list-common.model';
 
 @Component({
     selector: 'app-home',

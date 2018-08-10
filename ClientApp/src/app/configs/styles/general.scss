@@ -70,7 +70,7 @@
     }
     .p#{$posi}-#{$level} {
         @if $posi=="t" {
-            padding-left: $size;
+            padding-top: $size;
         }
         @else if $posi=="l" {
             padding-left: $size;
@@ -95,7 +95,7 @@
     }
     .b#{$posi}-#{$level} {
         @if $posi=="t" {
-            border-left-width: $level + px !important;
+            border-top-width: $level + px !important;
         }
         @else if $posi=="l" {
             border-left-width: $level + px !important;

@@ -10,27 +10,27 @@ export class WindowService implements OnDestroy, OnInit {
     breakpoints: Breakpoints[] = [{
         query: '(min-width: 1280px)',
         device: 'desktop',
-        value: 0
+        value: BreakpointsValue.desktop
     },
     {
         query: '(min-width: 960px) and (max-width: 1289px) and (orientation:landscape)',
         device: 'tablet landscape',
-        value: 1
+        value: BreakpointsValue.tablet_landscape
     },
     {
         query: '(min-width: 600px) and (max-width: 839px)',
         device: 'tablet portrait',
-        value: 2
+        value: BreakpointsValue.tablet_portrait
     },
     {
         query: '(min-width: 480px) and (max-width: 959px) and (orientation:landscape)',
         device: 'mobile landscape',
-        value: 3
+        value: BreakpointsValue.mobile_landscape
     },
     {
         query: '(min-width: 0px) and (max-width: 599px)',
         device: 'mobile portrait',
-        value: 4
+        value: BreakpointsValue.mobile_portrait
     }];
     window: any;
     document: Document;
@@ -75,5 +75,13 @@ export class WindowService implements OnDestroy, OnInit {
 export interface Breakpoints {
     device: string;
     query: string;
-    value: number;
+    value: BreakpointsValue;
+}
+
+export enum BreakpointsValue {
+    desktop = 0,
+    tablet_landscape = 1,
+    tablet_portrait = 2,
+    mobile_landscape = 3,
+    mobile_portrait = 4
 }

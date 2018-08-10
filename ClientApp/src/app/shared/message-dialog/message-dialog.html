@@ -1,0 +1,15 @@
+<div class='message-dialog' *ngIf='enabled'>
+    <div class='controls-top flex-right'>
+        <button class='bg-white cl-dangerous' (click)='btnClose()'>
+            <i class='icons'>close</i>
+        </button>
+    </div>
+    <div class='content pt-2'>
+        <span>{{message.key}}</span>
+        <span>{{message.message}}</span>
+    </div>
+    <div class='controls-bottom ptb-2' *ngIf='hasContinue'>
+        <button class='bg-white' (click)='btnContinue()'>Continue</button>
+        <button class='bg-white' (click)='btnCancel()'>Cancel</button>
+    </div>
+</div>

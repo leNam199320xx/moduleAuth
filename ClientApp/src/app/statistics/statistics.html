@@ -1,0 +1,5 @@
+<div class='statistics'>
+    <app-search (enterKeyEvent)='getSearchResults($event)'></app-search>
+</div>
+
+<app-message-dialog [message]='errorMessage' [enabled]='errorMessage' (closeEvent)='closeMessageDialog()'></app-message-dialog>

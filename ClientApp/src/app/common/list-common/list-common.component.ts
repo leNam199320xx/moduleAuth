@@ -6,8 +6,7 @@ import { ConfigLayoutComponent } from '../config-layout.component';
 @Component(
     {
         selector: 'app-list-common',
-        templateUrl: 'list-common.html',
-        styleUrls: ['list-common.css']
+        templateUrl: 'list-common.html'
     }
 )
 export class ListCommonComponent extends ConfigLayoutComponent implements OnInit  {

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ListItemComponent } from '../list-item/list-item.component';
+import { ListCommonComponent } from '../list-common/list-common.component';
 
 @Component({
     selector: 'app-list-icon',
     templateUrl: 'list-icon.html'
 })
 
-export class ListIconComponent extends ListItemComponent {
+export class ListIconComponent extends ListCommonComponent {
 
 }
