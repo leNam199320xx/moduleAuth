@@ -1,0 +1,23 @@
+<ng-container *ngIf='isHorizontal'>
+    <div class='scroll-bar h-64px w-8px'>
+        <div class='scroll-control h-xs-12 w-full'
+        (mousedown)='down($event)' 
+        (mousemove)='move($event)' 
+        (mouseup)='down($event)' 
+        (pointerdown)='down($event)' 
+        (pointermove)='move($event)'
+        (pointerup)='up($event)'
+        ></div>
+    </div>
+</ng-container>
+<ng-container *ngIf='!isHorizontal'>
+    <div class='scroll-bar w-64px h-8px'>
+        <div class='scroll-control w-xs-12 h-full' 
+        (mousedown)='down($event)' 
+        (mousemove)='move($event)' 
+        (mouseup)='down($event)' 
+        (pointerdown)='down($event)' 
+        (pointermove)='move($event)'
+        (pointerup)='up($event)'></div>
+    </div>
+</ng-container>

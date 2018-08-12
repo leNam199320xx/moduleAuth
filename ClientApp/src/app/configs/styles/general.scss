@@ -1,9 +1,9 @@
+@import 'variables.scss';
 @import 'icons.scss';
 @import 'body.scss';
 @import 'input.scss';
 @import 'button.scss';
 @import 'form.scss';
-@import 'variables.scss';
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
 @import 'grid.scss';
@@ -138,8 +138,23 @@
     }
 }
 
+@mixin genSquare($size, $name) {
+    .sq-#{$name} {
+        width: $size !important;
+        height: $size !important;
+    }
+}
+
+@mixin setGrid($clsDevice, $type, $num) {
+    @include generateSize((100%/$num), $type + '-' + $num);
+    #{$clsDevice} {
+        @include generateSize((100%/$num), $type + '-' + $num);
+    }
+}
+
 @include generateSize(100%, "full");
 @include generateSize(50%, "50p");
+@include generateSize(33.33%, "33p");
 @include generateSize(25%, "25p");
 @include generateSize(12.5%, "12-5p");
 @include generateSize(600px, "600px");
@@ -149,13 +164,26 @@
 @include generateSize(400px, "400px");
 @include generateSize(300px, "300px");
 @include generateSize(64px, "64px");
+@include generateSize(8px, "8px");
 @include generatePosition(fixed);
 @include generatePosition(absolute);
 @include generatePosition(relative);
+@include genSquare(30px, 30);
+@include genSquare(36px, 36);
+@include genSquare(48px, 48);
+@include genSquare(64px, 64);
 @each $_val in $defines {
     @include generateSize(nth($_val, 2), nth($_val, 1));
     @include generateHeaderHeight(nth($_val, 3), nth($_val, 1));
     @include generateFontSize(nth($_val, 4), nth($_val, 1));
+}
+
+@for $var from 1 to 12 {
+    @include setGrid('.desktop', 'xl', $var);
+    @include setGrid('.tablet.landscape', 'lg', $var);
+    @include setGrid('.tablet.portrait', 'nm', $var);
+    @include setGrid('.mobile.landscape', 'sm', $var);
+    @include setGrid('.mobile.portrait', 'xs', $var);
 }
 
 @each $_val in $defines-pm {
@@ -187,6 +215,7 @@
     }
 }
 
+@include generateMarginPadding("", "auto", auto);
 @import '../../common/common.scss';
 @import '../../admin/admin.scss';
 @import '../../account/acc.scss';

@@ -1,0 +1,13 @@
+.list-icon {
+    app-paging {
+        button {
+            &.next,
+            &.back {
+                @extend .w-50p;
+            }
+            &.more {
+                @extend .w-full;
+            }
+        }
+    }
+}

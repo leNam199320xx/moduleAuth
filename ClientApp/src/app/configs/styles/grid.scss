@@ -1,3 +1,4 @@
+
 .column {
     display: inline-block;
 }
@@ -7,8 +8,7 @@
     .column {
         @extend .w-12-5p;
     }
-
-    .column-large{
+    .column-large {
         @extend .w-25p;
     }
 }
@@ -18,8 +18,7 @@
     .column {
         @extend .w-25p;
     }
-
-    .column-large{
+    .column-large {
         @extend .w-50p;
     }
 }
@@ -28,8 +27,7 @@
     .column {
         @extend .w-50p;
     }
-
-    .column-large{
+    .column-large {
         @extend .w-full;
     }
 }

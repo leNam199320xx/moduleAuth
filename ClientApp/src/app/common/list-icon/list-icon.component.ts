@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ListCommonComponent } from '../list-common/list-common.component';
 
 @Component({
@@ -6,6 +6,10 @@ import { ListCommonComponent } from '../list-common/list-common.component';
     templateUrl: 'list-icon.html'
 })
 
-export class ListIconComponent extends ListCommonComponent {
-
+export class ListIconComponent extends ListCommonComponent implements OnInit {
+    @Input() name = 'My list';
+    ngOnInit() {
+        console.log('icon config');
+        this.setConfig();
+    }
 }

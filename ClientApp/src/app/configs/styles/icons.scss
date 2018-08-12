@@ -4,11 +4,7 @@
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url("font/MaterialIcons-Regular.eot"),
-    local('Material Icons'), local('MaterialIcons-Regular'), 
-    url("font/MaterialIcons-Regular.woff2") format('woff2'), 
-    url("font/MaterialIcons-Regular.woff") format('woff'), 
-    url("font/MaterialIcons-Regular.ttf") format('truetype');
+    src: url("font/MaterialIcons-Regular.eot"), local('Material Icons'), local('MaterialIcons-Regular'), url("font/MaterialIcons-Regular.woff2") format('woff2'), url("font/MaterialIcons-Regular.woff") format('woff'), url("font/MaterialIcons-Regular.ttf") format('truetype');
 }
 
 .icons {
@@ -21,8 +17,7 @@
     letter-spacing: normal;
     word-wrap: normal;
     white-space: nowrap;
-    direction: ltr;
-    // padding-right: 0.25rem;
+    direction: ltr; // padding-right: 0.25rem;
     /* Support for all WebKit browsers. */
     -webkit-font-smoothing: antialiased;
     /* Support for Safari and Chrome. */
@@ -31,4 +26,29 @@
     -moz-osx-font-smoothing: grayscale;
     /* Support for IE. */
     font-feature-settings: 'liga';
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.img {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.img-contain {
+    @extend .img;
+    background-size: contain;
+}
+
+.img-cover {
+    @extend .img;
+    background-size: cover;
+}
+
+.img-auto {
+    @extend .img;
+    background-size: auto;
 }

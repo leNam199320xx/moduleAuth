@@ -1,5 +1,11 @@
 <div class='statistics'>
     <app-search (enterKeyEvent)='getSearchResults($event)'></app-search>
+    <app-list-icon class="w-xl-3 w-xs-2 iblock p-1" [cards]='cards' [pageSize]='10' [isLoadMore]='true'></app-list-icon>
+    <app-list-icon class="w-xl-3 w-xs-2 iblock p-1" [cards]='cards' [pageSize]='10'></app-list-icon>
+    <app-list-icon class="w-xl-3 w-xs-2 iblock p-1" [cards]='cards' [pageSize]='10'></app-list-icon>
+    <app-list-icon class="w-xl-3 w-xs-2 iblock p-1" [cards]='cards' [pageSize]='10'></app-list-icon>
+    <app-list-icon class="w-xl-3 w-xs-2 iblock p-1" [cards]='cards' [pageSize]='10'></app-list-icon>
+    <app-list-icon class="w-xl-3 w-xs-2 iblock p-1" [cards]='cards' [pageSize]='10'></app-list-icon>
 </div>
 
 <app-message-dialog [message]='errorMessage' [enabled]='errorMessage' (closeEvent)='closeMessageDialog()'></app-message-dialog>

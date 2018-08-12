@@ -23,11 +23,14 @@ import { ConfigLayoutComponent } from '../common/config-layout.component';
 import { ListItemComponent } from '../common/list-item/list-item.component';
 import { SearchComponent } from '../common/search/search.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+import { ScrollComponent } from '../common/scroll/scroll.component';
 
 @NgModule({
     declarations: [
         SearchComponent,
+        ScrollComponent,
         MessageDialogComponent,
+        PagingComponent,
 
         ListButtonComponent,
         ListCardComponent,
@@ -45,16 +48,18 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
         PageSearchComponent,
         PageDetailComponent,
         PageListComponent,
-        PagingComponent,
         ConfigLayoutComponent
     ],
     imports: [CommonModule, FormsModule, RouterModule],
     exports: [
         SearchComponent,
         MessageDialogComponent,
+        ScrollComponent,
+        PagingComponent,
 
         ListCommonComponent,
         ListCardComponent,
+        ListIconComponent,
         ListPostComponent,
         ListLinkComponent,
         ListDialogComponent,

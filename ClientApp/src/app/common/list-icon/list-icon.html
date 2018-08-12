@@ -1,6 +1,17 @@
-<div class='list-icon' [ngClass]=''>
-    <div class='item'>
-        <div class='icon'></div>
-        <div class='content'></div>
+<div class='list-icon'>
+    <div class='title fs-lg p-3' *ngIf='name'>
+        {{name}}
     </div>
+    <div class="ps-relative scrollbar-custom-3 scrollbar-y h-600px">
+        <ng-container *ngFor='let card of displayCards'>
+            <div class='item p-2 flex'>
+                <div class='img-circle mr-3 img-cover sq-48' [ngStyle]='{"background-image": "url(" + card.imagesUrl + ")"}'></div>
+                <div class='w-full'>
+                    <a class="m-auto block" [routerLink]='card.url'>{{card.title}}</a>
+                </div>
+            </div>
+        </ng-container>
+        <!-- <app-scroll></app-scroll> -->
+    </div>
+    <app-paging [page]='pageConfig' (backClick)='back($event)' (nextClick)='next($event)' (loadMoreClick)='loadMore($event)' [hasNumber]='false'></app-paging>
 </div>

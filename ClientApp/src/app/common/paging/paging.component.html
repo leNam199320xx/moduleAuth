@@ -1,16 +1,16 @@
 <div class='paging'>
     <div class='paging-controls' *ngIf='!page.loadMore'>
-        <button (click)='btnBackClick()'>Back</button>
-        <button (click)='backPaging()' *ngIf='indexPaging > minIndexPaging'>...</button>
-
-        <ng-container *ngFor='let ix of pagings'>
-            <button (click)='btnGotoClick(ix)' [ngClass]='{"paging-selected": checkSelected(ix)}'>{{ix + 1}}</button>
+        <button (click)='btnBackClick()' class='back'>Back</button>
+        <button (click)='backPaging()' class='back-paging' *ngIf='indexPaging > minIndexPaging'>...</button>
+        <ng-container *ngIf='hasNumber'>
+            <ng-container *ngFor='let ix of pagings'>
+                <button class='number' (click)='btnGotoClick(ix)' [ngClass]='{"paging-selected": checkSelected(ix)}'>{{ix + 1}}</button>
+            </ng-container>
         </ng-container>
-
-        <button (click)='nextPaging()' *ngIf='indexPaging < maxIndexPaging'>...</button>
-        <button (click)='btnNextClick()'>Next</button>
+        <button (click)='nextPaging()' class='next-paging' *ngIf='indexPaging < maxIndexPaging'>...</button>
+        <button (click)='btnNextClick()' class='next'>Next</button>
     </div>
     <div *ngIf='page.loadMore'>
-        <button (click)='btnNextClick(true)'>Load more</button>
+        <button (click)='btnNextClick(true)' class='more'>Load more</button>
     </div>
 </div>

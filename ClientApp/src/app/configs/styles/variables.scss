@@ -6,11 +6,11 @@ $white: white;
 $black: black;
 $highlight: yellow;
 // define [ {name, main-width, header-height, font-size} ]
-$defines: ( 'xl', 1920px, 128px, 2rem),
-( 'lg', 1440px, 96px, 1.5rem),
-( 'nm', 1366px, 64px, 1rem),
-( 'sm', 1280px, 48px, 0.75rem),
-( 'xs', 1024px, 32px, 0.5rem);
+$defines: ( 'xl', 1920px, 128px, 2rem, 8),
+( 'lg', 1440px, 96px, 1.5rem, 6),
+( 'nm', 1366px, 64px, 1rem, 4),
+( 'sm', 1280px, 48px, 0.75rem, 3),
+( 'xs', 1024px, 32px, 0.5rem, 2);
 $defines-color:('success', $success),
 ('highlight', $highlight),
 ('warning', $warning),
@@ -19,14 +19,12 @@ $defines-color:('success', $success),
 ('black', $black),
 ('black-05', rgba($black, 0.5)),
 ('white', $white);
-
-$defines-pm : (1, 4px),
+$defines-pm: (1, 4px),
 (2, 8px),
 (3, 12px),
 (4, 16px),
 (5, 20px);
 $defines-pmname: ('l', 'r', 'lr', 't', 'b', 'tb', null);
-
 .txt-center {
     text-align: center;
 }
@@ -92,6 +90,11 @@ $defines-pmname: ('l', 'r', 'lr', 't', 'b', 'tb', null);
 .flex-left {
     display: flex;
     justify-content: flex-start;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
 }
 
 .float-right {

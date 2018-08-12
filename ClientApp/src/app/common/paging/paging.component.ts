@@ -9,9 +9,11 @@ import { PageModel } from './page.model';
 export class PagingComponent implements OnInit {
     @Input() page: PageModel;
     @Input() sizePaging = 5;
-    @Output() backClick = new EventEmitter<any>();
-    @Output() nextClick = new EventEmitter<any>();
-    @Output() gotoClick = new EventEmitter<any>();
+    @Input() hasNumber = true;
+    @Output() backClick = new EventEmitter<PagingComponent>();
+    @Output() nextClick = new EventEmitter<PagingComponent>();
+    @Output() gotoClick = new EventEmitter<PagingComponent>();
+    @Output() loadMoreClick = new EventEmitter<PagingComponent>();
     indexPaging = 0;
     minIndexPaging = 0;
     maxIndexPaging = 0;
@@ -30,7 +32,11 @@ export class PagingComponent implements OnInit {
     btnNextClick() {
         this.page.next();
         this.setIndexPaging();
-        this.nextClick.emit(this);
+        if (!this.page.loadMore) {
+            this.nextClick.emit(this);
+        } else {
+            this.loadMoreClick.emit(this);
+        }
     }
 
     setIndexPaging() {
