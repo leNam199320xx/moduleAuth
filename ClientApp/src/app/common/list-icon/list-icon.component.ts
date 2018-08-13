@@ -9,7 +9,6 @@ import { ListCommonComponent } from '../list-common/list-common.component';
 export class ListIconComponent extends ListCommonComponent implements OnInit {
     @Input() name = 'My list';
     ngOnInit() {
-        console.log('icon config');
         this.setConfig();
     }
 }

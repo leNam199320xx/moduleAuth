@@ -17,10 +17,12 @@ export class PagingComponent implements OnInit {
     indexPaging = 0;
     minIndexPaging = 0;
     maxIndexPaging = 0;
+    hasPaging = true;
     pagings: number[] = [];
     ngOnInit() {
         this.maxIndexPaging = Math.floor(this.page.pageLength / this.sizePaging);
         this.setNumberPaging(0, true);
+        this.hasPaging = this.page.pageLength <= 1 ? false : true;
     }
 
     btnBackClick() {

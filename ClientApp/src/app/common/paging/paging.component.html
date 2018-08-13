@@ -1,4 +1,4 @@
-<div class='paging'>
+<div class='paging' *ngIf='hasPaging'>
     <div class='paging-controls' *ngIf='!page.loadMore'>
         <button (click)='btnBackClick()' class='back'>Back</button>
         <button (click)='backPaging()' class='back-paging' *ngIf='indexPaging > minIndexPaging'>...</button>

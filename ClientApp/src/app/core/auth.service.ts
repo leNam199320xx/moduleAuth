@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AccountModel } from '../account/acc.model';
 import { ResponseModel } from './response.model';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
     loginInfo: ResponseModel = new ResponseModel();
-    loginSub: Subject<ResponseModel> = new Subject();
+    loginSub: BehaviorSubject<ResponseModel> = new BehaviorSubject(null);
     set loginResponse(val: ResponseModel) {
         this.loginInfo = val;
         this.loginSub.next(this.loginInfo);

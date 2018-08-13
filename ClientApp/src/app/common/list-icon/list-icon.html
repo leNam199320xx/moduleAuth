@@ -2,12 +2,15 @@
     <div class='title fs-lg p-3' *ngIf='name'>
         {{name}}
     </div>
-    <div class="ps-relative scrollbar-custom-3 scrollbar-y h-600px">
+    <div class="ps-relative scrollbar-custom-3 scrollbar-y mh-600px">
         <ng-container *ngFor='let card of displayCards'>
-            <div class='item p-2 flex'>
-                <div class='img-circle mr-3 img-cover sq-48' [ngStyle]='{"background-image": "url(" + card.imagesUrl + ")"}'></div>
-                <div class='w-full'>
-                    <a class="m-auto block" [routerLink]='card.url'>{{card.title}}</a>
+            <div class='item p-1 mb-1 flex'>
+                <div class='img-circle mr-3 img-cover sq-64' [ngStyle]='{"background-image": "url(" + card.imagesUrl + ")"}'></div>
+                <div class='w-full align-center flex-start'>
+                    <div class="block w-full">
+                        <a [routerLink]='card.url' [innerHTML]='card.title'></a>
+                        <div [innerHTML]='card.message'>1</div>
+                    </div>
                 </div>
             </div>
         </ng-container>

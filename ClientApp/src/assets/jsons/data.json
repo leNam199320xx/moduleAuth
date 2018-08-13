@@ -1,0 +1,191 @@
+[{
+    "name": "streamer",
+    "data": [{
+        "full_name": "Hoàng Văn Khoa",
+        "artist_name": "Pew Pew",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "full_name": "Đặng Tiến Hoàng",
+        "artist_name": "Viruss",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "full_name": "Độ Phùng",
+        "artist_name": "Mixi",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "full_name": "Nghiêm Văn Hiếu",
+        "artist_name": "Xemesis",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }]
+}, {
+    "name": "artist",
+    "data": [{
+        "full_name": "Hoàng Văn Khoa",
+        "artist_name": "Pew Pew",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "youtube",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "full_name": "Đặng Tiến Hoàng",
+        "artist_name": "Viruss",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "full_name": "Độ Phùng",
+        "artist_name": "Mixi",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "full_name": "Nghiêm Văn Hiếu",
+        "artist_name": "Xemesis",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }]
+}]

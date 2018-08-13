@@ -93,7 +93,11 @@ $defines-pmname: ('l', 'r', 'lr', 't', 'b', 'tb', null);
 }
 
 .flex-center {
-    justify-content: center;
+    @extend .flex;
+}
+
+.align-center {
+    display: flex;
     align-items: center;
 }
 

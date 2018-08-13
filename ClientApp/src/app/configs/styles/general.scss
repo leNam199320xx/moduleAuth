@@ -16,6 +16,9 @@
     .h-#{$name} {
         height: $size;
     }
+    .mh-#{$name} {
+        max-height: $size;
+    }
     .w-full-#{$name} {
         width: calc(100% - #{$size});
     }
