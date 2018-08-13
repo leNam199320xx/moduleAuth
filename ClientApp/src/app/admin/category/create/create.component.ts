@@ -26,9 +26,9 @@ export class AdminCategoryCreateComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        this.navsSub = this.adminService.getNavConfig().subscribe(res => {
-            this.navs = res;
-        });
+        // this.navsSub = this.adminService.getNavConfig().subscribe(res => {
+        //     this.navs = res;
+        // });
     }
     ngOnDestroy() {
         this.uploadSub ? this.uploadSub.unsubscribe() : this.uploadSub = null;

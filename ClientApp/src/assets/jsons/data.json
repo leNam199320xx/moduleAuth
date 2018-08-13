@@ -1,8 +1,8 @@
 [{
     "name": "streamer",
     "data": [{
-        "full_name": "Hoàng Văn Khoa",
-        "artist_name": "Pew Pew",
+        "fullname": "Hoàng Văn Khoa",
+        "shortname": "Pew Pew",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -16,7 +16,7 @@
                 "follow": 2000
             },
             {
-                "name": "google",
+                "name": "google-plus",
                 "view": 2000,
                 "like": 4000,
                 "share": 2000,
@@ -24,8 +24,8 @@
             }
         ]
     }, {
-        "full_name": "Đặng Tiến Hoàng",
-        "artist_name": "Viruss",
+        "fullname": "Đặng Tiến Hoàng",
+        "shortname": "Viruss",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -39,7 +39,7 @@
                 "follow": 2000
             },
             {
-                "name": "google",
+                "name": "google-plus",
                 "view": 2000,
                 "like": 4000,
                 "share": 2000,
@@ -47,8 +47,8 @@
             }
         ]
     }, {
-        "full_name": "Độ Phùng",
-        "artist_name": "Mixi",
+        "fullname": "Độ Phùng",
+        "shortname": "Mixi",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -62,7 +62,7 @@
                 "follow": 2000
             },
             {
-                "name": "google",
+                "name": "google-plus",
                 "view": 2000,
                 "like": 4000,
                 "share": 2000,
@@ -70,8 +70,8 @@
             }
         ]
     }, {
-        "full_name": "Nghiêm Văn Hiếu",
-        "artist_name": "Xemesis",
+        "fullname": "Nghiêm Văn Hiếu",
+        "shortname": "Xemesis",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -85,7 +85,7 @@
                 "follow": 2000
             },
             {
-                "name": "google",
+                "name": "google-plus",
                 "view": 2000,
                 "like": 4000,
                 "share": 2000,
@@ -94,10 +94,10 @@
         ]
     }]
 }, {
-    "name": "artist",
+    "name": "singer",
     "data": [{
-        "full_name": "Hoàng Văn Khoa",
-        "artist_name": "Pew Pew",
+        "fullname": "Nguyễn Thanh Tùng",
+        "shortname": "Sơn Tùng MTP",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -119,8 +119,8 @@
             }
         ]
     }, {
-        "full_name": "Đặng Tiến Hoàng",
-        "artist_name": "Viruss",
+        "fullname": "Nguyễn Hoàng Sơn",
+        "shortname": "Soobin Hoàng Sơn",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -134,7 +134,7 @@
                 "follow": 2000
             },
             {
-                "name": "google",
+                "name": "google-plus",
                 "view": 2000,
                 "like": 4000,
                 "share": 2000,
@@ -142,8 +142,8 @@
             }
         ]
     }, {
-        "full_name": "Độ Phùng",
-        "artist_name": "Mixi",
+        "fullname": "Độ Phùng",
+        "shortname": "Mixi",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -157,7 +157,7 @@
                 "follow": 2000
             },
             {
-                "name": "google",
+                "name": "google-plus",
                 "view": 2000,
                 "like": 4000,
                 "share": 2000,
@@ -165,8 +165,8 @@
             }
         ]
     }, {
-        "full_name": "Nghiêm Văn Hiếu",
-        "artist_name": "Xemesis",
+        "fullname": "Nghiêm Văn Hiếu",
+        "shortname": "Xemesis",
         "avatar": "",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
@@ -180,7 +180,102 @@
                 "follow": 2000
             },
             {
-                "name": "google",
+                "name": "google-plus",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }]
+}, {
+    "name": "model",
+    "data": [{
+        "fullname": "Phạm Thanh Hằng",
+        "shortname": "Thanh Hằng",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "youtube",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "fullname": "Hoàng Thị Thùy",
+        "shortname": "Hoàng Thùy",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google-plus",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "fullname": "Độ Phùng",
+        "shortname": "Mixi",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google-plus",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "fullname": "Nghiêm Văn Hiếu",
+        "shortname": "Xemesis",
+        "avatar": "",
+        "message": "Tứ hoàng streamer hàng đầu Việt Nam",
+        "url": "",
+        "thumbnailUrl": "",
+        "imageUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google-plus",
                 "view": 2000,
                 "like": 4000,
                 "share": 2000,

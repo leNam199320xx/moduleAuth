@@ -3,8 +3,8 @@ import { MessageModel, MessageType } from '../shared/message-dialog/message.mode
 import { CardModel } from '../common/list-common/list-common.model';
 import { StatisticsService } from './statistics.service';
 import { Career, StatisticCardModel } from './statistics.model';
-import { ReplaySubject, BehaviorSubject, Subject } from '../../../node_modules/rxjs';
-import { map } from '../../../node_modules/rxjs/Operators';
+import { ReplaySubject, BehaviorSubject, Subject } from 'rxjs';
+import { map } from 'rxjs/Operators';
 
 @Component({
     selector: 'app-statistics',
@@ -35,19 +35,18 @@ export class StatisticsComponent {
                 const data = new StatisticCardModel();
                 _one.data.forEach(_p => {
                     const _c = new CardModel();
-                    _c.title = '<span class="bold">' + _p.full_name + ' (<b>' + _p.artist_name + '</b>)' + '</span>';
+                    _c.title = '<span class="bold">' + _p.fullname + ' (<b>' + _p.shortname + '</b>)' + '</span>';
                     _c.url = _p.url;
                     _c.imagesUrl = _p.imageUrl;
-                    let sc = '';
+                    let sc = '<div>';
                     if (_p.socials) {
                         _p.socials.forEach(_sc => {
-                            sc += '<div class="fs-sm"><p class="fs-nm">' + _sc.name
-                                + '</p><div class="w-sm-2 iblock"> like: ' + _sc.like + '</div>'
-                                + '<div class="w-sm-2 iblock"> follow: ' + _sc.follow + '</div></div>';
+                            sc += '<div class="iblock sq-36 svg-' + _sc.name + ' img iblock"></div>';
+
                         });
                     }
-                    _c.message = '<i class="fs-sm">' + _p.message + '</i>'
-                        + sc;
+                    sc += '</div>';
+                    _c.message = '<i class="fs-sm">' + _p.message + '</i>' + sc;
                     dataCards.push(_c);
                 });
                 data.name = 'TOP ' + _one.name;

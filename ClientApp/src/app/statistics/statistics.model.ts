@@ -2,11 +2,13 @@ import { CardModel } from '../common/list-common/list-common.model';
 
 export class Career {
     name: string;
+    index: number;
     data: People[] = [];
+    enabledAddPeople = false;
 }
 export class People {
-    full_name: string;
-    artist_name: string;
+    fullname: string;
+    shortname: string;
     url: string;
     imageUrl: string;
     thumbnailUrl: string;
@@ -21,6 +23,13 @@ export class Social {
     share: number;
     follow: number;
     view: number;
+}
+
+export enum SocialName {
+    facebook = 'facebook',
+    googleplus = 'google-plus',
+    youtube = 'youtube',
+    twitter = 'twitter'
 }
 
 export class StatisticCardModel {

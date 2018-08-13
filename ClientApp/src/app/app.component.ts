@@ -33,10 +33,10 @@ export class AppComponent implements OnDestroy, OnInit {
         });
 
         this.configSubscription = this.configsService.getConfigsFromJson();
-        this.appService.getNavConfig().subscribe(res => {
-            this.appService.navs = res;
-            this.appService.navsSub.next(res);
-        });
+        // this.appService.getNavConfig().subscribe(res => {
+        //     this.appService.navs = res;
+        //     this.appService.navsSub.next(res);
+        // });
 
     }
 

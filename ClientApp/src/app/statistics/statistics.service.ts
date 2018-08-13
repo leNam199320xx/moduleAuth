@@ -1,6 +1,6 @@
-import { Injectable } from '../../../node_modules/@angular/core';
-import { HttpClient } from '../../../node_modules/@angular/common/http';
-import { Career } from './statistics.model';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Career, Social } from './statistics.model';
 
 @Injectable()
 export class StatisticsService {
@@ -8,5 +8,9 @@ export class StatisticsService {
 
     getDataStatistics() {
         return this.http.get<Career[]>('assets/jsons/data.json');
+    }
+
+    getDataSocial() {
+        return this.http.get<Social[]>('assets/jsons/socials.json');
     }
 }

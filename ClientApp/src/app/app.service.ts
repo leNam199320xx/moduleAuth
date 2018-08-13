@@ -14,7 +14,7 @@ export class AppService {
     getCategories(category: string) {
         return this.http.get<any>('api/admin/getcategories?category=' + category);
     }
-    getNavConfig() {
-        return this.http.get<Type[]>('assets/jsons/urls.json', {});
-    }
+    // getNavConfig() {
+    //     return this.http.get<Type[]>('assets/jsons/urls.json', {});
+    // }
 }

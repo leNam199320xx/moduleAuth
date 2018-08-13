@@ -6,9 +6,9 @@ import { CategoryModel, Type } from '../core/db.model';
 @Injectable()
 export class AdminService {
     constructor(private http: HttpClient) { }
-    getNavConfig() {
-        return this.http.get<Type[]>('assets/jsons/urls.json', {});
-    }
+    // getNavConfig() {
+    //     return this.http.get<Type[]>('assets/jsons/urls.json', {});
+    // }
     getCategories() {
         return this.http.get<any>('api/admin/getcategories', {});
     }

@@ -42,6 +42,13 @@ export class AdminComponent implements OnInit {
             url: '/category',
             index: 4
         });
+        this.navService.sourceNavLeft.push({
+            value: 'Statistics',
+            icon: null,
+            positionIcon: 'left',
+            url: '/statistics',
+            index: 4
+        });
         this.navService.sourceSubject.next(this.navService.sourceNavLeft);
     }
 

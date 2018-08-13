@@ -26,7 +26,7 @@ export class NavFixedComponent implements OnDestroy {
     ) {
         this.authService.loginSub.subscribe((res) => {
             this.loginResponse = res;
-            console.log(res);
+            // console.log(res);
         });
         this.configsService.configsSubject.subscribe(res => {
             // this.configNav = res.header.children[0] || new GeneralConfigModel();

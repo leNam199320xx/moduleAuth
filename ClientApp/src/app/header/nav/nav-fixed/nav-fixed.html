@@ -1,11 +1,11 @@
-<div class='navfixed {{configNav.clsHeight + " " + configNav.clsBgColor + " " + configNav.clsColor }}'>
+<div class='navfixed {{ configNav.clsHeight + " " + configNav.clsBgColor + " " + configNav.clsColor }}'>
     <div class='navfixed-left'>
         <div class='navfixed-item black-light-hover'>
             <a [routerLink]="['/']"><i class='icons'>home</i></a>
         </div>
-        <div *ngFor='let nv of categories' class='navfixed-item black-light-hover'>
+        <!-- <div *ngFor='let nv of categories' class='navfixed-item black-light-hover'>
             <a [routerLink]="['/', nv.url]">{{nv.name}}</a>
-        </div>
+        </div> -->
     </div>
     <div class='navfixed-right'>
         <ng-container *ngIf='!loginResponse.isSignedIn'>
@@ -26,7 +26,7 @@
                 </a>
                 <div class='navfixed-popup'>
                     <div class='navfixed-item'>
-                        <a routerLink='/admin'>Manage your page</a>
+                        <a [routerLink]="['/admin']">Manage your page</a>
                     </div>
                     <div class='navfixed-item'>
                         <button (click)="logout()">{{'Log Out'}}</button>
