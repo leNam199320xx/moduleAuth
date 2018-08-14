@@ -1,3 +1,6 @@
+export class SiteConfigModel {
+    clsWidth: string;
+}
 
 export class GeneralConfigModel {
     clsPosition: string;
@@ -11,12 +14,6 @@ export class GeneralConfigModel {
     name: string;
     children: GeneralConfigModel[];
 }
-export class ConfigModel {
-    public site: SiteConfigModel = new SiteConfigModel();
-    public header: HeaderConfigModel = new HeaderConfigModel();
-    public main: MainConfigModel = new MainConfigModel();
-    public footer: FooterConfigModel = new FooterConfigModel();
-}
 export class FooterConfigModel extends GeneralConfigModel {
     setDefault() { }
 }
@@ -26,10 +23,13 @@ export class MainConfigModel extends GeneralConfigModel {
 export class HeaderConfigModel extends GeneralConfigModel {
     setDefault() { }
 }
-
-export class SiteConfigModel {
-    clsWidth: string;
+export class ConfigModel {
+    site = new SiteConfigModel();
+    header = new HeaderConfigModel();
+    main = new MainConfigModel();
+    footer = new FooterConfigModel();
 }
+
 
 export enum PrefixCls {
     position = 'pst-',

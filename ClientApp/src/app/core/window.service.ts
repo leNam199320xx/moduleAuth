@@ -2,6 +2,14 @@ import { HostListener, Injectable, OnDestroy, PLATFORM_ID, APP_ID, Inject, OnIni
 import { Subject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
+export enum BreakpointsValue {
+    desktop = 0,
+    tablet_landscape = 1,
+    tablet_portrait = 2,
+    mobile_landscape = 3,
+    mobile_portrait = 4
+}
+
 @Injectable()
 export class WindowService implements OnDestroy, OnInit {
     isSite = false;
@@ -76,12 +84,4 @@ export interface Breakpoints {
     device: string;
     query: string;
     value: BreakpointsValue;
-}
-
-export enum BreakpointsValue {
-    desktop = 0,
-    tablet_landscape = 1,
-    tablet_portrait = 2,
-    mobile_landscape = 3,
-    mobile_portrait = 4
 }

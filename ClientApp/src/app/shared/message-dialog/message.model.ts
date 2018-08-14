@@ -1,11 +1,3 @@
-export class MessageModel {
-    message: string;
-    key: number;
-    type: MessageType = MessageType.error;
-    continueUrl: string;
-    continueValue: string | number;
-    continueType: MessageContinueType = MessageContinueType.url;
-}
 export enum MessageType {
     error = 0,
     warning = 1,
@@ -14,4 +6,12 @@ export enum MessageType {
 export enum MessageContinueType {
     url = 1,
     value = 2
+}
+export class MessageModel {
+    message: string;
+    key: number;
+    type: MessageType = MessageType.error;
+    continueUrl: string;
+    continueValue: string | number;
+    continueType: MessageContinueType = MessageContinueType.url;
 }
