@@ -5,8 +5,8 @@
     <div class="ps-relative scrollbar-custom-3 scrollbar-y mh-600px">
         <ng-container *ngFor='let card of displayCards'>
             <div class='item p-1 mb-1 flex'>
-                <div class='img-circle mr-3 img-cover sq-64' [ngStyle]='{"background-image": "url(" + card.imagesUrl + ")"}'></div>
-                <div class='w-full align-center flex-start'>
+                <div class='img-circle img-cover sq-64 iblock' [ngStyle]='{"background-image": "url(" + card.avatar + ")"}'></div>
+                <div class='pl-2 w-full-64px align-center flex-start'>
                     <div class="block w-full">
                         <a [routerLink]='card.url' [innerHTML]='card.title'></a>
                         <div [innerHTML]='card.message'>1</div>

@@ -10,7 +10,7 @@ export class People {
     fullname: string;
     shortname: string;
     url: string;
-    imageUrl: string;
+    imagesUrl: string;
     thumbnailUrl: string;
     message: string;
     avatar: string;

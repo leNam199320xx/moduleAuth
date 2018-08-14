@@ -3,11 +3,11 @@
     "data": [{
         "fullname": "Hoàng Văn Khoa",
         "shortname": "Pew Pew",
-        "avatar": "",
+        "avatar": "https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/38433497_253740058781306_1624083600276193280_n.jpg?_nc_cat=0&oh=02c646fef094044588dbd96cc0fca3c9&oe=5C138308",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -26,11 +26,11 @@
     }, {
         "fullname": "Đặng Tiến Hoàng",
         "shortname": "Viruss",
-        "avatar": "",
+        "avatar": "https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/24174409_1168155299986798_6419294238671137165_n.png?_nc_cat=1&oh=d158c269acc3f9c0fc310b1088553d41&oe=5BF453F4",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -49,11 +49,11 @@
     }, {
         "fullname": "Độ Phùng",
         "shortname": "Mixi",
-        "avatar": "",
+        "avatar": "https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/32087335_1268135656653666_839532180697776128_n.jpg?_nc_cat=1&oh=d34fe34ddf939057f3282592c25db12a&oe=5BF5EF0B",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -72,11 +72,57 @@
     }, {
         "fullname": "Nghiêm Văn Hiếu",
         "shortname": "Xemesis",
-        "avatar": "",
+        "avatar": "https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/36776593_1304229523013004_2260151639585325056_n.jpg?_nc_cat=0&oh=c7c546c75234ae2bce3bbdb6b2cd62fd&oe=5C08368F",
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google-plus",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "fullname": "Hoàng Minh Hiếu",
+        "shortname": "Toạc",
+        "avatar": "https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/37830859_310869052988446_3380321364270383104_n.jpg?_nc_cat=0&oh=5ce84904ac8404f7cb3af8ad5532db89&oe=5BF66964",
+        "message": "Bình luận viên AOE",
+        "url": "",
+        "thumbnailUrl": "",
+        "imagesUrl": "",
+        "socials": [{
+                "name": "facebook",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            },
+            {
+                "name": "google-plus",
+                "view": 2000,
+                "like": 4000,
+                "share": 2000,
+                "follow": 2000
+            }
+        ]
+    }, {
+        "fullname": "Nguyễn Hoàng Hải",
+        "shortname": "Hải Dớ",
+        "avatar": "https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/22154164_1827378827276340_1631656992789903846_n.jpg?_nc_cat=0&oh=bc1edce36cdd06142c02ccc380eb0c2a&oe=5BF2F314",
+        "message": "Kiến trúc sư kiêm nhà văn kiêm bình luận viên tin tức",
+        "url": "",
+        "thumbnailUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -102,7 +148,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -125,7 +171,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -148,7 +194,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -171,7 +217,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -197,7 +243,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -220,7 +266,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -243,7 +289,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,
@@ -266,7 +312,7 @@
         "message": "Tứ hoàng streamer hàng đầu Việt Nam",
         "url": "",
         "thumbnailUrl": "",
-        "imageUrl": "",
+        "imagesUrl": "",
         "socials": [{
                 "name": "facebook",
                 "view": 2000,

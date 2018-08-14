@@ -37,14 +37,15 @@ export class StatisticsComponent {
                     const _c = new CardModel();
                     _c.title = '<span class="bold">' + _p.fullname + ' (<b>' + _p.shortname + '</b>)' + '</span>';
                     _c.url = _p.url;
-                    _c.imagesUrl = _p.imageUrl;
+                    _c.imagesUrl = _p.imagesUrl;
+                    _c.avatar = _p.avatar;
                     let sc = '<div>';
-                    if (_p.socials) {
-                        _p.socials.forEach(_sc => {
-                            sc += '<div class="iblock sq-36 svg-' + _sc.name + ' img iblock"></div>';
+                    // if (_p.socials) {
+                    //     _p.socials.forEach(_sc => {
+                    //         sc += '<div class="iblock sq-36 svg-' + _sc.name + ' img iblock"></div>';
 
-                        });
-                    }
+                    //     });
+                    // }
                     sc += '</div>';
                     _c.message = '<i class="fs-sm">' + _p.message + '</i>' + sc;
                     dataCards.push(_c);

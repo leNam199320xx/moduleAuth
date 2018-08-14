@@ -10,7 +10,6 @@ import { RegisterComponent } from './account/register/register.component';
 import { AuthGuardService, LoginAuthGuardService } from './core/auth-guard.service';
 import { AuthService } from './core/auth.service';
 import { FooterComponent } from './footer/footer.component';
-import { RouterService } from './core/router.service';
 import { SharedModule } from './shared/shared.module';
 import { HeaderModule } from './header/header.module';
 import { AccountModule } from './account/acc.module';
@@ -21,12 +20,12 @@ import { MaterialModule } from './material.module';
 import { NavMenuComponent } from './header/nav/nav-menu/nav-menu.component';
 import { NavService } from './header/nav/nav.service';
 const routes: Route[] = [
-    { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: '', redirectTo: 'statistics', pathMatch: 'full' },
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
     { path: 'register', component: RegisterComponent, canActivate: [LoginAuthGuardService] },
     { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] },
     { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AuthGuardService] },
-    { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' }
+    { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -50,7 +49,6 @@ const routes: Route[] = [
         AuthGuardService,
         AuthService,
         LoginAuthGuardService,
-        RouterService,
         ConfigsService,
         NavService,
         AppService,

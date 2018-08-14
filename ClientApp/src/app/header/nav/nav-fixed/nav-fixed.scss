@@ -1,10 +1,8 @@
 .navfixed {
-    height: 100%;
-    display: flex;
-    position: relative;
-    top: 0;
     width: 100%;
     font-size: 1.25em;
+    background: #000011;
+    color: white;
 }
 
 .navfixed-item {
@@ -12,8 +10,7 @@
     height: 100%;
     padding: 10px 8px;
     cursor: pointer;
-
-    &:hover{
+    &:hover {
         background-color: rgba($color: #000000, $alpha: 0.1);
     }
 }
