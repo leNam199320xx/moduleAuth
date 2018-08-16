@@ -13,4 +13,8 @@ export class StatisticsService {
     getDataSocial() {
         return this.http.get<Social[]>('assets/jsons/socials.json');
     }
+
+    getInfoPeople() {
+        return this.http.post<any>('api/admin/GetDataOnePeople', {});
+    }
 }

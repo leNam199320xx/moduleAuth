@@ -56,4 +56,10 @@ export class AdminStatisticsComponent {
     cancelNewPeople() {
         this.currentCareer.enabledAddPeople = false;
     }
+
+    getInfoPeople() {
+        this.dataService.getInfoPeople().subscribe(res => {
+            console.log(res);
+        });
+    }
 }

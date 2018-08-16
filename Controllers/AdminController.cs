@@ -1,4 +1,5 @@
 using angular6DotnetCore.Areas.Identity.Pages.Account;
+using angular6DotnetCore.Logic;
 using angular6DotnetCore.Models;
 using angular6DotnetCore.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -239,6 +240,14 @@ namespace angular6DotnetCore.Controllers
             // Don't rely on or trust the FileName property without validation.
 
             return Ok(new { count = files.Count, size, newPath });
+        }
+
+        [HttpPost("GetDataOnePeople")]
+        public async Task<IActionResult> GetDataOnePeople()
+        {
+            var info = new InfoPeople();
+            await info.GetInfo();
+            return Ok(new { res = "get Ok!" });
         }
     }
 }
