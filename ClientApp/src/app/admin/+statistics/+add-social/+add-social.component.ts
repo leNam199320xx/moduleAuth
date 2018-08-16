@@ -1,9 +1,10 @@
-import { Component } from '../../../../../node_modules/@angular/core';
+import { Component, Input } from '@angular/core';
+import { Social } from '../../../statistics/statistics.model';
 
 @Component({
-    selector: 'app-admin-createpeople-addsocial',
+    selector: 'app-admin-people-addsocial',
     templateUrl: '+add-social.html'
 })
 export class AdminPeopleAddSocialComponent {
-
+    @Input() social = new Social();
 }

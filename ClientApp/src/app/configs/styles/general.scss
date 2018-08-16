@@ -149,9 +149,9 @@
 }
 
 @mixin setGrid($clsDevice, $type, $num) {
-    @include generateSize((100%/$num), $type + '-' + $num);
+    @include generateSize((100%*$num/$max-number-col), $type + '-' + $num);
     #{$clsDevice} {
-        @include generateSize((100%/$num), $type + '-' + $num);
+        @include generateSize((100%*$num/$max-number-col), $type + '-' + $num);
     }
 }
 
@@ -181,7 +181,7 @@
     @include generateFontSize(nth($_val, 4), nth($_val, 1));
 }
 
-@for $var from 1 to 12 {
+@for $var from 1 to $max-number-col {
     @include setGrid('.desktop', 'xl', $var);
     @include setGrid('.tablet.landscape', 'lg', $var);
     @include setGrid('.tablet.portrait', 'nm', $var);

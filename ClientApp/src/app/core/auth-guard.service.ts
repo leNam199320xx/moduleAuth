@@ -30,7 +30,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
     }
 
 }
-
+@Injectable()
 export class LoginAuthGuardService implements CanActivate {
     constructor(private authService: AuthService) {
 

@@ -35,6 +35,12 @@
                         <div class='w-sm-3 p-1 b-1 b-black'>
                             <button class='bg-warning txt-white'>Sửa</button>
                             <button class='bg-dangerous txt-white'>Xóa</button>
+                            <button class='' (click)='res = r.socials'>Xã hội</button>
+                        </div>
+                    </div>
+                    <div class='p-2' *ngFor='let s of res'>
+                        <div>
+                            <app-admin-people-addsocial [social]='s'></app-admin-people-addsocial>
                         </div>
                     </div>
                 </ng-container>

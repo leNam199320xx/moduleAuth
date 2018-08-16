@@ -243,10 +243,18 @@ namespace angular6DotnetCore.Controllers
         }
 
         [HttpPost("GetDataOnePeople")]
-        public async Task<IActionResult> GetDataOnePeople()
+        public IActionResult GetDataOnePeople()
         {
-            var info = new InfoPeople();
-            await info.GetInfo();
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            if (isSignedIn)
+            {
+                //_context.Peoples.ToList().ForEach(p =>
+                //{
+                //    p.
+                //    var info = new InfoPeople();
+                //    info.GetInfo(user, "");
+                //});
+            }
             return Ok(new { res = "get Ok!" });
         }
     }

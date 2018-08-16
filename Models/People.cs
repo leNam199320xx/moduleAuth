@@ -36,6 +36,7 @@ namespace angular6DotnetCore.Models
         public long? View { get; set; }
         public long? Share { get; set; }
         public long? Follow { get; set; }
+        public string Url { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }

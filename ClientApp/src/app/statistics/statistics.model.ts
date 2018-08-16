@@ -23,6 +23,7 @@ export class Social {
     share: number;
     follow: number;
     view: number;
+    url: string;
 }
 
 export enum SocialName {
