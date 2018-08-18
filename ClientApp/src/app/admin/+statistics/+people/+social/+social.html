@@ -1,0 +1,28 @@
+<div>
+    <div class='w-nm-2 iblock'>
+        <label class='pr-2'>Name</label>
+        <select [(ngModel)]='social.socialId'>
+            <option *ngFor='let s of socials' [ngValue]='s.id'>{{s.name}}</option>
+        </select>
+    </div>
+    <div class='w-nm-2 iblock'>
+        <label class='pr-2'>Link</label>
+        <input [(ngModel)]='social.url' />
+    </div>
+    <div class='w-nm-2 iblock'>
+        <label class='pr-2'>Like</label>
+        <input [(ngModel)]='social.like' />
+    </div>
+    <div class='w-nm-2 iblock'>
+        <label class='pr-2'>Share</label>
+        <input [(ngModel)]='social.share' />
+    </div>
+    <div class='w-nm-2 iblock'>
+        <label class='pr-2'>View</label>
+        <input [(ngModel)]='social.view' />
+    </div>
+    <div class='w-nm-2 iblock'>
+        <button (click)='saveSocial()'>Save</button>
+        <button (click)='closeBtn()'>Close</button>
+    </div>
+</div>

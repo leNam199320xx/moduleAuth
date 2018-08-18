@@ -1,0 +1,27 @@
+<div>
+    <div class="grp">
+        <label class='txt-r'>Tên đầy đủ</label>
+        <input placeholder="Nhập tên đầy đủ" [(ngModel)]='newPeople.fullName' />
+    </div>
+    <div class="grp">
+        <label class='txt-r'>Biệt danh</label>
+        <input placeholder="Nhập biệt danh" [(ngModel)]='newPeople.shortName' />
+    </div>
+    <div class="grp">
+        <label class='txt-r'>Đường dẫn chính</label>
+        <input placeholder="Nhập đường dẫn chính" [(ngModel)]='newPeople.url' />
+    </div>
+    <div class="grp">
+        <label class='txt-r'>Ảnh lớn</label>
+        <input placeholder="Nhập đường dẫn ảnh lớn" [(ngModel)]='newPeople.imagesUrl' />
+    </div>
+    <div class="grp">
+        <label class='txt-r'>Ảnh đại diện</label>
+        <input placeholder="Nhập Đường dẫn ảnh đại diện" [(ngModel)]='newPeople.avatar' />
+    </div>
+    <div class="grp">
+        <label class='txt-r'>Ảnh nhỏ</label>
+        <input placeholder="Nhập Đường dẫn ảnh nhỏ" [(ngModel)]='newPeople.thumbnailUrl' />
+    </div>
+    <button (click)='saveBtn()'>Save</button>
+</div>

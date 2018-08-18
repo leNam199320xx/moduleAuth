@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Career, Social } from './statistics.model';
+import { Career, Social } from '../core/statistics.model';
+import { ResponseModel } from '../core/response.model';
 
 @Injectable()
 export class StatisticsService {
     constructor(private http: HttpClient) { }
 
-    getDataStatistics() {
-        return this.http.get<Career[]>('assets/jsons/data.json');
+    getAllPeoples() {
+        return this.http.get<ResponseModel>('api/statistics/getpeoples');
     }
 
-    getDataSocial() {
-        return this.http.get<Social[]>('assets/jsons/socials.json');
+    getSocials() {
+        return this.http.get<Social[]>('api/statistics/getSocials');
     }
 
-    getInfoPeople() {
-        return this.http.post<any>('api/admin/GetDataOnePeople', {});
+    saveSocials($social: Social) {
+        return this.http.post<any>('api/statistics/saveSocial', {
+            name: $social.name
+        });
     }
 }

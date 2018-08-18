@@ -2,47 +2,30 @@
     <div class='title txt-center p-2'>
         Statistics Table
     </div>
-    <button class='' (click)='addNewCareer()'>Tạo mục mới</button>
-    <button class='' (click)='getInfoPeople()'>Lấy thông tin</button>
-    <div *ngIf='isAddNewCareer'>
-        <div class='grp'>
-            <label class='txt-r'>Tên mục</label>
-            <input placeholder="Nhập tên category" [(ngModel)]='newCareer.name' />
-        </div>
-        <div class='grp'>
-            <button (click)='saveNewCareer()'>Save</button>
-            <button (click)='cancelNewCareer()'>Cancel</button>
-        </div>
-    </div>
-
-
+    <button (click)='openSocialPanel()'>Danh sách mạng xã hội</button>
+    <button (click)='openCareerPanel()'>Danh sách công việc</button>
+    <app-admin-career *ngIf='enabledCareerPanel'></app-admin-career>
+    <app-admin-social *ngIf='enabledSocialPanel' [socials]='socials'></app-admin-social>
     <div class='table'>
-
         <ng-container *ngFor='let item of data'>
             <div class='flex-right align-center ptb-3'>
                 <span class='pr-2 txt-bold'>{{item.name}}</span>
-                <button (click)='addNewPeople(item)'>Thêm người mới</button>
+                <button (click)='openAddPeoplePanel(item)'>Thêm người mới</button>
             </div>
-            <div *ngIf='item.enabledAddPeople'>
-                <app-admin-statistics-createpeople (saveEvent)='saveNewPeople($event)' (cancelEvent)='cancelNewPeople()'>
-                </app-admin-statistics-createpeople>
-            </div>
+            <app-admin-people *ngIf='item._enabledAddPeople' [careerId]='item.id' (closeEvent)='r._enabledAddPeople = !$event'></app-admin-people>
             <div class='table b-1 b-black'>
                 <ng-container *ngFor='let r of item.data'>
                     <div class="flex flex-left">
-                        <div class='w-sm-3 p-1 b-1 b-black'>{{r.fullname}}</div>
-                        <div class='w-sm-3 p-1 b-1 b-black'>{{r.shortname}}</div>
+                        <div class='w-sm-3 p-1 b-1 b-black'>{{r.fullName}}</div>
+                        <div class='w-sm-3 p-1 b-1 b-black'>{{r.shortName}}</div>
                         <div class='w-sm-3 p-1 b-1 b-black'>
-                            <button class='bg-warning txt-white'>Sửa</button>
+                            <button class='bg-warning txt-white' (click)='r._enabledUpdatePeople = !r._enabledUpdatePeople;'>Sửa</button>
                             <button class='bg-dangerous txt-white'>Xóa</button>
-                            <button class='' (click)='res = r.socials'>Xã hội</button>
+                            <button (click)='r._enabledAddSocial = !r._enabledAddSocial'>Thêm thông tin mạng xã hội</button>
                         </div>
                     </div>
-                    <div class='p-2' *ngFor='let s of res'>
-                        <div>
-                            <app-admin-people-addsocial [social]='s'></app-admin-people-addsocial>
-                        </div>
-                    </div>
+                    <app-admin-people *ngIf='r._enabledUpdatePeople' [isUpdate]='true' [careerId]='item.id' [newPeople]='r' (closeEvent)='r._enabledUpdatePeople = !$event'></app-admin-people>
+                    <app-admin-people-addsocial *ngIf='r._enabledAddSocial' [socials]='socials' (closeEvent)='r._enabledAddSocial = !r._enabledAddSocial'></app-admin-people-addsocial>
                 </ng-container>
             </div>
         </ng-container>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StatisticsService } from '../../statistics/statistics.service';
-import { Career, People } from '../../statistics/statistics.model';
+import { Career, People, PeopleSocials, Social } from '../../core/statistics.model';
 
 @Component({
     selector: 'app-admin-statistics',
@@ -10,56 +10,29 @@ export class AdminStatisticsComponent {
     data: Career[] = [];
     newCareer: Career;
     currentCareer: Career;
-    isAddNewCareer = false;
-    constructor(private dataService: StatisticsService) {
-        this.dataService.getDataStatistics().subscribe(res => {
-            this.data = res;
+    enabledSocialPanel = false;
+    enabledCareerPanel = false;
+    socials: Social[] = [];
+    constructor(private dataService: StatisticsService
+    ) {
+        this.dataService.getAllPeoples().subscribe(res => {
+            this.data = res.results;
+        });
+
+        this.dataService.getSocials().subscribe(res => {
+            this.socials = res;
         });
     }
 
-
-    addNewCareer() {
-        this.isAddNewCareer = true;
-        this.newCareer = new Career();
+    openSocialPanel() {
+        this.enabledSocialPanel = !this.enabledSocialPanel;
     }
 
-    addNewPeople($career: Career) {
-        this.currentCareer = null;
-        if ($career) {
-            $career.enabledAddPeople = true;
-            this.currentCareer = $career;
-        }
+    openCareerPanel() {
+        this.enabledCareerPanel = !this.enabledCareerPanel;
     }
 
-    saveNewPeople($newPeople: People) {
-        if (this.currentCareer.data) {
-            this.currentCareer.data.push($newPeople);
-        } else {
-            this.currentCareer.data = [];
-            this.currentCareer.data.push($newPeople);
-        }
-        this.cancelNewPeople();
-    }
-
-    saveNewCareer() {
-        if (this.newCareer) {
-            this.data = [this.newCareer].concat(this.data);
-        }
-        this.cancelNewCareer();
-    }
-
-    cancelNewCareer() {
-        this.isAddNewCareer = false;
-        this.newCareer = null;
-    }
-
-    cancelNewPeople() {
-        this.currentCareer.enabledAddPeople = false;
-    }
-
-    getInfoPeople() {
-        this.dataService.getInfoPeople().subscribe(res => {
-            console.log(res);
-        });
+    openAddPeoplePanel ($item: Career) {
+        $item._enabledAddPeople = !$item._enabledAddPeople;
     }
 }

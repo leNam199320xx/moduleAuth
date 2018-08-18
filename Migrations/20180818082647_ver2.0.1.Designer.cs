@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using angular6DotnetCore.Models;
 
 namespace angular6DotnetCore.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180818082647_ver2.0.1")]
+    partial class ver201
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,18 +29,34 @@ namespace angular6DotnetCore.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<bool?>("Enabled");
-
                     b.Property<int>("Index");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
 
                     b.ToTable("Careers");
+                });
+
+            modelBuilder.Entity("angular6DotnetCore.Models.CareerPeoples", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CareerId");
+
+                    b.Property<int>("PeopleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CareerId");
+
+                    b.HasIndex("PeopleId");
+
+                    b.ToTable("CareerPeoples");
                 });
 
             modelBuilder.Entity("angular6DotnetCore.Models.People", b =>
@@ -49,18 +67,12 @@ namespace angular6DotnetCore.Migrations
 
                     b.Property<string>("Avatar");
 
-                    b.Property<int>("CareerId");
-
                     b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<bool?>("Enabled");
 
                     b.Property<string>("FullName")
                         .IsRequired();
 
                     b.Property<string>("ImagesUrl");
-
-                    b.Property<int>("Index");
 
                     b.Property<string>("Message");
 
@@ -71,8 +83,6 @@ namespace angular6DotnetCore.Migrations
                     b.Property<string>("Url");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CareerId");
 
                     b.ToTable("Peoples");
                 });
@@ -85,11 +95,7 @@ namespace angular6DotnetCore.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<bool?>("Enabled");
-
                     b.Property<long?>("Follow");
-
-                    b.Property<int>("Index");
 
                     b.Property<long?>("Like");
 
@@ -209,10 +215,6 @@ namespace angular6DotnetCore.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<bool?>("Enabled");
-
-                    b.Property<int>("Index");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -426,11 +428,16 @@ namespace angular6DotnetCore.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("angular6DotnetCore.Models.People", b =>
+            modelBuilder.Entity("angular6DotnetCore.Models.CareerPeoples", b =>
                 {
                     b.HasOne("angular6DotnetCore.Models.Career", "Career")
-                        .WithMany("Peoples")
+                        .WithMany()
                         .HasForeignKey("CareerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("angular6DotnetCore.Models.People", "People")
+                        .WithMany("CareerPeoples")
+                        .HasForeignKey("PeopleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

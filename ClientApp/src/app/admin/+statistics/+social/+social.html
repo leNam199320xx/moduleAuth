@@ -1,0 +1,20 @@
+<div class='pt-3'>
+    <label>Danh sách mạng xã hội</label>
+    <div class='new-social'>
+        <div class='iblock'>
+           <input [(ngModel)]='newSocial.name' />
+        </div>
+        <button class='iblock' (click)='saveBtn()'>Save</button>
+    </div>
+
+    <div class='list-socials'>
+        <ng-container *ngFor='let s of socials'>
+            <div>
+                <div class='w-nm-3 iblock'>id: {{s.id}}</div>
+                <div class='w-nm-3 iblock'>name: {{s.name}}</div>
+                <div class='w-nm-3 iblock'>created date: {{s.createdDate}}</div>
+                <div class='w-nm-3 iblock'>updated date: {{s.updatedDate}}</div>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace angular6DotnetCore.Models
 {
-    public class People
+    public class People : GeneralColumn
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string FullName { get; set; }
         public string ShortName { get; set; }
@@ -16,16 +15,14 @@ namespace angular6DotnetCore.Models
         public string ImagesUrl { get; set; }
         public string Message { get; set; }
         public string Avatar { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public virtual List<PeopleSocials> PeopleSocials { get; set; }
+        public List<PeopleSocials> PeopleSocials { get; set; }
+        public int CareerId { get; set; }
+        [ForeignKey("CareerId")]
+        public virtual Career Career { get; set; }
     }
 
-    public class PeopleSocials
+    public class PeopleSocials : GeneralColumn
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public int PeopleId { get; set; }
         [ForeignKey("PeopleId")]
         public virtual People People { get; set; }
@@ -37,41 +34,35 @@ namespace angular6DotnetCore.Models
         public long? Share { get; set; }
         public long? Follow { get; set; }
         public string Url { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
     }
 
-    public class Social
+    public class Social : GeneralColumn
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
         public virtual List<PeopleSocials> PeopleSocials { get; set; }
     }
 
-    public class Career
+    public class Career : GeneralColumn
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public int Index { get; set; }
+        [Required]
         public string Name { get; set; }
+        public virtual List<People> Peoples { get; set; }
     }
 
-    public class CareerPeoples
+    public class GeneralColumn : GeneralColumnNoId
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int CareerId { get; set; }
-        [ForeignKey("CareerId")]
-        public virtual Career Career { get; set; }
-        public int PeopleId { get; set; }
-        [ForeignKey("PeopleId")]
-        public virtual People People { get; set; }
+    }
+
+
+    public class GeneralColumnNoId
+    {
+        public int Index { get; set; }
+        public bool? Enabled { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

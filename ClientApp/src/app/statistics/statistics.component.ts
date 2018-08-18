@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MessageModel, MessageType } from '../shared/message-dialog/message.model';
 import { CardModel } from '../common/list-common/list-common.model';
 import { StatisticsService } from './statistics.service';
-import { Career, StatisticCardModel } from './statistics.model';
+import { Career, StatisticCardModel } from '../core/statistics.model';
 import { ReplaySubject, BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/Operators';
 
@@ -26,16 +26,17 @@ export class StatisticsComponent {
             card.title += ' - ' + i;
             this.cards.push(card);
         }
-        this.statisticsService.getDataStatistics().subscribe(rs => {
+        this.statisticsService.getAllPeoples().subscribe(rs => {
             const _mapData: StatisticCardModel[] = [];
+            const careers = rs.results as Career[];
 
-            for (let i = 0; i < rs.length; i++) {
-                const _one = rs[i];
+            for (let i = 0; i < careers.length; i++) {
+                const _one = careers[i];
                 const dataCards: CardModel[] = [];
                 const data = new StatisticCardModel();
                 _one.data.forEach(_p => {
                     const _c = new CardModel();
-                    _c.title = '<span class="bold">' + _p.fullname + ' (<b>' + _p.shortname + '</b>)' + '</span>';
+                    _c.title = '<span class="bold">' + _p.fullName + ' (<b>' + _p.shortName + '</b>)' + '</span>';
                     _c.url = _p.url;
                     _c.imagesUrl = _p.imagesUrl;
                     _c.avatar = _p.avatar;
@@ -47,7 +48,7 @@ export class StatisticsComponent {
                     //     });
                     // }
                     sc += '</div>';
-                    _c.message = '<i class="fs-sm">' + _p.message + '</i>' + sc;
+                    _c.message = _p.message ? '<i class="fs-sm">' + _p.message + '</i>' + sc : '';
                     dataCards.push(_c);
                 });
                 data.name = 'TOP ' + _one.name;

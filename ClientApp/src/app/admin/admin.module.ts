@@ -12,8 +12,12 @@ import { AdminCategoryCreateComponent } from './category/create/create.component
 import { AdminStatisticsComponent } from './+statistics/+statistics.component';
 import { SharedModule } from '../shared/shared.module';
 import { StatisticsService } from '../statistics/statistics.service';
-import { AdminStatisticsCreatePeopleComponent } from './+statistics/+create-people/+create-people.component';
-import { AdminPeopleAddSocialComponent } from './+statistics/+add-social/+add-social.component';
+import { AdminSocialComponent } from './+statistics/+social/+social.component';
+import { AdminCareerComponent } from './+statistics/+career/+career.component';
+import { AdminCareerService } from './+statistics/+career/+career.service';
+import { AdminPeopleComponent } from './+statistics/+people/+people.component';
+import { AdminPeopleSocialComponent } from './+statistics/+people/+social/+social.component';
+import { AdminPeopleService } from './+statistics/+people/+people.service';
 
 @NgModule({
     declarations: [
@@ -25,8 +29,10 @@ import { AdminPeopleAddSocialComponent } from './+statistics/+add-social/+add-so
         AdminCategoryCreateComponent,
         AdminHistoryComponent,
         AdminStatisticsComponent,
-        AdminStatisticsCreatePeopleComponent,
-        AdminPeopleAddSocialComponent,
+        AdminPeopleComponent,
+        AdminPeopleSocialComponent,
+        AdminSocialComponent,
+        AdminCareerComponent,
         AdminComponent
     ],
     imports: [
@@ -37,7 +43,7 @@ import { AdminPeopleAddSocialComponent } from './+statistics/+add-social/+add-so
         ])
     ],
     exports: [RouterModule],
-    providers: [AdminService, StatisticsService]
+    providers: [AdminService, StatisticsService, AdminCareerService, AdminPeopleService]
 })
 export class AdminModule {
 

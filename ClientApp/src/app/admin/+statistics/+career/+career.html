@@ -1,0 +1,18 @@
+<div class='pt-3'>
+    <label>Danh sách ngành nghề</label>
+    <div class='new-social'>
+        <div class='iblock'>
+            <input [(ngModel)]='newCareer.name' />
+        </div>
+        <button class='iblock' (click)='saveBtn()'>Save</button>
+    </div>
+
+    <div class='list-socials'>
+        <ng-container *ngFor='let s of careers'>
+            <div>
+                <div class='w-nm-3 iblock'>name: {{s.name}}</div>
+                <div class='w-nm-3 iblock'>index: {{s.index}}</div>
+            </div>
+        </ng-container>
+    </div>
+</div>

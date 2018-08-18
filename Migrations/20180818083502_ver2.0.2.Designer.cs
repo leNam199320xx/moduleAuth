@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using angular6DotnetCore.Models;
 
 namespace angular6DotnetCore.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180818083502_ver2.0.2")]
+    partial class ver202
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +29,6 @@ namespace angular6DotnetCore.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<bool?>("Enabled");
-
                     b.Property<int>("Index");
 
                     b.Property<string>("Name")
@@ -41,6 +41,27 @@ namespace angular6DotnetCore.Migrations
                     b.ToTable("Careers");
                 });
 
+            modelBuilder.Entity("angular6DotnetCore.Models.CareerPeoples", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CareerId");
+
+                    b.Property<int>("Index");
+
+                    b.Property<int>("PeopleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CareerId");
+
+                    b.HasIndex("PeopleId");
+
+                    b.ToTable("CareerPeoples");
+                });
+
             modelBuilder.Entity("angular6DotnetCore.Models.People", b =>
                 {
                     b.Property<int>("Id")
@@ -49,11 +70,7 @@ namespace angular6DotnetCore.Migrations
 
                     b.Property<string>("Avatar");
 
-                    b.Property<int>("CareerId");
-
                     b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<bool?>("Enabled");
 
                     b.Property<string>("FullName")
                         .IsRequired();
@@ -72,8 +89,6 @@ namespace angular6DotnetCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CareerId");
-
                     b.ToTable("Peoples");
                 });
 
@@ -84,8 +99,6 @@ namespace angular6DotnetCore.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<bool?>("Enabled");
 
                     b.Property<long?>("Follow");
 
@@ -209,8 +222,6 @@ namespace angular6DotnetCore.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<bool?>("Enabled");
 
                     b.Property<int>("Index");
 
@@ -426,11 +437,16 @@ namespace angular6DotnetCore.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("angular6DotnetCore.Models.People", b =>
+            modelBuilder.Entity("angular6DotnetCore.Models.CareerPeoples", b =>
                 {
                     b.HasOne("angular6DotnetCore.Models.Career", "Career")
-                        .WithMany("Peoples")
+                        .WithMany()
                         .HasForeignKey("CareerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("angular6DotnetCore.Models.People", "People")
+                        .WithMany("CareerPeoples")
+                        .HasForeignKey("PeopleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -241,21 +241,5 @@ namespace angular6DotnetCore.Controllers
 
             return Ok(new { count = files.Count, size, newPath });
         }
-
-        [HttpPost("GetDataOnePeople")]
-        public IActionResult GetDataOnePeople()
-        {
-            var isSignedIn = _signInManager.IsSignedIn(User);
-            if (isSignedIn)
-            {
-                //_context.Peoples.ToList().ForEach(p =>
-                //{
-                //    p.
-                //    var info = new InfoPeople();
-                //    info.GetInfo(user, "");
-                //});
-            }
-            return Ok(new { res = "get Ok!" });
-        }
     }
 }

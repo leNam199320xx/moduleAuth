@@ -1,7 +1,9 @@
+import { Career } from './statistics.model';
+
 export class ResponseModel {
     message: string;
     errors: any;
-    results: any;
+    results: Career[] | any;
     succeeded: string;
     username: string;
     email: string;
