@@ -43,44 +43,6 @@ namespace angular6DotnetCore.Controllers
 
         }
 
-        [HttpPost("GetDataOnePeople")]
-        public IActionResult GetDataOnePeople()
-        {
-            var isSignedIn = _signInManager.IsSignedIn(User);
-            if (isSignedIn)
-            {
-                //_context.Peoples.ToList().ForEach(p =>
-                //{
-                //    p.
-                //    var info = new InfoPeople();
-                //    info.GetInfo(user, "");
-                //});
-            }
-            return Ok(new { res = "get Ok!" });
-        }
-
-        [HttpPost("SaveSocialToPeople")]
-        public async Task<IActionResult> SaveSocialToPeople([FromBody] PeopleSocials social)
-        {
-            var isSignedIn = _signInManager.IsSignedIn(User);
-            var message = new MessageModel
-            {
-                IsSignedIn = isSignedIn
-            };
-            if (isSignedIn)
-            {
-                _context.PeopleSocials.Add(social);
-                await _context.SaveChangesAsync();
-                message.Message = "Success!";
-                return Ok(message);
-            }
-            else
-            {
-                message.Message += "you need login to excute this function";
-                return BadRequest(message);
-            }
-        }
-
         public async Task<IActionResult> SaveUpdatedSocial([FromBody] PeopleSocials social)
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
@@ -135,7 +97,7 @@ namespace angular6DotnetCore.Controllers
         }
 
         [HttpGet("getPeoples")]
-        public async Task<IActionResult> GetPeoples()
+        public async Task<IActionResult> GetPeoples([FromQuery] int socialId)
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
@@ -143,40 +105,204 @@ namespace angular6DotnetCore.Controllers
             List<object> listData = new List<object>();
             //if (isSignedIn)
             //{
-                var careers = await _context.Careers.ToListAsync();
-                careers.ForEach(e =>
+            var careers = await _context.Careers.ToListAsync();
+            List<Social> socials = new List<Social>();
+            if (socialId > 0)
+            {
+                var Id = socialId;
+                Social social = await _context.Socials.FindAsync(Id);
+                socials.Add(social);
+            }
+            else
+            {
+                socials = await _context.Socials.ToListAsync();
+            }
+            var peopleSocials = await _context.PeopleSocials.ToListAsync();
+            careers.ForEach(e =>
+            {
+                object data = new object();
+                var items = _context.Peoples.Where(p => p.CareerId == e.Id);
+
+                var listPeople = items.Select(m => new
                 {
-                    object data = new object();
-                    var listPeople = _context.Peoples.Where(p => p.CareerId == e.Id).Select(m => new People
+                    m.Id,
+                    m.Index,
+                    m.Avatar,
+                    m.FullName,
+                    m.ShortName,
+                    m.ImagesUrl,
+                    m.Url,
+                    m.CreatedDate,
+                    m.UpdatedDate,
+                    m.Message,
+                    m.Enabled
+                }).ToListAsync().Result;
+                List<object> listSoc = new List<object>();
+
+                for (var i = 0; i < listPeople.Count; i++)
+                {
+                    var p = listPeople[i];
+                    for (var j = 0; j < socials.Count; j++)
                     {
-                        Id = m.Id,
-                        Index = m.Index,
-                        Avatar = m.Avatar,
-                        FullName = m.FullName,
-                        ShortName = m.ShortName,
-                        ImagesUrl = m.ImagesUrl,
-                        Url = m.Url,
-                        CreatedDate = m.CreatedDate,
-                        UpdatedDate = m.UpdatedDate,
-                        Message = m.Message,
-                        Enabled = m.Enabled
-                    }).ToListAsync().Result;
-                    data = new
-                    {
-                        id = e.Id,
-                        name = e.Name,
-                        data = listPeople
-                    };
-                    listData.Add(data);
-                });
-                message.Results = listData;
-                return Ok(message);
+                        var soc = socials[j];
+                        var item = peopleSocials.Where(m => (m.SocialId == soc.Id) && (m.PeopleId == p.Id)).Select(n => new
+                        {
+                            n.Id,
+                            n.PeopleId,
+                            n.SocialId,
+                            n.Index,
+                            n.Like,
+                            n.Follow,
+                            n.Share,
+                            n.Url,
+                            n.View
+                        }).LastOrDefault();
+                        if (item != null)
+                        {
+                            listSoc.Add(item);
+                        }
+                    }
+                }
+                data = new
+                {
+                    id = e.Id,
+                    name = e.Name,
+                    data = listPeople,
+                    socials = listSoc
+                };
+                listData.Add(data);
+            });
+            message.Results = listData;
+            return Ok(message);
             //}
             //else
             //{
             //    message.Message += "you need login to excute this function";
             //    return BadRequest(message);
             //}
+        }
+
+        [HttpGet("GetSocialsByPeopleId")]
+        public async Task<IActionResult> GetSocialsByPeopleId([FromQuery] int peopleId)
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel
+            {
+                IsSignedIn = isSignedIn
+            };
+            if (isSignedIn)
+            {
+                try
+                {
+                    var results = await _context.PeopleSocials.Where(m => m.PeopleId == peopleId).Select(n => new
+                    {
+                        socialName = n.Social.Name,
+                        socialId = n.SocialId,
+                        share = n.Share,
+                        like = n.Like,
+                        follow = n.Follow,
+                        index = n.Index,
+                        view = n.View,
+                        url = n.Url,
+                        id = n.Id
+                    }).ToListAsync();
+                    return Ok(results);
+                }
+                catch (Exception ex)
+                {
+                    message.Message += " " + ex.Message;
+                    return BadRequest(message);
+                }
+            }
+            else
+            {
+                message.Message += "you need login to excute this function";
+                return BadRequest(message);
+            }
+        }
+
+        [HttpPost("GetDataFromFacebook")]
+        public async Task<IActionResult> GetDataFromFacebook([FromBody] PeopleSocials p)
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel
+            {
+                IsSignedIn = isSignedIn
+            };
+            InfoPeople info = new InfoPeople();
+            if (isSignedIn)
+            {
+                try
+                {
+                    var px = info.GetInfo(DateTime.Now.Ticks.ToString(), p.Url);
+                    var pupdate = await _context.PeopleSocials.FindAsync(p.Id);
+                    pupdate.Like = px.Like;
+                    pupdate.Follow = px.Follow;
+                    _context.Entry(pupdate).State = EntityState.Modified;
+                    var num = await _context.SaveChangesAsync();
+                    if (num > 0)
+                    {
+                        return Ok(new
+                        {
+                            like = px.Like,
+                            follow = px.Follow
+                        });
+                    }
+                    message.Succeeded = false;
+                    message.Message = "Data or Url is invalid";
+                    return BadRequest(message);
+                }
+                catch (Exception ex)
+                {
+                    message.Message += ex.Message;
+                    return BadRequest(message);
+                }
+            }
+            else
+            {
+                message.Message += "you need login to excute this function";
+                return BadRequest(message);
+            }
+        }
+
+        [HttpPost("SaveSocialForPeople")]
+        public async Task<IActionResult> SaveSocialForPeople([FromBody] PeopleSocials psocial)
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel
+            {
+                IsSignedIn = isSignedIn
+            };
+            if (isSignedIn)
+            {
+                var item = await _context.PeopleSocials.FindAsync(psocial.Id);
+                if (item != null)
+                {
+                    item.UpdatedDate = DateTime.Now;
+                    item.PeopleId = psocial.PeopleId;
+                    item.SocialId = psocial.SocialId;
+                    item.Share = psocial.Share;
+                    item.Like = psocial.Like;
+                    item.Follow = psocial.Follow;
+                    item.Index = psocial.Index;
+                    item.View = psocial.View;
+                    item.Url = psocial.Url;
+                    _context.Entry(item).State = EntityState.Modified;
+                }
+                else
+                {
+                    psocial.CreatedDate = DateTime.Now;
+                    _context.PeopleSocials.Add(psocial);
+                }
+                await _context.SaveChangesAsync();
+                message.Message = "Success!";
+                return Ok(message);
+            }
+            else
+            {
+                message.Message += "you need login to excute this function";
+                return BadRequest(message);
+            }
         }
 
         [HttpPost("saveSocial")]

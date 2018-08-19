@@ -30,8 +30,8 @@ export class People extends GeneralColumn {
 
 export class PeopleSocials extends GeneralColumn {
     like: number;
-    share: number;
     follow: number;
+    share: number;
     view: number;
     url: string;
     peopleId: number;

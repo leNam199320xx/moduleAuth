@@ -21,11 +21,11 @@
                         <div class='w-sm-3 p-1 b-1 b-black'>
                             <button class='bg-warning txt-white' (click)='r._enabledUpdatePeople = !r._enabledUpdatePeople;'>Sửa</button>
                             <button class='bg-dangerous txt-white'>Xóa</button>
-                            <button (click)='r._enabledAddSocial = !r._enabledAddSocial'>Thêm thông tin mạng xã hội</button>
+                            <button (click)='openAddSocialToPeoplePanel(r)'>Thêm thông tin mạng xã hội</button>
                         </div>
                     </div>
                     <app-admin-people *ngIf='r._enabledUpdatePeople' [isUpdate]='true' [careerId]='item.id' [newPeople]='r' (closeEvent)='r._enabledUpdatePeople = !$event'></app-admin-people>
-                    <app-admin-people-addsocial *ngIf='r._enabledAddSocial' [socials]='socials' (closeEvent)='r._enabledAddSocial = !r._enabledAddSocial'></app-admin-people-addsocial>
+                    <app-admin-people-social *ngIf='r._enabledAddSocial' [peopleId]='r.id' [peopleSocials]='r.socials' [socials]='socials' (closeEvent)='openAddSocialToPeoplePanel(r)'></app-admin-people-social>
                 </ng-container>
             </div>
         </ng-container>

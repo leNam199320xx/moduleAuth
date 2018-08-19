@@ -1,28 +1,62 @@
 <div>
-    <div class='w-nm-2 iblock'>
+    <div>
+        <div class='flex flex-left'>
+            <div class='w-xl-2'>mạng xã hội</div>
+            <div class='w-xl-2 overflow-hidden'>link</div>
+            <div class='w-xl-1'>like</div>
+            <div class='w-xl-1'>share</div>
+            <div class='w-xl-1'>follow</div>
+            <div class='w-xl-1'>view</div>
+            <div class='w-xl-1'>index</div>
+        </div>
+        <ng-container *ngFor='let p of peopleSocials'>
+            <div class='flex flex-left all-text-wrap'>
+                <div class='w-xl-2'>{{p.socialName}}</div>
+                <div class='w-xl-2'>{{p.url}}</div>
+                <div class='w-xl-1'>{{p.like}}</div>
+                <div class='w-xl-1'>{{p.share}}</div>
+                <div class='w-xl-1'>{{p.follow}}</div>
+                <div class='w-xl-1'>{{p.view}}</div>
+                <div class='w-xl-1'>{{p.index}}</div>
+                <div class='w-xl-2'>
+                    <button (click)='editSocialBtn(p)'>Sửa</button>
+                    <button>Xóa</button>
+                    <button (click)='chechSocialBtn(p)'>Check</button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<div>
+    <div class='w-xs-12 w-xl-2 iblock'>
         <label class='pr-2'>Name</label>
-        <select [(ngModel)]='social.socialId'>
+        <select class='w-full' [(ngModel)]='social.socialId'>
             <option *ngFor='let s of socials' [ngValue]='s.id'>{{s.name}}</option>
         </select>
     </div>
-    <div class='w-nm-2 iblock'>
+    <div class='w-xs-12 w-xl-2 iblock'>
         <label class='pr-2'>Link</label>
-        <input [(ngModel)]='social.url' />
+        <input class='w-full' [(ngModel)]='social.url' type='url' />
     </div>
-    <div class='w-nm-2 iblock'>
+    <div class='w-xs-6 w-xl-1 iblock'>
         <label class='pr-2'>Like</label>
-        <input [(ngModel)]='social.like' />
+        <input class='w-full' [(ngModel)]='social.like' type='number' />
     </div>
-    <div class='w-nm-2 iblock'>
+    <div class='w-xs-6 w-xl-1 iblock'>
         <label class='pr-2'>Share</label>
-        <input [(ngModel)]='social.share' />
+        <input class='w-full' [(ngModel)]='social.share' type='number' />
     </div>
-    <div class='w-nm-2 iblock'>
+    <div class='w-xs-6 w-xl-1 iblock'>
         <label class='pr-2'>View</label>
-        <input [(ngModel)]='social.view' />
+        <input class='w-full' [(ngModel)]='social.view' type='number' />
     </div>
-    <div class='w-nm-2 iblock'>
-        <button (click)='saveSocial()'>Save</button>
+    <div class='w-xs-6 w-xl-1 iblock'>
+        <label class='pr-2'>Follow</label>
+        <input class='w-full' [(ngModel)]='social.follow' type='number' />
+    </div>
+    <div>
+        <button (click)='saveSocialBtn()'>Save</button>
         <button (click)='closeBtn()'>Close</button>
+        <button (click)='chechSocialBtn(social)'>Check</button>
     </div>
 </div>

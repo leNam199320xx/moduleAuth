@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MessageModel, MessageType } from '../shared/message-dialog/message.model';
 import { CardModel } from '../common/list-common/list-common.model';
 import { StatisticsService } from './statistics.service';
-import { Career, StatisticCardModel } from '../core/statistics.model';
+import { Career, StatisticCardModel, Social } from '../core/statistics.model';
 import { ReplaySubject, BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/Operators';
 
@@ -14,6 +14,7 @@ export class StatisticsComponent {
     errorMessage: MessageModel;
     errorMessageOld: MessageModel;
     cards: CardModel[] = [];
+    socials: Social[] = this.statisticsService.socials;
     datafull: StatisticCardModel[] = [];
     // dataSub: Subject<StatisticCardModel[]> = new Subject();
     constructor(private statisticsService: StatisticsService) {
@@ -26,6 +27,10 @@ export class StatisticsComponent {
             card.title += ' - ' + i;
             this.cards.push(card);
         }
+        this.statisticsService.getSocials().subscribe(rs => {
+            const so = rs as Social[];
+            this.statisticsService.socials = so || [];
+        });
         this.statisticsService.getAllPeoples().subscribe(rs => {
             const _mapData: StatisticCardModel[] = [];
             const careers = rs.results as Career[];

@@ -6,7 +6,6 @@
 @import 'form.scss';
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
-@import 'grid.scss';
 @import 'scrollbar.scss';
 @mixin generateSize ($size, $name) {
     .w-#{$name} {
@@ -148,13 +147,6 @@
     }
 }
 
-@mixin setGrid($clsDevice, $type, $num) {
-    @include generateSize((100%*$num/$max-number-col), $type + '-' + $num);
-    #{$clsDevice} {
-        @include generateSize((100%*$num/$max-number-col), $type + '-' + $num);
-    }
-}
-
 @include generateSize(100%, "full");
 @include generateSize(50%, "50p");
 @include generateSize(33.33%, "33p");
@@ -179,14 +171,6 @@
     @include generateSize(nth($_val, 2), nth($_val, 1));
     @include generateHeaderHeight(nth($_val, 3), nth($_val, 1));
     @include generateFontSize(nth($_val, 4), nth($_val, 1));
-}
-
-@for $var from 1 to $max-number-col {
-    @include setGrid('.desktop', 'xl', $var);
-    @include setGrid('.tablet.landscape', 'lg', $var);
-    @include setGrid('.tablet.portrait', 'nm', $var);
-    @include setGrid('.mobile.landscape', 'sm', $var);
-    @include setGrid('.mobile.portrait', 'xs', $var);
 }
 
 @each $_val in $defines-pm {
@@ -215,6 +199,101 @@
         border-color: nth($_val, 2);
         border-style: solid;
         border-width: 0;
+    }
+}
+
+.txt-center {
+    text-align: center;
+}
+
+.txt-r {
+    text-align: right;
+}
+
+.txt-l {
+    text-align: left;
+}
+
+.txt-bold {
+    font-weight: bold;
+}
+
+.txt-italic {
+    font-style: italic;
+}
+
+.btn {
+    text-align: center;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row {
+    width: 100%;
+}
+
+.image {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.block {
+    display: block;
+}
+
+.iblock {
+    display: inline-block;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.flex-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-left {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.flex-center {
+    @extend .flex;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.all-text-wrap {
+    * {
+        word-wrap: break-word;
     }
 }
 

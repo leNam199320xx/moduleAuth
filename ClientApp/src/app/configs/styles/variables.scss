@@ -6,12 +6,9 @@ $white: white;
 $black: black;
 $highlight: yellow;
 // define [ {name, main-width, header-height, font-size} ]
-$max-number-col: 12;
-$defines: ( 'xl', 1920px, 128px, 2rem, 8),
-( 'lg', 1440px, 96px, 1.5rem, 6),
-( 'nm', 1366px, 64px, 1rem, 4),
-( 'sm', 1280px, 48px, 0.75rem, 3),
-( 'xs', 1024px, 32px, 0.5rem, 2);
+$max-number-col: 13;
+$defines: ( 'xl', 1920px, 128px, 2rem, 8, '.desktop'),
+( 'lg', 1440px, 96px, 1.5rem, 6, '.tablet.landscape'),
 $defines-color:('success', $success),
 ('highlight', $highlight),
 ('warning', $warning),
@@ -108,4 +105,14 @@ $defines-pmname: ('l', 'r', 'lr', 't', 'b', 'tb', null);
 
 .float-left {
     float: left;
+    }
+    .mh-#{$name} {
+        max-height: $size;
+    }
+    .w-full-#{$name} {
+        width: calc(100% - #{$size});
+    }
+    .h-full-#{$name} {
+        height: calc(100% - #{$size});
+    }
 }

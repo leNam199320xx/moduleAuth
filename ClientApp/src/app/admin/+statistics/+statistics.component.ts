@@ -12,16 +12,17 @@ export class AdminStatisticsComponent {
     currentCareer: Career;
     enabledSocialPanel = false;
     enabledCareerPanel = false;
-    socials: Social[] = [];
+    socials: Social[] = this.dataService.socials;
     constructor(private dataService: StatisticsService
     ) {
         this.dataService.getAllPeoples().subscribe(res => {
             this.data = res.results;
         });
-
-        this.dataService.getSocials().subscribe(res => {
-            this.socials = res;
-        });
+        if (!this.socials || this.socials.length === 0) {
+            this.dataService.getSocials().subscribe(res => {
+                this.socials = res;
+            });
+        }
     }
 
     openSocialPanel() {
@@ -32,7 +33,15 @@ export class AdminStatisticsComponent {
         this.enabledCareerPanel = !this.enabledCareerPanel;
     }
 
-    openAddPeoplePanel ($item: Career) {
+    openAddPeoplePanel($item: Career) {
         $item._enabledAddPeople = !$item._enabledAddPeople;
     }
+
+    openAddSocialToPeoplePanel($item: People) {
+        $item._enabledAddSocial = !$item._enabledAddSocial;
+        this.dataService.getSocialByPeopleId($item.id).subscribe(res => {
+            $item.socials = res;
+        });
+    }
+
 }
