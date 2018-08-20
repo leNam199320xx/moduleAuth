@@ -21,6 +21,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/app/configs/styles/bootstrap/bootstrap.scss",
               "src/app/configs/styles/general.scss",
               "src/app/configs/styles/grid.scss",
               "src/app/app.scss"
