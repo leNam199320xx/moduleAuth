@@ -68,15 +68,11 @@ namespace angular6DotnetCore.Controllers
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
             message.IsSignedIn = isSignedIn;
-            if (isSignedIn)
+            return Ok(await _context.Socials.Select(m => new
             {
-                return Ok(await _context.Socials.ToListAsync());
-            }
-            else
-            {
-                message.Message += "you need login to excute this function";
-                return BadRequest(message);
-            }
+                m.Id,
+                m.Name
+            }).ToListAsync());
         }
 
         [HttpGet("getCareers")]
@@ -103,8 +99,6 @@ namespace angular6DotnetCore.Controllers
             var message = new MessageModel();
             message.IsSignedIn = isSignedIn;
             List<object> listData = new List<object>();
-            //if (isSignedIn)
-            //{
             var careers = await _context.Careers.ToListAsync();
             List<Social> socials = new List<Social>();
             if (socialId > 0)
@@ -135,51 +129,27 @@ namespace angular6DotnetCore.Controllers
                     m.CreatedDate,
                     m.UpdatedDate,
                     m.Message,
-                    m.Enabled
-                }).ToListAsync().Result;
-                List<object> listSoc = new List<object>();
-
-                for (var i = 0; i < listPeople.Count; i++)
-                {
-                    var p = listPeople[i];
-                    for (var j = 0; j < socials.Count; j++)
+                    m.Enabled,
+                    socials = peopleSocials.Where(x => x.PeopleId == m.Id).Select(n => new
                     {
-                        var soc = socials[j];
-                        var item = peopleSocials.Where(m => (m.SocialId == soc.Id) && (m.PeopleId == p.Id)).Select(n => new
-                        {
-                            n.Id,
-                            n.PeopleId,
-                            n.SocialId,
-                            n.Index,
-                            n.Like,
-                            n.Follow,
-                            n.Share,
-                            n.Url,
-                            n.View
-                        }).LastOrDefault();
-                        if (item != null)
-                        {
-                            listSoc.Add(item);
-                        }
-                    }
-                }
+                        n.Id,
+                        n.SocialId,
+                        n.PeopleId,
+                        n.Like,
+                        n.Share,
+                        n.Follow
+                    })
+                }).ToListAsync().Result;
                 data = new
                 {
                     id = e.Id,
                     name = e.Name,
-                    data = listPeople,
-                    socials = listSoc
+                    data = listPeople
                 };
                 listData.Add(data);
             });
             message.Results = listData;
             return Ok(message);
-            //}
-            //else
-            //{
-            //    message.Message += "you need login to excute this function";
-            //    return BadRequest(message);
-            //}
         }
 
         [HttpGet("GetSocialsByPeopleId")]

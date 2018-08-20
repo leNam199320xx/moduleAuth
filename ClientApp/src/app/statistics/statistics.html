@@ -1,5 +1,13 @@
 <div class='statistics'>
     <app-search (enterKeyEvent)='getSearchResults($event)'></app-search>
+    <div class='ptb-2 fs-lg'>
+        <div class='flex'>
+            <div class="w-xl-4 p-2 txt-center" *ngFor='let soc of socials'>
+                <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
+                <div>{{soc.name}}</div>
+            </div>
+        </div>
+    </div>
     <div class='flex'>
         <ng-container *ngIf='datafull'>
             <ng-container *ngFor='let item of datafull'>

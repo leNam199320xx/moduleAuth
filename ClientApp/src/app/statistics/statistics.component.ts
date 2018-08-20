@@ -28,8 +28,10 @@ export class StatisticsComponent {
             this.cards.push(card);
         }
         this.statisticsService.getSocials().subscribe(rs => {
+            console.log(rs);
             const so = rs as Social[];
             this.statisticsService.socials = so || [];
+            this.socials = this.statisticsService.socials;
         });
         this.statisticsService.getAllPeoples().subscribe(rs => {
             const _mapData: StatisticCardModel[] = [];

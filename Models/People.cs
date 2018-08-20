@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +14,7 @@ namespace angular6DotnetCore.Models
         public string ImagesUrl { get; set; }
         public string Message { get; set; }
         public string Avatar { get; set; }
-        public List<PeopleSocials> PeopleSocials { get; set; }
+        public virtual List<PeopleSocials> PeopleSocials { get; set; }
         public int CareerId { get; set; }
         [ForeignKey("CareerId")]
         public virtual Career Career { get; set; }
