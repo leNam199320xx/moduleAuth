@@ -2,18 +2,18 @@
     <app-search (enterKeyEvent)='getSearchResults($event)'></app-search>
     <div class='ptb-2 fs-lg'>
         <div class='flex'>
-            <div class="w-xl-4 p-2 txt-center" *ngFor='let soc of socials'>
-                <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
-                <div>{{soc.name}}</div>
+            <div class="col-xl-3 col-md-6 col-sm-12 p-2" *ngFor='let soc of socials'>
+                <div class='txt-center'>
+                    <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
+                    <div>{{soc.name}}</div>
+                </div>
+                <div *ngIf='datafull'>
+                    <ng-container *ngFor='let item of datafull'>
+                        <app-list-icon class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")' [cards]='item.data' [pageSize]='10' [isLoadMore]='true' [name]='item.name'></app-list-icon>
+                    </ng-container>
+                </div>
             </div>
         </div>
-    </div>
-    <div class='flex'>
-        <ng-container *ngIf='datafull'>
-            <ng-container *ngFor='let item of datafull'>
-                <app-list-icon class="w-xl-4 w-nm-12 iblock p-1" [cards]='item.data' [pageSize]='10' [isLoadMore]='true' [name]='item.name'></app-list-icon>
-            </ng-container>
-        </ng-container>
     </div>
 </div>
 

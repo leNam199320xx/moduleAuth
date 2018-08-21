@@ -18,13 +18,19 @@ import { WindowService } from './core/window.service';
 import { MaterialModule } from './material.module';
 import { NavMenuComponent } from './header/nav/nav-menu/nav-menu.component';
 import { NavService } from './header/nav/nav.service';
+import { AppCustomPreloader } from './app.preload';
 const routes: Route[] = [
     { path: '', redirectTo: 'statistics', pathMatch: 'full' },
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
     { path: 'register', component: RegisterComponent, canActivate: [LoginAuthGuardService] },
     { path: 'creater', loadChildren: './creater/creater.module#CreaterModule', canLoad: [AuthGuardService] },
     { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AuthGuardService] },
-    { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule', pathMatch: 'full' }
+    {
+        path: 'statistics',
+        loadChildren: './statistics/statistics.module#StatisticsModule',
+        pathMatch: 'full',
+        data: { preload: true }
+    }
 ];
 
 @NgModule({
@@ -41,7 +47,7 @@ const routes: Route[] = [
         MaterialModule,
         HeaderModule,
         AccountModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes, { preloadingStrategy: AppCustomPreloader })
     ],
     exports: [],
     providers: [
@@ -51,7 +57,8 @@ const routes: Route[] = [
         ConfigsService,
         NavService,
         AppService,
-        WindowService
+        WindowService,
+        AppCustomPreloader
     ],
     bootstrap: [AppComponent]
 })

@@ -47,7 +47,7 @@
 @mixin generateMarginPadding ($posi, $level, $size) {
     .m#{$posi}-#{$level} {
         @if $posi=="t" {
-            margin-left: $size;
+            margin-top: $size;
         }
         @else if $posi=="l" {
             margin-left: $size;
@@ -147,6 +147,26 @@
     }
 }
 
+@mixin generateTextColor($name, $val) {
+    .cl-#{$name} {
+        color: $val;
+    }
+}
+
+@mixin generateBorderColor($name, $val) {
+    .b-#{$name} {
+        border-color: $val;
+        border-style: solid;
+        border-width: 0;
+    }
+}
+
+@mixin generateBackgroundColor($name, $val) {
+    .bg-#{$name} {
+        background-color: $val
+    }
+}
+
 @include generateSize(100%, "full");
 @include generateSize(50%, "50p");
 @include generateSize(33.33%, "33p");
@@ -159,6 +179,7 @@
 @include generateSize(400px, "400px");
 @include generateSize(300px, "300px");
 @include generateSize(64px, "64px");
+@include generateSize(128px, "128px");
 @include generateSize(8px, "8px");
 @include generatePosition(fixed);
 @include generatePosition(absolute);
@@ -180,26 +201,15 @@
 }
 
 @each $_val in $defines_color {
-    .txt-#{nth($_val, 1)} {
-        color: nth($_val, 2);
-    }
-    .bg-#{nth($_val, 1)} {
-        background-color: nth($_val, 2);
-    }
     .tag-#{nth($_val, 1)} {
         background-color: nth($_val, 2);
         padding: 2px 4px;
         border-radius: 4px;
         color: white;
     }
-    .cl-#{nth($_val, 1)} {
-        color: nth($_val, 2);
-    }
-    .b-#{nth($_val, 1)} {
-        border-color: nth($_val, 2);
-        border-style: solid;
-        border-width: 0;
-    }
+    @include generateBackgroundColor(nth($_val, 1), nth($_val, 2));
+    @include generateTextColor(nth($_val, 1), nth($_val, 2));
+    @include generateBorderColor(nth($_val, 1), nth($_val, 2));
 }
 
 .txt-center {
@@ -214,11 +224,11 @@
     text-align: left;
 }
 
-.txt-bold {
+.bold {
     font-weight: bold;
 }
 
-.txt-italic {
+.italic {
     font-style: italic;
 }
 
@@ -233,6 +243,7 @@
 
 .row {
     width: 100%;
+    display: block;
 }
 
 .image {
@@ -256,7 +267,6 @@
 
 .flex {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -271,7 +281,8 @@
 }
 
 .flex-center {
-    @extend .flex;
+    display: flex;
+    justify-content: center;
 }
 
 .align-center {
@@ -291,6 +302,10 @@
     overflow: hidden;
 }
 
+.overflow-auto {
+    overflow: hidden;
+}
+
 .all-text-wrap {
     * {
         word-wrap: break-word;
@@ -298,6 +313,7 @@
 }
 
 @include generateMarginPadding("", "auto", auto);
+@include generateMarginPadding("t", 64px, 64px);
 @import '../../common/common.scss';
 @import '../../admin/admin.scss';
 @import '../../account/acc.scss';

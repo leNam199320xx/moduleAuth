@@ -43,7 +43,7 @@ export class StatisticsComponent {
                 const data = new StatisticCardModel();
                 _one.data.forEach(_p => {
                     const _c = new CardModel();
-                    _c.title = '<span class="bold">' + _p.fullName + ' (<b>' + _p.shortName + '</b>)' + '</span>';
+                    _c.title = '<span>' + _p.fullName + ' (<b>' + _p.shortName + '</b>)' + '</span>';
                     _c.url = _p.url;
                     _c.imagesUrl = _p.imagesUrl;
                     _c.avatar = _p.avatar;

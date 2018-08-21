@@ -5,6 +5,11 @@ $dangerous: red;
 $white: white;
 $black: black;
 $highlight: yellow;
+$primary-color: rgb(116, 178, 180);
+$facebook-color: #3b5999;
+$youtube-color: #cd201f;
+$google-plus-color: #dd4b39;
+$twitter-color: #55acee;
 // define [ {name, main-width, header-height, font-size} ]
 $max-number-col: 13;
 $defines: ( 'xl', 1920px, 128px, 2rem, 8, '.desktop'),
@@ -19,7 +24,12 @@ $defines-color:('success', $success),
 ('orange', $orange),
 ('black', $black),
 ('black-05', rgba($black, 0.5)),
-('white', $white);
+('white', $white),
+('facebook', $facebook-color),
+('twitter', $twitter-color),
+('youtube', $youtube-color),
+('google-plus', $google-plus-color),
+('primary', $primary-color);
 $defines-pm: (1, 4px),
 (2, 8px),
 (3, 12px),

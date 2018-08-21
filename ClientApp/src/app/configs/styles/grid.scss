@@ -1,13 +1,1 @@
 @import 'variables.scss';
-@mixin setGrid($clsDevice, $type, $num) {
-    #{$clsDevice} {
-        @include generateGridWidth((100%*$num/($max-number-col - 1)), $type + '-' + $num);
-    }
-    @include generateGridWidth((100%*$num/($max-number-col - 1)), $type + '-' + $num);
-}
-
-@each $_val in $defines {
-    @for $var from 1 to $max-number-col {
-        @include setGrid(nth($_val, 6), nth($_val, 1), $var);
-    }
-}

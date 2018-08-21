@@ -1,16 +1,14 @@
 <app-header></app-header>
-<div class="{{configsService.configs.site.clsWidth}} center">
-    <div class='container'>
-        <div class='content-left' *ngIf='navService.visibleLeft'>
-            <app-nav-menu></app-nav-menu>
-        </div>
-        <div class='content-center'>
-            <!-- wellcome {{authService.loginInfo.username || authService.loginInfo.email}} -->
-            <router-outlet></router-outlet>
-        </div>
-        <div class='content-right' *ngIf='navService.visibleRight'>
-            <app-nav-menu></app-nav-menu>
-        </div>
-    </div>
-    <app-footer></app-footer>
+<div class="mt-64px">
+    <!-- <div class='content-left' *ngIf='navService.visibleLeft'>
+        <app-nav-menu></app-nav-menu>
+    </div> -->
+    <!-- <div class='content-center'> -->
+        <!-- wellcome {{authService.loginInfo.username || authService.loginInfo.email}} -->
+        <router-outlet></router-outlet>
+    <!-- </div> -->
+    <!-- <div class='content-right' *ngIf='navService.visibleRight'>
+        <app-nav-menu></app-nav-menu>
+    </div> -->
 </div>
+<app-footer></app-footer>
