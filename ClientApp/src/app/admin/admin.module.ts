@@ -18,6 +18,7 @@ import { AdminCareerService } from './+statistics/+career/+career.service';
 import { AdminPeopleComponent } from './+statistics/+people/+people.component';
 import { AdminPeopleSocialComponent } from './+statistics/+people/+social/+social.component';
 import { AdminPeopleService } from './+statistics/+people/+people.service';
+import { AdminSocialEditComponent } from './+statistics/+social/+edit/+edit.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { AdminPeopleService } from './+statistics/+people/+people.service';
         AdminPeopleComponent,
         AdminPeopleSocialComponent,
         AdminSocialComponent,
+        AdminSocialEditComponent,
         AdminCareerComponent,
         AdminComponent
     ],

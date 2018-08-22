@@ -61,6 +61,22 @@ namespace angular6DotnetCore.Controllers
                 return BadRequest(message);
             }
         }
+        [HttpGet("getFullSocials")]
+        public async Task<IActionResult> GetFullSocials()
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel();
+            message.IsSignedIn = isSignedIn;
+            return Ok(await _context.Socials.Select(m => new Social
+            {
+                Id = m.Id,
+                Index = m.Index,
+                Name = m.Name,
+                UpdatedDate = m.UpdatedDate,
+                CreatedDate = m.CreatedDate,
+                Enabled = m.Enabled
+            }).OrderBy(m => m.Index).ToListAsync());
+        }
 
         [HttpGet("getSocials")]
         public async Task<IActionResult> GetSocials()
@@ -68,7 +84,7 @@ namespace angular6DotnetCore.Controllers
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
             message.IsSignedIn = isSignedIn;
-            return Ok(await _context.Socials.Select(m => new
+            return Ok(await _context.Socials.OrderBy(m => m.Index).Select(m => new
             {
                 m.Id,
                 m.Name
@@ -83,16 +99,18 @@ namespace angular6DotnetCore.Controllers
                 IsSignedIn = isSignedIn
             };
             var peoples = await _context.PeopleSocials.ToListAsync();
-            var careers = await _context.Careers.ToListAsync();
-            var socials = await _context.Socials.Select(m => new
+            var careers = await _context.Careers.OrderBy(m => m.Index).ToListAsync();
+            var socials = await _context.Socials.OrderBy(m => m.Index).Select(m => new
             {
                 m.Id,
-                m.Name
+                m.Name,
+                m.Index
             }).ToListAsync();
             return Ok(socials.Select(m => new
             {
                 m.Id,
                 m.Name,
+                m.Index,
                 careers = GetPeopleBySocialId(m.Id, careers, peoples)
             }).ToList());
         }
@@ -104,7 +122,7 @@ namespace angular6DotnetCore.Controllers
             message.IsSignedIn = isSignedIn;
             if (isSignedIn)
             {
-                return Ok(await _context.Careers.ToListAsync());
+                return Ok(await _context.Careers.OrderBy(m => m.Index).ToListAsync());
             }
             else
             {
@@ -117,8 +135,8 @@ namespace angular6DotnetCore.Controllers
         public async Task<IActionResult> GetPeoples([FromQuery] int socialId)
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
-            var careers = await _context.Careers.ToListAsync();
-            var peoples = await _context.PeopleSocials.ToListAsync();
+            var careers = await _context.Careers.OrderBy(m => m.Index).ToListAsync();
+            var peoples = await _context.PeopleSocials.OrderBy(m => m.Index).ToListAsync();
             var message = new MessageModel
             {
                 IsSignedIn = isSignedIn,
@@ -353,6 +371,40 @@ namespace angular6DotnetCore.Controllers
                 {
                     social.CreatedDate = DateTime.Now;
                     await _context.Socials.AddAsync(social);
+                    await _context.SaveChangesAsync();
+                    return Ok(message);
+                }
+                catch (Exception ex)
+                {
+                    message.Message += " " + ex.Message;
+                    return BadRequest(message);
+                }
+            }
+            else
+            {
+                message.Message += "you need login to excute this function";
+                return BadRequest(message);
+            }
+        }
+
+        [HttpPost("updateSocial")]
+        public async Task<IActionResult> UpdateSocial([FromBody] Social social)
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel
+            {
+                IsSignedIn = isSignedIn
+            };
+            if (isSignedIn)
+            {
+                try
+                {
+                    var updatedSocial = await _context.Socials.FindAsync(social.Id);
+                    updatedSocial.Name = social.Name;
+                    updatedSocial.Index = social.Index;
+                    updatedSocial.Enabled = social.Enabled;
+                    updatedSocial.UpdatedDate = DateTime.Now;
+                    _context.Entry(updatedSocial).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
                     return Ok(message);
                 }

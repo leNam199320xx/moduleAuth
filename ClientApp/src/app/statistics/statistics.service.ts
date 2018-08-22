@@ -16,6 +16,10 @@ export class StatisticsService {
         return this.http.get<Social[]>('api/statistics/getSocials');
     }
 
+    getFullSocials() {
+        return this.http.get<Social[]>('api/statistics/getFullSocials');
+    }
+
     getSocialsWithPeoples() {
         return this.http.get<Social[]>('api/statistics/getSocialsWithPeoples');
     }
@@ -37,5 +41,9 @@ export class StatisticsService {
         return this.http.post<any>('api/statistics/saveSocial', {
             name: $social.name
         });
+    }
+
+    updateSocial($social: Social) {
+        return this.http.post<any>('api/statistics/updateSocial', $social);
     }
 }

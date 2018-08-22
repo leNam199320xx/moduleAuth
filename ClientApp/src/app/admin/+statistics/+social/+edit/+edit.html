@@ -1,0 +1,18 @@
+<div>
+    <div>
+        <label>Nhập tên</label>
+        <input [(ngModel)]='social.name' />
+    </div>
+    <div>
+        <label>Nhập index</label>
+        <input [(ngModel)]='social.index' />
+    </div>
+    <div>
+        <label>Khóa</label>
+        <input [(ngModel)]='social.enabled' type='checkbox' />
+    </div>
+    <div>
+        <button (click)='saveBtn()'>Save</button>
+        <button (click)='cancelBtn()'>Cancel</button>
+    </div>
+</div>

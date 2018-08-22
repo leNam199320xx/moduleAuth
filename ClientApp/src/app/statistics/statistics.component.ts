@@ -48,6 +48,8 @@ export class StatisticsComponent {
                 _c.imagesUrl = _p.imagesUrl;
                 _c.avatar = _p.avatar;
                 _c.message = _p.message ? '<i class="fs-sm">' + _p.message + '</i>' : '';
+                (<any>_c).socials = _p.socials;
+
                 dataCards.push(_c);
             });
             data.name = 'TOP ' + _one.name;

@@ -12,7 +12,7 @@ export class AdminStatisticsComponent {
     currentCareer: Career;
     enabledSocialPanel = false;
     enabledCareerPanel = false;
-    socials: Social[] = this.dataService.socials;
+    socials: Social[] = [];
     constructor(private dataService: StatisticsService
     ) {
         this.getAllSocial();
@@ -20,7 +20,7 @@ export class AdminStatisticsComponent {
     }
 
     getAllSocial() {
-        this.dataService.getSocials().subscribe(res => {
+        this.dataService.getFullSocials().subscribe(res => {
             this.socials = res;
         });
     }

@@ -1,0 +1,34 @@
+<div class='list-icon'>
+    <div class='title fs-lg mtb-3 pb-2 txt-r bb-2 b-{{type}} cl-{{type}}' *ngIf='name'>
+        <!-- <button>Xem biểu đồ</button> -->
+        <i class='icons'>star_border</i>
+        {{name}}
+    </div>
+    <div class="ps-relative scrollbar-custom-3 scrollbar-y mh-600px">
+        <ng-container *ngFor='let card of displayCards'>
+            <div class='item p-1 mb-3 flex'>
+                <div class='img-circle img-cover sq-64 iblock' [ngStyle]='{"background-image": "url(" + card.avatar + ")"}'></div>
+                <div class='pl-2 w-full-64px align-center'>
+                    <div class="block w-full-128px">
+                        <a [routerLink]='card.url' [innerHTML]='card.title'></a>
+                        <div [innerHTML]='card.message'>1</div>
+                    </div>
+
+                    <div class=" w-128px txt-r">
+                        <div class='flex align-center'>
+                            <i class='icons'>thumb_up</i>
+                            <i>{{getNumber(card)[0]}}</i>
+                        </div>
+                        <div class='flex align-center'>
+                            <i class='icons'>person_add</i>
+                            <i>{{getNumber(card)[1]}}</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <!-- <app-scroll></app-scroll> -->
+    </div>
+    <app-paging [page]='pageConfig' (backClick)='back($event)' (nextClick)='next($event)' (loadMoreClick)='loadMore($event)'
+        [hasNumber]='false'></app-paging>
+</div>

@@ -2,19 +2,32 @@
     <label>Danh sách mạng xã hội</label>
     <div class='new-social'>
         <div class='iblock'>
-           <input [(ngModel)]='newSocial.name' />
+            <input [(ngModel)]='newSocial.name' />
         </div>
         <button class='iblock' (click)='saveBtn()'>Save</button>
     </div>
 
     <div class='list-socials'>
+        <div class='flex'>
+            <div class='col-xl-2'>id: </div>
+            <div class='col-xl-2'>name: </div>
+            <div class='col-xl-2'>index:</div>
+            <div class='col-xl-2'>created date:</div>
+            <div class='col-xl-2'>updated date: </div>
+            <div class='col-xl-2'></div>
+        </div>
         <ng-container *ngFor='let s of socials'>
-            <div>
-                <div class='w-nm-3 iblock'>id: {{s.id}}</div>
-                <div class='w-nm-3 iblock'>name: {{s.name}}</div>
-                <div class='w-nm-3 iblock'>created date: {{s.createdDate}}</div>
-                <div class='w-nm-3 iblock'>updated date: {{s.updatedDate}}</div>
+            <div class='flex'>
+                <div class='col-xl-2'>{{s.id}}</div>
+                <div class='col-xl-2'>{{s.name}}</div>
+                <div class='col-xl-2'>{{s.index}}</div>
+                <div class='col-xl-2'>{{s.createdDate}}</div>
+                <div class='col-xl-2'>{{s.updatedDate}}</div>
+                <div class='col-xl-2'>
+                    <button (click)='s._enableEditPanel = !s._enableEditPanel;'>Sửa</button>
+                </div>
             </div>
+            <app-admin-social-edit *ngIf='s._enableEditPanel' [social]='s'></app-admin-social-edit>
         </ng-container>
     </div>
 </div>

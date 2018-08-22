@@ -1,24 +1,24 @@
 <div>
     <div>
         <div class='flex flex-left'>
-            <div class='w-xl-2'>mạng xã hội</div>
-            <div class='w-xl-2 overflow-hidden'>link</div>
-            <div class='w-xl-1'>like</div>
-            <div class='w-xl-1'>share</div>
-            <div class='w-xl-1'>follow</div>
-            <div class='w-xl-1'>view</div>
-            <div class='w-xl-1'>index</div>
+            <div class='col-xl-2'>mạng xã hội</div>
+            <div class='col-xl-2 overflow-hidden'>link</div>
+            <div class='col-xl-1'>like</div>
+            <div class='col-xl-1'>share</div>
+            <div class='col-xl-1'>follow</div>
+            <div class='col-xl-1'>view</div>
+            <div class='col-xl-1'>index</div>
         </div>
         <ng-container *ngFor='let p of peopleSocials'>
             <div class='flex flex-left all-text-wrap'>
-                <div class='w-xl-2'>{{p.socialName}}</div>
-                <div class='w-xl-2'>{{p.url}}</div>
-                <div class='w-xl-1'>{{p.like}}</div>
-                <div class='w-xl-1'>{{p.share}}</div>
-                <div class='w-xl-1'>{{p.follow}}</div>
-                <div class='w-xl-1'>{{p.view}}</div>
-                <div class='w-xl-1'>{{p.index}}</div>
-                <div class='w-xl-2'>
+                <div class='col-xl-2'>{{p.socialName}}</div>
+                <div class='col-xl-2'>{{p.url}}</div>
+                <div class='col-xl-1'>{{p.like}}</div>
+                <div class='col-xl-1'>{{p.share}}</div>
+                <div class='col-xl-1'>{{p.follow}}</div>
+                <div class='col-xl-1'>{{p.view}}</div>
+                <div class='col-xl-1'>{{p.index}}</div>
+                <div class='col-xl-2'>
                     <button (click)='editSocialBtn(p)'>Sửa</button>
                     <button>Xóa</button>
                     <button (click)='chechSocialBtn(p)'>Check</button>

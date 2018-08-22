@@ -45,8 +45,7 @@ export class PeopleSocials extends GeneralColumn {
 export class Social extends GeneralColumn {
     id: number;
     name: string;
-    createdDate: Date;
-    updatedDate: Date;
+    _enableEditPanel = false;
     careers: Career[] = [];
 }
 
