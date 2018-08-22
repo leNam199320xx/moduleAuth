@@ -4,7 +4,8 @@ import { CardModel } from '../common/list-common/list-common.model';
 import { StatisticsService } from './statistics.service';
 import { Career, StatisticCardModel, Social } from '../core/statistics.model';
 import { ReplaySubject, BehaviorSubject, Subject } from 'rxjs';
-import { map } from 'rxjs/Operators';
+import { map, take } from 'rxjs/Operators';
+import { ResponseModel } from '../core/response.model';
 
 @Component({
     selector: 'app-statistics',
@@ -27,43 +28,33 @@ export class StatisticsComponent {
             card.title += ' - ' + i;
             this.cards.push(card);
         }
-        this.statisticsService.getSocials().subscribe(rs => {
-            console.log(rs);
+        this.statisticsService.getSocialsWithPeoples().subscribe(rs => {
             const so = rs as Social[];
             this.statisticsService.socials = so || [];
             this.socials = this.statisticsService.socials;
         });
-        this.statisticsService.getAllPeoples().subscribe(rs => {
-            const _mapData: StatisticCardModel[] = [];
-            const careers = rs.results as Career[];
-
-            for (let i = 0; i < careers.length; i++) {
-                const _one = careers[i];
-                const dataCards: CardModel[] = [];
-                const data = new StatisticCardModel();
-                _one.data.forEach(_p => {
-                    const _c = new CardModel();
-                    _c.title = '<span>' + _p.fullName + ' (<b>' + _p.shortName + '</b>)' + '</span>';
-                    _c.url = _p.url;
-                    _c.imagesUrl = _p.imagesUrl;
-                    _c.avatar = _p.avatar;
-                    let sc = '<div>';
-                    // if (_p.socials) {
-                    //     _p.socials.forEach(_sc => {
-                    //         sc += '<div class="iblock sq-36 svg-' + _sc.name + ' img iblock"></div>';
-
-                    //     });
-                    // }
-                    sc += '</div>';
-                    _c.message = _p.message ? '<i class="fs-sm">' + _p.message + '</i>' + sc : '';
-                    dataCards.push(_c);
-                });
-                data.name = 'TOP ' + _one.name;
-                data.data = dataCards;
-                _mapData.push(data);
-            }
-            this.datafull = _mapData;
-        });
+    }
+    mapData(careers: Career[]) {
+        const _mapData: StatisticCardModel[] = [];
+        console.log(careers);
+        for (let i = 0; i < careers.length; i++) {
+            const _one = careers[i];
+            const dataCards: CardModel[] = [];
+            const data = new StatisticCardModel();
+            _one.peoples.forEach(_p => {
+                const _c = new CardModel();
+                _c.title = '<span>' + _p.fullName + ' (<b>' + _p.shortName + '</b>)' + '</span>';
+                _c.url = _p.url;
+                _c.imagesUrl = _p.imagesUrl;
+                _c.avatar = _p.avatar;
+                _c.message = _p.message ? '<i class="fs-sm">' + _p.message + '</i>' : '';
+                dataCards.push(_c);
+            });
+            data.name = 'TOP ' + _one.name;
+            data.data = dataCards;
+            _mapData.push(data);
+        }
+        return _mapData;
     }
     getSearchResults($val: string) {
         if ($val && $val !== '') {

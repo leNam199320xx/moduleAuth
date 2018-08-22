@@ -11,7 +11,7 @@ export class GeneralColumn {
 
 export class Career extends GeneralColumn {
     name: string;
-    data: People[] = [];
+    peoples: People[] = [];
     _enabledAddPeople = false;
 }
 export class People extends GeneralColumn {
@@ -36,8 +36,10 @@ export class PeopleSocials extends GeneralColumn {
     url: string;
     peopleId: number;
     peopleName: string;
+    people: People;
     socialId: number;
     socialName: string;
+    social: Social;
 }
 
 export class Social extends GeneralColumn {
@@ -45,6 +47,7 @@ export class Social extends GeneralColumn {
     name: string;
     createdDate: Date;
     updatedDate: Date;
+    careers: Career[] = [];
 }
 
 export class StatisticCardModel {

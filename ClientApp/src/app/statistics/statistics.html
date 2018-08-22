@@ -7,8 +7,8 @@
                     <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
                     <div>{{soc.name}}</div>
                 </div>
-                <div *ngIf='datafull'>
-                    <ng-container *ngFor='let item of datafull'>
+                <div *ngIf='soc.careers && soc.careers.length > 0'>
+                    <ng-container *ngFor='let item of mapData(soc.careers)'>
                         <app-list-icon class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")' [cards]='item.data' [pageSize]='10' [isLoadMore]='true' [name]='item.name'></app-list-icon>
                     </ng-container>
                 </div>

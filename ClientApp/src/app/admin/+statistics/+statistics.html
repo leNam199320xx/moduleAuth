@@ -5,20 +5,20 @@
     <button (click)='openSocialPanel()'>Danh sách mạng xã hội</button>
     <button (click)='openCareerPanel()'>Danh sách công việc</button>
     <app-admin-career *ngIf='enabledCareerPanel'></app-admin-career>
-    <app-admin-social *ngIf='enabledSocialPanel' [socials]='socials'></app-admin-social>
+    <app-admin-social *ngIf='enabledSocialPanel' [socials]='socials' (closeEvent)='closeSocial()'></app-admin-social>
     <div class='table'>
         <ng-container *ngFor='let item of data'>
             <div class='flex-right align-center ptb-3'>
                 <span class='pr-2 txt-bold'>{{item.name}}</span>
                 <button (click)='openAddPeoplePanel(item)'>Thêm người mới</button>
             </div>
-            <app-admin-people *ngIf='item._enabledAddPeople' [careerId]='item.id' (closeEvent)='r._enabledAddPeople = !$event'></app-admin-people>
+            <app-admin-people *ngIf='item._enabledAddPeople' [careerId]='item.id' (closeEvent)='closeAddPeople(item)'></app-admin-people>
             <div class='table b-1 b-black'>
-                <ng-container *ngFor='let r of item.data'>
+                <ng-container *ngFor='let r of item.peoples'>
                     <div class="flex flex-left">
-                        <div class='w-sm-3 p-1 b-1 b-black'>{{r.fullName}}</div>
-                        <div class='w-sm-3 p-1 b-1 b-black'>{{r.shortName}}</div>
-                        <div class='w-sm-3 p-1 b-1 b-black'>
+                        <div class='col-12 col-md-6 col-xl-3 p-1 b-1 b-black'>{{r.fullName}}</div>
+                        <div class='col-12 col-md-6 col-xl-3 p-1 b-1 b-black'>{{r.shortName}}</div>
+                        <div class='col-12 col-md-6 col-xl-3 p-1 b-1 b-black'>
                             <button class='bg-warning txt-white' (click)='r._enabledUpdatePeople = !r._enabledUpdatePeople;'>Sửa</button>
                             <button class='bg-dangerous txt-white'>Xóa</button>
                             <button (click)='openAddSocialToPeoplePanel(r)'>Thêm thông tin mạng xã hội</button>

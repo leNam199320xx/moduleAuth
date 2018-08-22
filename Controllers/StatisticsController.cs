@@ -74,7 +74,28 @@ namespace angular6DotnetCore.Controllers
                 m.Name
             }).ToListAsync());
         }
-
+        [HttpGet("getSocialsWithPeoples")]
+        public async Task<IActionResult> GetSocialsWidthPeoples()
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel
+            {
+                IsSignedIn = isSignedIn
+            };
+            var peoples = await _context.PeopleSocials.ToListAsync();
+            var careers = await _context.Careers.ToListAsync();
+            var socials = await _context.Socials.Select(m => new
+            {
+                m.Id,
+                m.Name
+            }).ToListAsync();
+            return Ok(socials.Select(m => new
+            {
+                m.Id,
+                m.Name,
+                careers = GetPeopleBySocialId(m.Id, careers, peoples)
+            }).ToList());
+        }
         [HttpGet("getCareers")]
         public async Task<IActionResult> GetCareers()
         {
@@ -96,40 +117,37 @@ namespace angular6DotnetCore.Controllers
         public async Task<IActionResult> GetPeoples([FromQuery] int socialId)
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
-            var message = new MessageModel();
-            message.IsSignedIn = isSignedIn;
-            List<object> listData = new List<object>();
             var careers = await _context.Careers.ToListAsync();
-            List<Social> socials = new List<Social>();
-            if (socialId > 0)
+            var peoples = await _context.PeopleSocials.ToListAsync();
+            var message = new MessageModel
             {
-                var Id = socialId;
-                Social social = await _context.Socials.FindAsync(Id);
-                socials.Add(social);
-            }
-            else
-            {
-                socials = await _context.Socials.ToListAsync();
-            }
-            var peopleSocials = await _context.PeopleSocials.ToListAsync();
+                IsSignedIn = isSignedIn,
+                Results = GetFullPeople(careers, peoples)
+            };
+            return Ok(message);
+        }
+
+        public List<object> GetFullPeople(List<Career> careers, List<PeopleSocials> peoples)
+        {
+            List<object> listData = new List<object>();
+            List<PeopleSocials> peopleSocials = peoples.ToList();
+
             careers.ForEach(e =>
             {
-                object data = new object();
-                var items = _context.Peoples.Where(p => p.CareerId == e.Id);
-
-                var listPeople = items.Select(m => new
+                object career = new object();
+                var listPeople = _context.Peoples.Where(p => p.CareerId == e.Id).Select(m => new
                 {
                     m.Id,
-                    m.Index,
+                    //m.Index,
                     m.Avatar,
                     m.FullName,
                     m.ShortName,
                     m.ImagesUrl,
                     m.Url,
-                    m.CreatedDate,
-                    m.UpdatedDate,
-                    m.Message,
-                    m.Enabled,
+                    //m.CreatedDate,
+                    //m.UpdatedDate,
+                    //m.Message,
+                    //m.Enabled,
                     socials = peopleSocials.Where(x => x.PeopleId == m.Id).Select(n => new
                     {
                         n.Id,
@@ -140,16 +158,62 @@ namespace angular6DotnetCore.Controllers
                         n.Follow
                     })
                 }).ToListAsync().Result;
-                data = new
+                career = new
                 {
                     id = e.Id,
                     name = e.Name,
-                    data = listPeople
+                    peoples = listPeople
                 };
-                listData.Add(data);
+                if (listPeople != null && listPeople.Count > 0)
+                {
+                    listData.Add(career);
+                }
             });
-            message.Results = listData;
-            return Ok(message);
+            return listData;
+        }
+
+        public List<object> GetPeopleBySocialId(int socialId, List<Career> careers, List<PeopleSocials> peoples)
+        {
+            List<object> listData = new List<object>();
+            List<PeopleSocials> peopleSocials = peoples.Where(m => m.SocialId == socialId).ToList();
+            careers.ForEach(e =>
+            {
+                object career = new object();
+                var listPeople = _context.Peoples.Where(p => p.CareerId == e.Id).Select(m => new
+                {
+                    m.Id,
+                    //m.Index,
+                    m.Avatar,
+                    m.FullName,
+                    m.ShortName,
+                    m.ImagesUrl,
+                    m.Url,
+                    //m.CreatedDate,
+                    //m.UpdatedDate,
+                    //m.Message,
+                    //m.Enabled,
+                    socials = peopleSocials.Where(x => x.PeopleId == m.Id && x.SocialId == socialId).Select(n => new
+                    {
+                        n.Id,
+                        n.SocialId,
+                        n.PeopleId,
+                        n.Like,
+                        n.Share,
+                        n.Follow
+                    })
+                }).ToListAsync().Result;
+                career = new
+                {
+                    id = e.Id,
+                    name = e.Name,
+                    peoples = listPeople.Where(m => m.socials.Count() > 0)
+                };
+                if (listPeople != null && listPeople.Count > 0)
+                {
+                    listData.Add(career);
+                }
+            });
+            return listData;
         }
 
         [HttpGet("GetSocialsByPeopleId")]

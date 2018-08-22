@@ -16,6 +16,10 @@ export class StatisticsService {
         return this.http.get<Social[]>('api/statistics/getSocials');
     }
 
+    getSocialsWithPeoples() {
+        return this.http.get<Social[]>('api/statistics/getSocialsWithPeoples');
+    }
+
     getSocialByPeopleId($id: number) {
         return this.http.get<PeopleSocials[]>('api/statistics/GetSocialsByPeopleId?peopleId=' + $id);
     }

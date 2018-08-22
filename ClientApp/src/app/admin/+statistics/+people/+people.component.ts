@@ -25,12 +25,10 @@ export class AdminPeopleComponent implements OnInit {
         this.newPeople.careerId = this.careerId;
         if (this.isUpdate) {
             this.peopleService.saveUpdatedPeople(this.newPeople).subscribe(res => {
-                console.log(res);
                 this.closeEvent.emit(true);
             });
         } else {
             this.peopleService.savePeople(this.newPeople).subscribe(res => {
-                console.log(res);
                 this.closeEvent.emit(true);
             });
         }
