@@ -1,4 +1,3 @@
-using angular6DotnetCore.Areas.Identity.Pages.Account;
 using System.Threading.Tasks;
 using System;
 using System.Security.Claims;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using angular6DotnetCore.Models;
+using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
 
 namespace angular6DotnetCore.Controllers
 {

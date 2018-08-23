@@ -1,9 +1,9 @@
-using angular6DotnetCore.Areas.Identity.Pages.Account;
 using angular6DotnetCore.Logic;
 using angular6DotnetCore.Models;
 using angular6DotnetCore.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
