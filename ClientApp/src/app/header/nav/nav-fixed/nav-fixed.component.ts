@@ -31,12 +31,6 @@ export class NavFixedComponent implements OnDestroy {
         this.configsService.configsSubject.subscribe(res => {
             // this.configNav = res.header.children[0] || new GeneralConfigModel();
         });
-
-        this.appService.getCategories('category').subscribe(res => {
-            this.categories = res.results as CategoryModel[];
-
-        });
-
     }
     logout() {
         this.logoutSubscription = this.authService.logout().subscribe(res => this.authService.loginResponse = res);

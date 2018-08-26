@@ -1,15 +1,22 @@
 <div class='statistics'>
     <app-search (enterKeyEvent)='getSearchResults($event)'></app-search>
     <div class='ptb-2 fs-lg'>
-        <div class='flex'>
-            <div class="col-xl-6 col-md-12 p-2" *ngFor='let soc of socials'>
+        <div class=''>
+            <div class='w-300px ps-fixed'>
+                <div class='txt-center' *ngFor='let soc of socials'>
+                    <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
+                    <div>{{soc.name}}</div>
+                </div>
+            </div>
+            <div class='w-800px center' *ngFor='let soc of socials'>
                 <div class='txt-center'>
                     <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
                     <div>{{soc.name}}</div>
                 </div>
                 <div *ngIf='soc.careers && soc.careers.length > 0'>
                     <ng-container *ngFor='let item of mapData(soc.careers)'>
-                        <app-statistic-people class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")' [cards]='item.data' [pageSize]='10' [isLoadMore]='true' [name]='item.name'></app-statistic-people>
+                        <app-statistic-people class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")' [cards]='item.data' [pageSize]='10'
+                            [isLoadMore]='true' [name]='item.name'></app-statistic-people>
                     </ng-container>
                 </div>
             </div>

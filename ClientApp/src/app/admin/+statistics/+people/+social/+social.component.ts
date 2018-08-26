@@ -39,11 +39,29 @@ export class AdminPeopleSocialComponent {
                 console.log(res);
                 $p.like = res.like;
                 $p.follow = res.follow;
+                $p.share = res.share;
+                $p.view = res.view;
             });
         }
     }
 
     editSocialBtn($p: PeopleSocials) {
         this.social = $p;
+    }
+
+    deleteSocialBtn($p: PeopleSocials) {
+        if ($p) {
+            this.statisticsService.deleteSocialOfPeople($p).subscribe(res => {
+                console.log(res);
+                if (res.succeeded) {
+                    for (let i = 0; i < this.peopleSocials.length; i++) {
+                        if (this.peopleSocials[i].id === $p.id) {
+                            this.peopleSocials.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            });
+        }
     }
 }

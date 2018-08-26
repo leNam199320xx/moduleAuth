@@ -1,3 +1,4 @@
+using angular6DotnetCore.Areas.Identity.Services;
 using angular6DotnetCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -75,7 +76,7 @@ namespace angular6DotnetCore
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

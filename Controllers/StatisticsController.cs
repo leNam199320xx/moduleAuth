@@ -67,7 +67,7 @@ namespace angular6DotnetCore.Controllers
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
             message.IsSignedIn = isSignedIn;
-            return Ok(await _context.Socials.Select(m => new Social
+            return Ok(await _context.Socials.AsNoTracking().Select(m => new Social
             {
                 Id = m.Id,
                 Index = m.Index,
@@ -84,7 +84,7 @@ namespace angular6DotnetCore.Controllers
             var isSignedIn = _signInManager.IsSignedIn(User);
             var message = new MessageModel();
             message.IsSignedIn = isSignedIn;
-            return Ok(await _context.Socials.OrderBy(m => m.Index).Select(m => new
+            return Ok(await _context.Socials.AsNoTracking().OrderBy(m => m.Index).Select(m => new
             {
                 m.Id,
                 m.Name
@@ -98,9 +98,24 @@ namespace angular6DotnetCore.Controllers
             {
                 IsSignedIn = isSignedIn
             };
-            var peoples = await _context.PeopleSocials.ToListAsync();
-            var careers = await _context.Careers.OrderBy(m => m.Index).ToListAsync();
-            var socials = await _context.Socials.OrderBy(m => m.Index).Select(m => new
+            List<PeopleSocials> peoples = await _context.PeopleSocials.AsNoTracking().Select(
+                m => new PeopleSocials
+                {
+                    Id = m.Id,
+                    PeopleId = m.PeopleId,
+                    SocialId = m.SocialId,
+                    Share = m.Share,
+                    View = m.View,
+                    Like = m.Like,
+                    Follow = m.Follow
+                }).OrderBy(m => m.PeopleId).OrderBy(m => m.SocialId).ToListAsync();
+            List<Career> careers = await _context.Careers.OrderBy(m => m.Index).AsNoTracking().Select(m => new Career
+            {
+                Id = m.Id,
+                Name = m.Name,
+                Index = m.Index
+            }).ToListAsync();
+            var socials = await _context.Socials.OrderBy(m => m.Index).AsNoTracking().Select(m => new
             {
                 m.Id,
                 m.Name,
@@ -122,7 +137,7 @@ namespace angular6DotnetCore.Controllers
             message.IsSignedIn = isSignedIn;
             if (isSignedIn)
             {
-                return Ok(await _context.Careers.OrderBy(m => m.Index).ToListAsync());
+                return Ok(await _context.Careers.AsNoTracking().OrderBy(m => m.Index).ToListAsync());
             }
             else
             {
@@ -135,8 +150,8 @@ namespace angular6DotnetCore.Controllers
         public async Task<IActionResult> GetPeoples([FromQuery] int socialId)
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
-            var careers = await _context.Careers.OrderBy(m => m.Index).ToListAsync();
-            var peoples = await _context.PeopleSocials.OrderBy(m => m.Index).ToListAsync();
+            var careers = await _context.Careers.AsNoTracking().OrderBy(m => m.Index).ToListAsync();
+            var peoples = await _context.PeopleSocials.AsNoTracking().OrderBy(m => m.Index).ToListAsync();
             var message = new MessageModel
             {
                 IsSignedIn = isSignedIn,
@@ -217,7 +232,8 @@ namespace angular6DotnetCore.Controllers
                         n.PeopleId,
                         n.Like,
                         n.Share,
-                        n.Follow
+                        n.Follow,
+                        n.View
                     })
                 }).ToListAsync().Result;
                 career = new
@@ -246,7 +262,7 @@ namespace angular6DotnetCore.Controllers
             {
                 try
                 {
-                    var results = await _context.PeopleSocials.Where(m => m.PeopleId == peopleId).Select(n => new
+                    var results = await _context.PeopleSocials.AsNoTracking().Where(m => m.PeopleId == peopleId).Select(n => new
                     {
                         socialName = n.Social.Name,
                         socialId = n.SocialId,
@@ -290,6 +306,8 @@ namespace angular6DotnetCore.Controllers
                     var pupdate = await _context.PeopleSocials.FindAsync(p.Id);
                     pupdate.Like = px.Like;
                     pupdate.Follow = px.Follow;
+                    pupdate.View = px.View;
+                    pupdate.Share = px.Share;
                     _context.Entry(pupdate).State = EntityState.Modified;
                     var num = await _context.SaveChangesAsync();
                     if (num > 0)
@@ -297,6 +315,8 @@ namespace angular6DotnetCore.Controllers
                         return Ok(new
                         {
                             like = px.Like,
+                            view = px.View,
+                            share = px.Share,
                             follow = px.Follow
                         });
                     }
@@ -496,6 +516,37 @@ namespace angular6DotnetCore.Controllers
                 {
                     people.UpdatedDate = DateTime.Now;
                     _context.Entry(people).State = EntityState.Modified;
+                    int value = await _context.SaveChangesAsync();
+                    message.Succeeded = value > 0;
+                    return Ok(message);
+                }
+                catch (Exception ex)
+                {
+                    message.Message += " " + ex.Message;
+                    return BadRequest(message);
+                }
+            }
+            else
+            {
+                message.Message += "you need login to excute this function";
+                return BadRequest(message);
+            }
+        }
+
+        [HttpPost("deleteSocialOfPeople")]
+        public async Task<IActionResult> DeleteSocialOfPeople([FromBody]PeopleSocials peopleSocials)
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            var message = new MessageModel
+            {
+                IsSignedIn = isSignedIn
+            };
+            if (isSignedIn)
+            {
+                try
+                {
+                    peopleSocials = await _context.PeopleSocials.FindAsync(peopleSocials.Id);
+                    _context.Entry(peopleSocials).State = EntityState.Deleted;
                     int value = await _context.SaveChangesAsync();
                     message.Succeeded = value > 0;
                     return Ok(message);

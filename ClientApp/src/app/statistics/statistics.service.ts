@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Career, Social, PeopleSocials } from '../core/statistics.model';
 import { ResponseModel } from '../core/response.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class StatisticsService {
     socials: Social[];
+    socialsSubject: BehaviorSubject<Social[]>;
     constructor(private http: HttpClient) { }
 
     getAllPeoples($id: number = 0) {
@@ -45,5 +47,9 @@ export class StatisticsService {
 
     updateSocial($social: Social) {
         return this.http.post<any>('api/statistics/updateSocial', $social);
+    }
+
+    deleteSocialOfPeople($p: PeopleSocials) {
+        return this.http.post<ResponseModel>('api/statistics/deleteSocialOfPeople', $p);
     }
 }
