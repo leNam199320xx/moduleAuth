@@ -4,13 +4,13 @@
         <div class=''>
             <div class='w-300px ps-fixed'>
                 <div class='txt-center' *ngFor='let soc of socials'>
-                    <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
+                    <div class='iblock img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
                     <div>{{soc.name}}</div>
                 </div>
             </div>
             <div class='w-800px center' *ngFor='let soc of socials'>
                 <div class='txt-center'>
-                    <div class='iblock svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
+                    <div class='iblock img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
                     <div>{{soc.name}}</div>
                 </div>
                 <div *ngIf='soc.careers && soc.careers.length > 0'>
