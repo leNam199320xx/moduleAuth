@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { AuthService } from './core/auth.service';
 import { Subscription } from 'rxjs';
 import { ConfigsService } from './core/configs.service';
-import { AppService } from './app.service';
 import { WindowService } from './core/window.service';
 import { NavService } from './header/nav/nav.service';
+import { SharedService } from './shared/shared.service';
 
 @Component({
     selector: 'app-root',
@@ -19,8 +19,8 @@ export class AppComponent implements OnDestroy, OnInit {
         public authService: AuthService,
         public configsService: ConfigsService,
         public navService: NavService,
-        public appService: AppService,
-        private windowService: WindowService
+        private windowService: WindowService,
+        private sharedService: SharedService
     ) {
         this.navService.sourceSubject.subscribe(res => console.log(1, res));
     }
@@ -39,4 +39,5 @@ export class AppComponent implements OnDestroy, OnInit {
         this.logoutSubscription ? this.logoutSubscription.unsubscribe() : this.logoutSubscription = null;
         this.configSubscription ? this.configSubscription.unsubscribe() : this.configSubscription = null;
     }
+
 }

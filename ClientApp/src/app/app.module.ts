@@ -13,12 +13,12 @@ import { SharedModule } from './shared/shared.module';
 import { HeaderModule } from './header/header.module';
 import { AccountModule } from './account/acc.module';
 import { ConfigsService } from './core/configs.service';
-import { AppService } from './app.service';
 import { WindowService } from './core/window.service';
 import { MaterialModule } from './material.module';
 import { NavMenuComponent } from './header/nav/nav-menu/nav-menu.component';
 import { NavService } from './header/nav/nav.service';
 import { AppCustomPreloader } from './app.preload';
+import { SharedService } from './shared/shared.service';
 const routes: Route[] = [
     { path: '', redirectTo: 'statistics', pathMatch: 'full' },
     { path: 'login', component: LoginComponent, canActivate: [LoginAuthGuardService] },
@@ -56,8 +56,8 @@ const routes: Route[] = [
         LoginAuthGuardService,
         ConfigsService,
         NavService,
-        AppService,
         WindowService,
+        SharedService,
         AppCustomPreloader
     ],
     bootstrap: [AppComponent]

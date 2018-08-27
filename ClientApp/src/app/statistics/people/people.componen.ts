@@ -8,7 +8,6 @@ import { CardModel } from '../../common/list-common/list-common.model';
 })
 export class StatisticPeopleComponent extends ListIconComponent {
     getNumber($card: CardModel) {
-        console.log((<any>$card).socials[0]);
         return [(<any>$card).socials[0].like, (<any>$card).socials[0].follow, (<any>$card).socials[0].view, (<any>$card).socials[0].share];
     }
 }

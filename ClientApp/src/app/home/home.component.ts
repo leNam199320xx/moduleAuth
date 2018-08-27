@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardModel } from '../common/list-common/list-common.model';
+import { SharedService } from '../shared/shared.service';
 
 @Component({
     selector: 'app-home',
@@ -9,7 +10,7 @@ import { CardModel } from '../common/list-common/list-common.model';
 export class HomeComponent {
     cards: CardModel[] = [];
 
-    constructor(private activatedRoute: ActivatedRoute) {
+    constructor(private activatedRoute: ActivatedRoute, private sharedService: SharedService) {
         for (let i = 0; i < 100; i++) {
             const card = {
                 url: '/',

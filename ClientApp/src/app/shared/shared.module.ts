@@ -24,6 +24,8 @@ import { ListItemComponent } from '../common/list-item/list-item.component';
 import { SearchComponent } from '../common/search/search.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { ScrollComponent } from '../common/scroll/scroll.component';
+import { CountryComponent } from '../statistics/country/country.component';
+import { SharedService } from './shared.service';
 
 @NgModule({
     declarations: [
@@ -48,6 +50,7 @@ import { ScrollComponent } from '../common/scroll/scroll.component';
         PageSearchComponent,
         PageDetailComponent,
         PageListComponent,
+        CountryComponent,
         ConfigLayoutComponent
     ],
     imports: [CommonModule, FormsModule, RouterModule],
@@ -67,13 +70,14 @@ import { ScrollComponent } from '../common/scroll/scroll.component';
         ListItemComponent,
         CardCommonComponent,
         PostSimpleComponent,
+        CountryComponent,
 
         HttpClientModule,
         CommonModule,
         FormsModule,
         RouterModule
     ],
-    providers: [],
+    providers: [SharedService],
     entryComponents: [ListDialogComponent]
 })
 export class SharedModule {

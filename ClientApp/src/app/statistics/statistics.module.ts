@@ -6,11 +6,11 @@ import { StatisticsService } from './statistics.service';
 import { StatisticPeopleComponent } from './people/people.componen';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    StatisticsRoutingModule
-  ],
-  declarations: [StatisticsComponent, StatisticPeopleComponent],
-  providers: [StatisticsService]
+    imports: [
+        SharedModule,
+        StatisticsRoutingModule
+    ],
+    declarations: [StatisticsComponent, StatisticPeopleComponent],
+    providers: [StatisticsService]
 })
 export class StatisticsModule { }

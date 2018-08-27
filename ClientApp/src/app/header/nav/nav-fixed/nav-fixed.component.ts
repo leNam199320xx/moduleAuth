@@ -5,7 +5,6 @@ import { ResponseModel } from '../../../core/response.model';
 import { CategoryModel, Type } from '../../../core/db.model';
 import { AuthService } from '../../../core/auth.service';
 import { ConfigsService } from '../../../core/configs.service';
-import { AppService } from '../../../app.service';
 
 @Component({
     selector: 'app-nav-fixed',
@@ -21,8 +20,7 @@ export class NavFixedComponent implements OnDestroy {
 
     constructor(
         public authService: AuthService,
-        public configsService: ConfigsService,
-        public appService: AppService
+        public configsService: ConfigsService
     ) {
         this.authService.loginSub.subscribe((res) => {
             this.loginResponse = res;
