@@ -14,7 +14,6 @@ export class LoginComponent implements OnDestroy {
     loginSubscription: Subscription;
     constructor(private authService: AuthService, private router: Router, private sharedService: SharedService) {
         this.sharedService.countriesSub.subscribe(res => {
-            console.log(1, res);
         });
     }
     login() {

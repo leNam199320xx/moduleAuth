@@ -1,39 +1,23 @@
 <div class='navfixed center bg-primary ps-relative'>
-    <div class='navfixed-left'>
-        <div class='navfixed-item black-light-hover'>
-            <a [routerLink]="['/']"><i class='icons'>home</i></a>
-        </div>
-        <!-- <div *ngFor='let nv of categories' class='navfixed-item black-light-hover'>
-            <a [routerLink]="['/', nv.url]">{{nv.name}}</a>
-        </div> -->
+    <div class='navfixed-left flex align-items-center'>
+        <a class=' black-light-hover' [routerLink]="['/']"><i class='icons'>home</i></a>
+        <app-search class="item" (enterKeyEvent)='getSearchResults($event)'></app-search>
     </div>
-    <div class='navfixed-right'>
+    <div class='navfixed-right flex align-items-center'>
         <ng-container *ngIf='!loginResponse.isSignedIn'>
-            <div class='navfixed-item'>
-                <a [routerLink]="['/login']"><i class="icons">add_shopping_cart</i></a>
-            </div>
-            <div class='navfixed-item'>
-                <a [routerLink]="['/login']">Log In</a>
-            </div>
-            <div class='navfixed-item'>
-                <a [routerLink]="['/register']">Register</a>
-            </div>
+            <!-- <a  [routerLink]="['/login']"><i class="icons">add_shopping_cart</i></a> -->
+            <a [routerLink]="['/login']">Log In</a>
+            <a [routerLink]="['/register']">Register</a>
         </ng-container>
         <ng-container *ngIf='loginResponse.isSignedIn'>
-            <div class='navfixed-item navfixed-username'>
-                <a>
-                    {{loginResponse.username || loginResponse.email}}
-                </a>
-                <div class='navfixed-popup'>
-                    <div class='navfixed-item'>
-                        <a [routerLink]="['/admin']">Manage your page</a>
-                    </div>
-                    <div class='navfixed-item'>
-                        <button (click)="logout()">{{'Log Out'}}</button>
-                    </div>
+            <a class='navfixed-username'>
+                {{loginResponse.username || loginResponse.email}}
+                <div class='navfixed-popup bg-white b-2 b-primary'>
+                    <a class='h-48px' [routerLink]="['/admin']">Manage your page</a>
+                    <a class='h-48px' [routerLink]="['/admin/statistics']">Statistics</a>
+                    <a class='h-48px' (click)="logout()">{{'Log Out'}}</a>
                 </div>
-            </div>
-
+            </a>
         </ng-container>
     </div>
 </div>

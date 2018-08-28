@@ -18,6 +18,7 @@ namespace angular6DotnetCore.Models
         public int CareerId { get; set; }
         [ForeignKey("CareerId")]
         public virtual Career Career { get; set; }
+        public string CountryCode { get; set; }
     }
 
     public class PeopleSocials : GeneralColumn

@@ -1,15 +1,18 @@
 .navfixed {
     width: 100%;
-    font-size: 1.25em;
-}
-
-.navfixed-item {
-    display: inline-block;
-    height: 100%;
-    padding: 10px 8px;
-    cursor: pointer;
-    &:hover {
-        background-color: rgba($color: #000000, $alpha: 0.1);
+    font-size: 1.25rem;
+    a,
+    .item {
+        height: 64px;
+        padding: 0 10px;
+        min-width: 64px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 0.1);
+        }
     }
 }
 
@@ -17,6 +20,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    height: 100%;
 }
 
 .navfixed-left {
@@ -26,12 +30,18 @@
 .navfixed-popup {
     position: absolute;
     top: 100%;
-}
-
-.navfixed-username:active .navfixed-popup {
-    visibility: visible;
-}
-
-.navfixed-username:not(:hover) .navfixed-popup {
     visibility: collapse;
+    right: 0;
+}
+
+.navfixed-username:hover {
+    .navfixed-popup {
+        visibility: visible;
+    }
+}
+
+.navfixed-username:not(:hover) {
+    .navfixed-popup {
+        visibility: collapse;
+    }
 }

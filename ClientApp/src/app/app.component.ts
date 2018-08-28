@@ -18,11 +18,8 @@ export class AppComponent implements OnDestroy, OnInit {
     constructor(
         public authService: AuthService,
         public configsService: ConfigsService,
-        public navService: NavService,
-        private windowService: WindowService,
-        private sharedService: SharedService
+        private windowService: WindowService
     ) {
-        this.navService.sourceSubject.subscribe(res => console.log(1, res));
     }
     @HostListener('window:resize', ['$event']) onresize(_event: Event) {
         this.windowService.setBreakpoint();

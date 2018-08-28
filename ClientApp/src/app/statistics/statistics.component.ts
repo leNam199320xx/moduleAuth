@@ -16,6 +16,7 @@ export class StatisticsComponent {
     errorMessageOld: MessageModel;
     cards: CardModel[] = [];
     socials: Social[] = this.statisticsService.socials;
+    socialSelected: Social = new Social();
     datafull: StatisticCardModel[] = [];
     // dataSub: Subject<StatisticCardModel[]> = new Subject();
     constructor(private statisticsService: StatisticsService) {
@@ -36,7 +37,6 @@ export class StatisticsComponent {
     }
     mapData(careers: Career[]) {
         const _mapData: StatisticCardModel[] = [];
-        console.log(careers);
         for (let i = 0; i < careers.length; i++) {
             const _one = careers[i];
             const dataCards: CardModel[] = [];
@@ -58,20 +58,28 @@ export class StatisticsComponent {
         }
         return _mapData;
     }
-    getSearchResults($val: string) {
-        if ($val && $val !== '') {
-            // search
-        } else {
-            // error message
-            this.errorMessage = new MessageModel();
-            this.errorMessage.key = 404;
-            this.errorMessage.message = 'Not found';
-            this.errorMessage.type = MessageType.error;
-        }
-    }
-
     closeMessageDialog() {
         this.errorMessageOld = this.errorMessage;
         this.errorMessage = undefined;
+    }
+
+    socialBtn($social: Social) {
+        if ($social.id === this.socialSelected.id) {
+            $social._activated = false;
+            this.socialSelected = new Social();
+        } else {
+            this.socials.forEach(rs => {
+                rs._activated = false;
+            });
+            $social._activated = true;
+            this.socialSelected = $social;
+        }
+    }
+
+    checkSocial($social: Social) {
+        if ((this.socialSelected.id === $social.id) || (this.socialSelected.id === 0)) {
+            return true;
+        }
+        return false;
     }
 }

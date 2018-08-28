@@ -43,9 +43,10 @@ export class PeopleSocials extends GeneralColumn {
 }
 
 export class Social extends GeneralColumn {
-    id: number;
+    id = 0;
     name: string;
     _enableEditPanel = false;
+    _activated = false;
     careers: Career[] = [];
 }
 

@@ -24,7 +24,6 @@ export class AdminPeopleSocialComponent {
 
         } else {
             this.statisticsService.saveSocialForPeople(this.social).subscribe(res => {
-                console.log(res);
             });
         }
     }

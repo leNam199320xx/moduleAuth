@@ -1,28 +1,31 @@
 <div class='statistics'>
-    <app-search (enterKeyEvent)='getSearchResults($event)'></app-search>
-    <app-country></app-country>
     <div class='ptb-2 fs-lg'>
         <div class=''>
-            <div class='w-300px ps-fixed'>
-                <div class='txt-center' *ngFor='let soc of socials'>
-                    <div class='iblock img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
+            <div class='ps-fixed bg-white b-2 p-3 b-primary'>
+                <div class='txt-center pb-2' *ngFor='let soc of socials'>
+                    <div class='iblock btn btn-circle img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36' (click)='socialBtn(soc)'>
+                        <div [ngClass]='{"activated": soc._activated}'></div>
+                    </div>
                     <div>{{soc.name}}</div>
                 </div>
             </div>
             <div class='w-800px center' *ngFor='let soc of socials'>
-                <div class='txt-center'>
-                    <div class='iblock img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
-                    <div>{{soc.name}}</div>
-                </div>
-                <div *ngIf='soc.careers && soc.careers.length > 0'>
-                    <ng-container *ngFor='let item of mapData(soc.careers)'>
-                        <app-statistic-people class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")' [cards]='item.data' [pageSize]='10'
-                            [isLoadMore]='true' [name]='item.name'></app-statistic-people>
-                    </ng-container>
-                </div>
+                <ng-container *ngIf='checkSocial(soc)'>
+                    <div class='txt-center'>
+                        <div class='iblock img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
+                        <div>{{soc.name}}</div>
+                    </div>
+                    <div *ngIf='soc.careers && soc.careers.length > 0'>
+                        <ng-container *ngFor='let item of mapData(soc.careers)'>
+                            <app-statistic-people class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")' [cards]='item.data' [pageSize]='10'
+                                [isLoadMore]='true' [name]='item.name'></app-statistic-people>
+                        </ng-container>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>
+    <app-country></app-country>
 </div>
 
 <app-message-dialog [message]='errorMessage' [enabled]='errorMessage' (closeEvent)='closeMessageDialog()'></app-message-dialog>

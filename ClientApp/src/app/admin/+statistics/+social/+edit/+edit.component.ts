@@ -12,7 +12,6 @@ export class AdminSocialEditComponent {
     }
     saveBtn() {
         this.statisticsService.updateSocial(this.social).subscribe(res => {
-            console.log('update social - ', res);
         });
     }
 

@@ -5,6 +5,7 @@ import { ResponseModel } from '../../../core/response.model';
 import { CategoryModel, Type } from '../../../core/db.model';
 import { AuthService } from '../../../core/auth.service';
 import { ConfigsService } from '../../../core/configs.service';
+import { MessageModel, MessageType } from '../../../shared/message-dialog/message.model';
 
 @Component({
     selector: 'app-nav-fixed',
@@ -17,6 +18,7 @@ export class NavFixedComponent implements OnDestroy {
     configNav: GeneralConfigModel = new GeneralConfigModel();
     navs: Type[] = [];
     categories: CategoryModel[] = [];
+    errorMessage: MessageModel;
 
     constructor(
         public authService: AuthService,
@@ -36,4 +38,16 @@ export class NavFixedComponent implements OnDestroy {
     ngOnDestroy() {
         this.logoutSubscription ? this.logoutSubscription.unsubscribe() : this.logoutSubscription = null;
     }
+    getSearchResults($val: string) {
+        if ($val && $val !== '') {
+            // search
+        } else {
+            // error message
+            this.errorMessage = new MessageModel();
+            this.errorMessage.key = 404;
+            this.errorMessage.message = 'Not found';
+            this.errorMessage.type = MessageType.error;
+        }
+    }
+
 }

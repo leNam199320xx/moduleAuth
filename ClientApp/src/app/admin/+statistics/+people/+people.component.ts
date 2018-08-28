@@ -15,11 +15,9 @@ export class AdminPeopleComponent implements OnInit {
 
     }
     ngOnInit() {
-        console.log(this.newPeople);
     }
     saveBtn() {
         if (!this.careerId) {
-            console.log('input a career id');
             return;
         }
         this.newPeople.careerId = this.careerId;
