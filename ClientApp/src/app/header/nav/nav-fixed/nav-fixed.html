@@ -1,6 +1,6 @@
 <div class='navfixed center bg-primary ps-relative'>
     <div class='navfixed-left flex align-items-center'>
-        <a class=' black-light-hover' [routerLink]="['/']"><i class='icons'>home</i></a>
+        <a class='black-light-hover' [routerLink]="['/']"><div class='w-full h-full img' [ngStyle]='{"background-image": "url(/assets/icons/star_64.png)"}'></div></a>
         <app-search class="item" (enterKeyEvent)='getSearchResults($event)'></app-search>
     </div>
     <div class='navfixed-right flex align-items-center'>

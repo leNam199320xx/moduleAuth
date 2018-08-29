@@ -7,7 +7,9 @@
     src: url("font/MaterialIcons-Regular.eot"), local('Material Icons'), local('MaterialIcons-Regular'), url("font/MaterialIcons-Regular.woff2") format('woff2'), url("font/MaterialIcons-Regular.woff") format('woff'), url("font/MaterialIcons-Regular.ttf") format('truetype');
 }
 
-.icons {
+.icons {   
+    margin: auto;
+    display: block;
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;

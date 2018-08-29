@@ -1,5 +1,4 @@
 @import 'variables.scss';
-@import 'icons.scss';
 @import 'body.scss';
 @import 'input.scss';
 @import 'button.scss';
@@ -7,6 +6,7 @@
 @import 'nav/navfixed.scss';
 @import 'nav/footer.scss';
 @import 'scrollbar.scss';
+@import 'icons.scss';
 @mixin generateSize ($size, $name) {
     .w-#{$name} {
         width: 100%;
@@ -185,6 +185,7 @@
 @include generatePosition(absolute);
 @include generatePosition(relative);
 @include genSquare(30px, 30);
+@include genSquare(32px, 32);
 @include genSquare(36px, 36);
 @include genSquare(48px, 48);
 @include genSquare(64px, 64);
@@ -314,6 +315,7 @@
 
 @include generateMarginPadding("", "auto", auto);
 @include generateMarginPadding("t", 64px, 64px);
+@include generateMarginPadding('', 0, 0);
 @import '../../common/common.scss';
 @import '../../admin/admin.scss';
 @import '../../account/acc.scss';

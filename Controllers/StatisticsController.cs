@@ -98,8 +98,8 @@ namespace angular6DotnetCore.Controllers
             {
                 IsSignedIn = isSignedIn
             };
-            List<PeopleSocials> peoples = await _context.PeopleSocials.AsNoTracking().Select(
-                m => new PeopleSocials
+            List<PeopleSocialsTotal> peopleSocials = await _context.PeopleSocials.AsNoTracking().Select(
+                m => new PeopleSocialsTotal
                 {
                     Id = m.Id,
                     PeopleId = m.PeopleId,
@@ -107,26 +107,40 @@ namespace angular6DotnetCore.Controllers
                     Share = m.Share,
                     View = m.View,
                     Like = m.Like,
-                    Follow = m.Follow
-                }).OrderBy(m => m.PeopleId).OrderBy(m => m.SocialId).ToListAsync();
+                    Follow = m.Follow,
+                    Total = m.Like ?? 0 + m.Share ?? 0 + m.View ?? 0 + m.Follow ?? 0
+                }).OrderByDescending(m => m.Total).ToListAsync();
             List<Career> careers = await _context.Careers.OrderBy(m => m.Index).AsNoTracking().Select(m => new Career
             {
                 Id = m.Id,
                 Name = m.Name,
                 Index = m.Index
             }).ToListAsync();
-            var socials = await _context.Socials.OrderBy(m => m.Index).AsNoTracking().Select(m => new
+            var socials = await _context.Socials.OrderBy(m => m.Index).AsNoTracking().Select(m => new Social
             {
-                m.Id,
-                m.Name,
-                m.Index
+                Id = m.Id,
+                Name = m.Name,
+                Index = m.Index
             }).ToListAsync();
+            var peoples = await _context.Peoples.Select(m => new People
+            {
+                Id = m.Id,
+                Index = m.Index,
+                FullName = m.FullName,
+                ShortName = m.ShortName,
+                Avatar = m.Avatar,
+                ImagesUrl = m.ImagesUrl,
+                Url = m.Url,
+                Message = m.Message,
+                CountryCode = m.CountryCode,
+                CareerId = m.CareerId
+            }).OrderBy(m => m.CountryCode).ThenBy(m => m.CareerId).ToListAsync();
             return Ok(socials.Select(m => new
             {
                 m.Id,
                 m.Name,
                 m.Index,
-                careers = GetPeopleBySocialId(m.Id, careers, peoples)
+                careers = GetPeopleBySocialId(m.Id, careers, peopleSocials, peoples)
             }).ToList());
         }
         [HttpGet("getCareers")]
@@ -150,8 +164,26 @@ namespace angular6DotnetCore.Controllers
         public async Task<IActionResult> GetPeoples([FromQuery] int socialId)
         {
             var isSignedIn = _signInManager.IsSignedIn(User);
-            var careers = await _context.Careers.AsNoTracking().OrderBy(m => m.Index).ToListAsync();
-            var peoples = await _context.PeopleSocials.AsNoTracking().OrderBy(m => m.Index).ToListAsync();
+            var careers = await _context.Careers.AsNoTracking().OrderBy(m => m.Index).Select(
+                m => new Career
+                {
+                    Id = m.Id,
+                    Index = m.Index,
+                    Name = m.Name
+                }
+                ).ToListAsync();
+            var peoples = await _context.PeopleSocials.AsNoTracking().OrderBy(m => m.Index)
+                .ThenByDescending(m => new
+                {
+                    Total = m.Like + m.Share + m.View + m.Follow,
+                    m.Like,
+                    m.Share,
+                    m.View,
+                    m.Follow,
+                    m.Index,
+                    m.Id
+                })
+                .ToListAsync();
             var message = new MessageModel
             {
                 IsSignedIn = isSignedIn,
@@ -177,10 +209,6 @@ namespace angular6DotnetCore.Controllers
                     m.ShortName,
                     m.ImagesUrl,
                     m.Url,
-                    //m.CreatedDate,
-                    //m.UpdatedDate,
-                    //m.Message,
-                    //m.Enabled,
                     socials = peopleSocials.Where(x => x.PeopleId == m.Id).Select(n => new
                     {
                         n.Id,
@@ -188,7 +216,8 @@ namespace angular6DotnetCore.Controllers
                         n.PeopleId,
                         n.Like,
                         n.Share,
-                        n.Follow
+                        n.Follow,
+                        Total = setTotal(n)
                     })
                 }).ToListAsync().Result;
                 career = new
@@ -205,27 +234,23 @@ namespace angular6DotnetCore.Controllers
             return listData;
         }
 
-        public List<object> GetPeopleBySocialId(int socialId, List<Career> careers, List<PeopleSocials> peoples)
+        public List<object> GetPeopleBySocialId(int socialId, List<Career> careers, List<PeopleSocialsTotal> peopleSocials, List<People> peoples)
         {
             List<object> listData = new List<object>();
-            List<PeopleSocials> peopleSocials = peoples.Where(m => m.SocialId == socialId).ToList();
+            List<PeopleSocialsTotal> peopleSocialsTotal = peopleSocials.Where(m => m.SocialId == socialId).ToList();
             careers.ForEach(e =>
             {
                 object career = new object();
-                var listPeople = _context.Peoples.Where(p => p.CareerId == e.Id).Select(m => new
+                var resultPeoples = peoples.Where(m => m.CareerId == e.Id).Select(m => new
                 {
                     m.Id,
-                    //m.Index,
+                    m.Index,
                     m.Avatar,
                     m.FullName,
                     m.ShortName,
                     m.ImagesUrl,
                     m.Url,
-                    //m.CreatedDate,
-                    //m.UpdatedDate,
-                    //m.Message,
-                    //m.Enabled,
-                    socials = peopleSocials.Where(x => x.PeopleId == m.Id && x.SocialId == socialId).Select(n => new
+                    socials = peopleSocialsTotal.Where(x => x.PeopleId == m.Id).Select(n => new
                     {
                         n.Id,
                         n.SocialId,
@@ -233,21 +258,33 @@ namespace angular6DotnetCore.Controllers
                         n.Like,
                         n.Share,
                         n.Follow,
-                        n.View
-                    })
-                }).ToListAsync().Result;
+                        n.View,
+                        n.Total
+                    }).OrderByDescending(t => t.Total)
+                }).ToList();
+
                 career = new
                 {
                     id = e.Id,
                     name = e.Name,
-                    peoples = listPeople.Where(m => m.socials.Count() > 0)
+                    peoples = resultPeoples.Where(m => m.socials.Count() > 0)
                 };
-                if (listPeople != null && listPeople.Count > 0)
+
+                if (resultPeoples != null && resultPeoples.Count > 0)
                 {
                     listData.Add(career);
                 }
             });
             return listData;
+        }
+
+        public long setTotal(PeopleSocials n)
+        {
+            long like = n.Like ?? 0;
+            long follow = n.Follow ?? 0;
+            long view = n.View ?? 0;
+            long share = n.Share ?? 0;
+            return like + share + follow + view;
         }
 
         [HttpGet("GetSocialsByPeopleId")]

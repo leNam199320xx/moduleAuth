@@ -5,12 +5,17 @@
         {{name}}
     </div>
     <div class="ps-relative scrollbar-custom-3 scrollbar-y mh-600px">
-        <ng-container *ngFor='let card of displayCards'>
+        <ng-container *ngFor='let card of displayCards; let ix = index;'>
             <div class='item p-1 mb-3 flex align-items-center'>
-                <div class='img-circle img-cover sq-64 iblock' [ngStyle]='{"background-image": "url(" + card.avatar + ")"}'></div>
+                <div class='img-circle img-cover sq-64 iblock ps-relative' [ngStyle]='{"background-image": "url(" + card.avatar + ")"}'>
+                    <ng-container *ngIf='ix < 3'>
+                        <div class="img sq-48 ps-absolute" [ngStyle]='{"background-image": "url(/assets/icons/star"+(ix + 1)+"_64.png)", "right": "-40%", "top": "40%"}'></div>
+                    </ng-container>
+                </div>
                 <div class='pl-2 w-full-64px align-center'>
                     <div class="block w-full-128px">
-                        <a [routerLink]='card.url' [innerHTML]='card.title'></a>
+                        <a [routerLink]='card.url' [innerHTML]='card.title'>
+                        </a>
                         <div [innerHTML]='card.message'>1</div>
                     </div>
 
@@ -37,6 +42,5 @@
         </ng-container>
         <!-- <app-scroll></app-scroll> -->
     </div>
-    <app-paging [page]='pageConfig' (backClick)='back($event)' (nextClick)='next($event)' (loadMoreClick)='loadMore($event)'
-        [hasNumber]='false'></app-paging>
+    <app-paging [page]='pageConfig' (backClick)='back($event)' (nextClick)='next($event)' (loadMoreClick)='loadMore($event)' [hasNumber]='false'></app-paging>
 </div>

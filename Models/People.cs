@@ -36,6 +36,16 @@ namespace angular6DotnetCore.Models
         public string Url { get; set; }
     }
 
+    public class PeopleSocialsTotal : PeopleSocials
+    {
+        public long Total { get; set; }
+        public long getTotal()
+        {
+            Total = Like ?? 0 + Share ?? 0 + View ?? 0 + Follow ?? 0;
+            return Total;
+        }
+    }
+
     public class Social : GeneralColumn
     {
         [Required]
