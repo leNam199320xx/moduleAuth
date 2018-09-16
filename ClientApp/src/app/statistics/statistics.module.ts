@@ -1,16 +1,25 @@
 import { NgModule } from '@angular/core';
-import { StatisticsRoutingModule } from './statistics-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { StatisticsComponent } from './statistics.component';
 import { StatisticsService } from './statistics.service';
 import { StatisticPeopleComponent } from './people/people.componen';
+import { StatisticsGraphComponent } from './graph/graph.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
         SharedModule,
-        StatisticsRoutingModule
+        RouterModule.forChild([{
+            path: '',
+            component: StatisticsComponent
+        },
+        {
+            path: 'graph',
+            component: StatisticsGraphComponent
+        }])
     ],
-    declarations: [StatisticsComponent, StatisticPeopleComponent],
+    exports: [RouterModule],
+    declarations: [StatisticsComponent, StatisticPeopleComponent, StatisticsGraphComponent],
     providers: [StatisticsService]
 })
 export class StatisticsModule { }
