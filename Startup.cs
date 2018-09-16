@@ -1,5 +1,7 @@
 using angular6DotnetCore.Areas.Identity.Services;
+using angular6DotnetCore.Logic;
 using angular6DotnetCore.Models;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,12 +18,12 @@ namespace angular6DotnetCore
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,7 +36,7 @@ namespace angular6DotnetCore
             });
 
             services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AmazonVirtualMachineConnection")));
-            //services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
 
             services.AddIdentity<IdentityUser, IdentityRole>(config =>
@@ -53,7 +55,7 @@ namespace angular6DotnetCore
                 options.Password.RequiredUniqueChars = 6;
 
                 // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(30);
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
 
@@ -92,6 +94,9 @@ namespace angular6DotnetCore
                 options.AppId = appId;
                 options.AppSecret = appSecret;
             });
+            services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("AmazonVirtualMachineConnection")));
+            // add job autorun            
+            Console.WriteLine("--add user context");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,7 +111,8 @@ namespace angular6DotnetCore
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -117,25 +123,27 @@ namespace angular6DotnetCore
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
-                //routes.MapRoute(
-                //   name: "spa-login",
-                //   template: "{*url}",
-                //   defaults: new { controller = "Account", action = "Login" });
             });
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
-
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
 
+            RecurringJob.AddOrUpdate(() => Run(), Cron.Daily);
+        }
+
+        public void Run()
+        {
+            var infoPeople = new InfoPeople();
+            var optionsBuilder = new DbContextOptionsBuilder<UserDbContext>();
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("AmazonVirtualMachineConnection"));
+            var dbContext = new UserDbContext(optionsBuilder.Options);
+            var res = infoPeople.CrawlFull(dbContext).Result;
         }
     }
 }

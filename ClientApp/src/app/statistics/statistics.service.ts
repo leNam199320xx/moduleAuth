@@ -52,4 +52,8 @@ export class StatisticsService {
     deleteSocialOfPeople($p: PeopleSocials) {
         return this.http.post<ResponseModel>('api/statistics/deleteSocialOfPeople', $p);
     }
+
+    runCrawler() {
+        return this.http.post<any>('api/statistics/runCrawler', {});
+    }
 }

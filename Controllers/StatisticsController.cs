@@ -40,7 +40,13 @@ namespace angular6DotnetCore.Controllers
             _logger = logger;
             _emailSender = emailSender;
             _hostingEnvironment = hostingEnvironment;
-
+            Console.WriteLine("statistic started");
+        }
+        public async Task<bool> CrawlerExcute()
+        {
+            Console.WriteLine("get full socials info");
+            InfoPeople infoPeople = new InfoPeople();
+            return await infoPeople.CrawlFull(_context);
         }
 
         public async Task<IActionResult> SaveUpdatedSocial([FromBody] PeopleSocials social)
@@ -339,22 +345,23 @@ namespace angular6DotnetCore.Controllers
             {
                 try
                 {
-                    var px = info.GetInfo(DateTime.Now.Ticks.ToString(), p.Url);
-                    var pupdate = await _context.PeopleSocials.FindAsync(p.Id);
-                    pupdate.Like = px.Like;
-                    pupdate.Follow = px.Follow;
-                    pupdate.View = px.View;
-                    pupdate.Share = px.Share;
-                    _context.Entry(pupdate).State = EntityState.Modified;
-                    var num = await _context.SaveChangesAsync();
-                    if (num > 0)
+                    //var px = info.GetInfo(DateTime.Now.Ticks.ToString(), p.Url);
+                    //var pupdate = await _context.PeopleSocials.FindAsync(p.Id);
+                    //pupdate.Like = px.Like;
+                    //pupdate.Follow = px.Follow;
+                    //pupdate.View = px.View;
+                    //pupdate.Share = px.Share;
+                    //_context.Entry(pupdate).State = EntityState.Modified;
+                    //var num = await _context.SaveChangesAsync();
+                    var item = await info.UpdateUser(_context, p);
+                    if (item != null)
                     {
                         return Ok(new
                         {
-                            like = px.Like,
-                            view = px.View,
-                            share = px.Share,
-                            follow = px.Follow
+                            like = item.Like,
+                            view = item.View,
+                            share = item.Share,
+                            follow = item.Follow
                         });
                     }
                     message.Succeeded = false;
@@ -599,6 +606,15 @@ namespace angular6DotnetCore.Controllers
                 message.Message += "you need login to excute this function";
                 return BadRequest(message);
             }
+        }
+
+        [HttpPost("runCrawler")]
+        public async Task<IActionResult> RunCrawler ()
+        {
+            return Ok(new
+            {
+                value = await CrawlerExcute()
+            });
         }
     }
 }

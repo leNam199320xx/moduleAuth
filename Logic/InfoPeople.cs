@@ -1,11 +1,10 @@
 ﻿using angular6DotnetCore.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -13,6 +12,7 @@ namespace angular6DotnetCore.Logic
 {
     public class InfoPeople
     {
+        private readonly UserDbContext _context;
         public PeopleSocials GetInfo(string code, string url)
         {
             if (url.ToLower().IndexOf(".facebook.") > -1)
@@ -45,8 +45,8 @@ namespace angular6DotnetCore.Logic
             var text = client.DownloadString(pathPeople);
             var inx = text.IndexOf("lượt xem");
             var inx2 = text.IndexOf("người đăng ký");
-            int ?number1 = null;
-            int ?number2 = null;
+            int? number1 = null;
+            int? number2 = null;
             if (inx > -1)
             {
                 var result1 = text.Substring(inx - 50, 50).Split('"').Reverse().ToList();
@@ -133,5 +133,84 @@ namespace angular6DotnetCore.Logic
             };
         }
 
+        public async Task<PeopleSocials> UpdateUser(UserDbContext _context, PeopleSocials p)
+        {
+            var px = GetInfo(DateTime.Now.Ticks.ToString(), p.Url);
+            var pupdate = await _context.PeopleSocials.FindAsync(p.Id);
+            pupdate.Like = px.Like;
+            pupdate.Follow = px.Follow;
+            pupdate.View = px.View;
+            pupdate.Share = px.Share;
+            _context.Entry(pupdate).State = EntityState.Modified;
+            var num = await _context.SaveChangesAsync();
+            if (num > 0)
+            {
+                return pupdate;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<PeopleSocialsByDate> CrawlSocial(UserDbContext _context, PeopleSocials p)
+        {
+            Console.WriteLine("-- url: " + p.Url);
+            var newItem = new PeopleSocialsByDate();
+            var px = GetInfo(DateTime.Now.Ticks.ToString(), p.Url);
+
+            newItem.Like = px.Like;
+            newItem.Follow = px.Follow;
+            newItem.View = px.View;
+            newItem.Share = px.Share;
+            newItem.PeopleSocialsId = p.Id;
+            return newItem;
+        }
+
+        public async Task<List<PeopleSocialsByDate>> CrawlSocialsByPeopleId(UserDbContext _context, int peopleId)
+        {
+            Console.WriteLine("-- people id: " + peopleId);
+            var socials = _context.PeopleSocials.Select(m => new PeopleSocials
+            {
+                Id = m.Id,
+                PeopleId = m.PeopleId,
+                Url = m.Url
+            }).Where(m => m.PeopleId == peopleId).ToList();
+            List<PeopleSocialsByDate> crawlSocials = new List<PeopleSocialsByDate>();
+            for (var i = 0; i < socials.Count; i++)
+            {
+                var newItem = await CrawlSocial(_context, socials[i]);
+                crawlSocials.Add(newItem);
+            }
+
+            return crawlSocials;
+        }
+
+        public async Task<bool> CrawlFull(UserDbContext _context)
+        {
+            try
+            {
+                if (_context == null)
+                {
+                    return false;
+                }
+                var peoples = _context.Peoples.Select(m => m.Id).ToList();
+                List<PeopleSocialsByDate> fullCrawledData = new List<PeopleSocialsByDate>();
+                for (var i = 0; i < peoples.Count; i++)
+                {
+                    Console.WriteLine("-- index: " + i);
+                    var crawledData = await CrawlSocialsByPeopleId(_context, peoples[i]);
+                    fullCrawledData = fullCrawledData.Concat(crawledData).ToList();
+                }
+                await _context.PeopleSocialsByDates.AddRangeAsync(fullCrawledData);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
     }
 }

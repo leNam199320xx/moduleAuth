@@ -58,4 +58,9 @@ export class AdminStatisticsComponent {
     closeSocial() {
         this.getAllSocial();
     }
+    runCrawler() {
+        this.dataService.runCrawler().subscribe(res => {
+            this.data = res.results;
+        });
+    }
 }

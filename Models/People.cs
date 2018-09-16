@@ -14,7 +14,7 @@ namespace angular6DotnetCore.Models
         public string ImagesUrl { get; set; }
         public string Message { get; set; }
         public string Avatar { get; set; }
-        public virtual List<PeopleSocials> PeopleSocials { get; set; }
+        //public virtual List<PeopleSocials> PeopleSocials { get; set; }
         public int CareerId { get; set; }
         [ForeignKey("CareerId")]
         public virtual Career Career { get; set; }
@@ -34,6 +34,22 @@ namespace angular6DotnetCore.Models
         public long? Share { get; set; }
         public long? Follow { get; set; }
         public string Url { get; set; }
+        //public virtual List<PeopleSocialsByDate> PeopleSocialsByDates { get; set; }
+    }
+
+    public class PeopleSocialsByDate : GeneralColumn
+    {
+        public int PeopleSocialsId { get; set; }
+        [ForeignKey("PeopleSocialsId")]
+        public PeopleSocials PeopleSocials { get; set; }
+        public long? Like { get; set; }
+        public long? View { get; set; }
+        public long? Share { get; set; }
+        public long? Follow { get; set; }
+        public PeopleSocialsByDate()
+        {
+            CreatedDate = DateTime.Now;
+        }
     }
 
     public class PeopleSocialsTotal : PeopleSocials
@@ -50,14 +66,14 @@ namespace angular6DotnetCore.Models
     {
         [Required]
         public string Name { get; set; }
-        public virtual List<PeopleSocials> PeopleSocials { get; set; }
+        //public virtual List<PeopleSocials> PeopleSocials { get; set; }
     }
 
     public class Career : GeneralColumn
     {
         [Required]
         public string Name { get; set; }
-        public virtual List<People> Peoples { get; set; }
+        //public virtual List<People> Peoples { get; set; }
     }
 
     public class GeneralColumn : GeneralColumnNoId

@@ -4,6 +4,7 @@
     </div>
     <button (click)='openSocialPanel()'>Danh sách mạng xã hội</button>
     <button (click)='openCareerPanel()'>Danh sách công việc</button>
+    <button (click)='runCrawler()'>Thu thập</button>
     <app-admin-career *ngIf='enabledCareerPanel'></app-admin-career>
     <app-admin-social *ngIf='enabledSocialPanel' [socials]='socials' (closeEvent)='closeSocial()'></app-admin-social>
     <div class='table'>

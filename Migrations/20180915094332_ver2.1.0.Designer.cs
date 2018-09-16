@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using angular6DotnetCore.Models;
 
 namespace angular6DotnetCore.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180915094332_ver2.1.0")]
+    partial class ver210
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,25 +128,17 @@ namespace angular6DotnetCore.Migrations
 
                     b.Property<bool?>("Enabled");
 
-                    b.Property<long?>("Follow");
-
                     b.Property<int>("Index");
-
-                    b.Property<long?>("Like");
 
                     b.Property<int>("PeopleSocialsId");
 
-                    b.Property<long?>("Share");
-
                     b.Property<DateTime?>("UpdatedDate");
-
-                    b.Property<long?>("View");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PeopleSocialsId");
 
-                    b.ToTable("PeopleSocialsByDates");
+                    b.ToTable("PeopleSocialsByDate");
                 });
 
             modelBuilder.Entity("angular6DotnetCore.Models.Post", b =>
