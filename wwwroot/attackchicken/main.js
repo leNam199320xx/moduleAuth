@@ -1,11 +1,29 @@
-(function() {
+(function () {
     "use strict";
+    /**
+     * ReInstall request animation frame
+     */
+    window.requestAnimationFrame = (function () {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFame ||
+            window.msRequestAnimationFrame ||
+            function (callback, element) {
+                return window.setTimeout(
+                    function () {
+                        callback(Date.now());
+                    }, 1000 / 60);
+            };
+    })();
+
     /**
      * Set default config
      */
     var height = 600;
     var width = 360;
     var pages = ["history", "start", "main", "result"];
+    var assetsLoaded = false;
     var images = [
         { name: "start_background" },
         { name: "start_button_history" },
@@ -47,6 +65,8 @@
      * Load component
      */
     var container = document.getElementById("game_container");
+    var process = document.getElementById("process");
+    var processPercent = document.getElementById("process_percent");
     var ns = "http://www.w3.org/2000/svg";
     if (typeof (container) !== "object") {
         container = document.createElementNS(ns, "svg");
@@ -60,7 +80,7 @@
     /**
      * Common actions and animations
      */
-    var ELEMENT = function(targetString) {
+    var ELEMENT = function (targetString) {
         if (targetString.indexOf("#") === 0) {
             this.target = document.getElementById(targetString.replace("#", ""));
         } else if (targetString.indexOf(".") === 0) {
@@ -72,19 +92,19 @@
     };
     ELEMENT.prototype.target = undefined;
     ELEMENT.prototype.type = "img";
-    ELEMENT.prototype.click = function() { };
-    ELEMENT.prototype.hide = function() {
+    ELEMENT.prototype.click = function () { };
+    ELEMENT.prototype.hide = function () {
         this.target.classList.add("hidden");
     };
-    ELEMENT.prototype.show = function() {
+    ELEMENT.prototype.show = function () {
         this.target.classList.remove("hidden");
     };
-    var CLICK = function($elements) {
+    var CLICK = function ($elements) {
         for (var i = 0, l = $elements.length; i < l; i++) {
             if ($elements.target) {
                 var e = $elements[i];
                 var t = e.target;
-                $elements[i].click = function(e) {
+                $elements[i].click = function (e) {
                     e.click();
                 };
                 $elements[i].target.addEventListener("click", $elements[i].click, false);
@@ -93,11 +113,44 @@
     };
     CLICK.prototype.enabledTouchSupport = false;
     CLICK.prototype.enabledMultiTouch = false;
-    var ANIMATION = function($elements, $actionName) {
-
+    var ANIMATION = function ($elements) {
+        $acceleration = $acceleration || 1;
+        var e = $elements;
+        var startX = e.getAttribute("x");
+        var startY = e.getAttribute("y");
+    };
+    ANIMATION.prototype.rootPosition = { x: 0, y: 0 };
+    ANIMATION.prototype.rootScale = 1;
+    ANIMATION.prototype.rootRotate = 0;
+    ANIMATION.prototype.moveFrame = 0;
+    ANIMATION.prototype.rotateFrame = 0;
+    ANIMATION.prototype.scaleFrame = 0;
+    ANIMATION.prototype.move = function ($x, $y, $secondstime, $delayTime) {
+        $x = $x ? $x : 0;
+        $x = $y ? $y : 0;
+        var distanceWidth = $x - this.rootPosition.x;
+        var distanceHeight = $y - this.rootPosition.y;
+        this.moveFrame = setFrameCount($secondstime);
+    };
+    ANIMATION.prototype.rotate = function ($rotate, $secondstime, $delayTime) {
+        $rotate = $rotate ? $rotate : 0;
+        var distance = $rotate - this.rootRotate;
+        this.rotateFrame = setFrameCount($secondstime);
+    };
+    ANIMATION.prototype.scale = function ($scale, $secondstime, $delayTime) {
+        $scale = $scale ? $scale : 1;
+        var distance = $rotate - this.rootRotate;
+        this.scaleFrame = setFrameCount($secondstime);
     };
 
-    var LOAD = function($filenames, $type) {
+    function setFrameCount($secondstime){
+        $secondstime = $secondstime ? $secondstime : 0;
+        var tickTime = parseInt(1000 / fps, 10);
+        var frameCount = parseInt($secondstime / tickTime, 10);
+        return frameCount;
+    }
+
+    var LOAD = function ($filenames, $type) {
         if ($type === "audio") {
 
         } else if ($type === "image") {
@@ -109,12 +162,15 @@
             }
             var loadingCount = loadingImages.length;
             var loadedCount = 0;
-            var load = function() {
+            var load = function () {
                 loadingImages[loadedCount].src = loadingImages[loadedCount].srcString;
                 loadingImages[loadedCount].onload =
-                    loadingImages[loadedCount].onerror = function() {
+                    loadingImages[loadedCount].onerror = function () {
                         loadedCount++;
                         if (loadedCount < loadingCount) {
+                            var _widthPercent = (((loadedCount + 1) / loadingCount) * 280);
+                            processPercent.setAttribute("width", _widthPercent);
+                            assetsLoaded = true;
                             new load();
                         }
                     };
@@ -125,12 +181,27 @@
     };
 
     /**
-     * Excute game
+     * Timeline for each item
+     * time is seconds
+     */
+    var TIMELINE = function () { };
+    TIMELINE.prototype.action = undefined;
+    TIMELINE.prototype.time = 0;
+    TIMELINE.prototype.frame = 0;
+    TIMELINE.prototype.startTime = 0;
+    TIMELINE.prototype.delayTime = 0;
+    TIMELINE.prototype.hasLoop = false;
+    TIMELINE.prototype.timelineChildren = [];
+    /**
+     * functions of game
+     * click functions
+     * load asset functions
      */
 
     function startGame() {
         hidePages();
         mainPage.show();
+        runGame();
     }
 
     function gotoHistory() {
@@ -151,11 +222,11 @@
     }
 
     var startBtn = new ELEMENT("#start_button");
-    startBtn.click = function(target) {
+    startBtn.click = function (target) {
         startGame();
     };
     var historyBtn = new ELEMENT("#start_button");
-    historyBtn.click = function(target) {
+    historyBtn.click = function (target) {
         gotoHistory();
     };
     var pageStart = new ELEMENT("#page_start");
@@ -168,6 +239,63 @@
     hidePages();
     pageStart.show();
     new LOAD(images, "image");
+
+
+    /**
+     * Run game
+     * RUn Timeline
+     */
+    var fps = 25;
+    var isPause = false;
+    var isStop = false;
+    var mainTimeline = new TIMELINE();
+    mainTimeline.delayTime = 3;
+    mainTimeline.time = 10;
+    var frame = 0;
+    var startTime = 0, currentTime = 0, currentFrame = 0;
+    var tick = 1000 / fps;
+    var time;
+    var secondTime = 0;
+    function runGame() {
+        if (!isPause && !isStop && secondsTime >= mainTimeline.delayTime) {
+            startTime = startTime === 0 ? Date.now() : startTime;
+            currentTime = Date.now();
+            time = currentTime - startTime;
+            secondsTime = parseInt(time / 1000, 10);
+            currentFrame = parseInt(time / tick, 10).toFixed(2);
+            console.log(secondsTime);
+            for (var i = 0; i < mainTimeline.timelineChildren.length; i++) {
+
+            }
+
+            if (hasLoop) {
+                startTime = Date.now();
+            }
+        }
+        // pause game keep position
+        if (isPause) {
+            pauseGame();
+        }
+        // stop game or not
+        if (!isStop) {
+            requestAnimationFrame(runGame);
+        } else {
+            resetGame();
+        }
+    }
+    function resetGame() {
+        secondTime = 0;
+        time = 0;
+        startTime = 0;
+        currentTime = 0;
+        currentFrame = 0;
+    }
+
+    function pauseGame() {
+
+    }
+    console.log("----RUN GAME----");
+    runGame();
 }());
 
 
