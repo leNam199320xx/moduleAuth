@@ -65,7 +65,7 @@
      * Load component
      */
     var container = document.getElementById("game_container");
-    var process = document.getElementById("process");
+    // var process = document.getElementById("process");
     var processPercent = document.getElementById("process_percent");
     var ns = "http://www.w3.org/2000/svg";
     if (typeof (container) !== "object") {
@@ -99,6 +99,10 @@
     ELEMENT.prototype.show = function () {
         this.target.classList.remove("hidden");
     };
+    /**
+     * All actions click
+     * @param {*} $elements : html elements
+     */
     var CLICK = function ($elements) {
         for (var i = 0, l = $elements.length; i < l; i++) {
             if ($elements.target) {
@@ -113,46 +117,97 @@
     };
     CLICK.prototype.enabledTouchSupport = false;
     CLICK.prototype.enabledMultiTouch = false;
-    var ANIMATION = function ($elements) {
-        $acceleration = $acceleration || 1;
-        var e = $elements;
-        var startX = e.getAttribute("x");
-        var startY = e.getAttribute("y");
+
+    /**
+     * animation common for element
+     * @param {*} $element html elements
+     */
+    var ANIMATION = function ($element) {
+        this.element = $element;
+        var _this = this;
+        this.size = {
+            height: parseFloat(this.element.getAttribute("height")) || 0,
+            width: parseFloat(this.element.getAttribute("width")) || 0
+        }
+        this.rootPosition = {
+            x: parseFloat(this.element.getAttribute("x")) || 0,
+            y: parseFloat(this.element.getAttribute("y")) || 0
+        };
+        this.centerPosition = {
+            x: (this.rootPosition.x + this.size.width) / 2,
+            y: (this.rootPosition.y + this.size.height) / 2
+        };
+        this.delaySecondsTime = 0;
+        this.secondsTime = 0;
+        this.rootScale = 1;
+        this.rootRotate = 0;
+        this.scaleFrame = 0;
+        // setting move function
+        this.moveValues = [];
+        this.moveFramesCount = 0;
+        this.framesCount = 0;
+        this.timerFrames = 0;
+
+        // setting rotate function
+        this.rotateFrame = 0;
+        this.rotateValues = [];
+        this.settingRotate = function ($rotate, $secondstime) {
+            $rotate = $rotate ? $rotate : 0;
+            var distance = $rotate - this.rootRotate;
+            this.rotateFrame = setFrameCount($secondstime);
+        };
+        this.settingScale = function ($scale, $secondstime) {
+            $scale = $scale ? $scale : 1;
+            var distance = $rotate - this.rootRotate;
+            this.scaleFrame = setFrameCount($secondstime);
+        };
+
+        function runNow() {
+        }
     };
-    ANIMATION.prototype.rootPosition = { x: 0, y: 0 };
-    ANIMATION.prototype.rootScale = 1;
-    ANIMATION.prototype.rootRotate = 0;
-    ANIMATION.prototype.moveFrame = 0;
-    ANIMATION.prototype.rotateFrame = 0;
-    ANIMATION.prototype.scaleFrame = 0;
-    ANIMATION.prototype.move = function ($x, $y, $secondstime, $delayTime) {
+    ANIMATION.prototype.settingMove = function ($x, $y) {
         $x = $x ? $x : 0;
         $x = $y ? $y : 0;
-        var distanceWidth = $x - this.rootPosition.x;
-        var distanceHeight = $y - this.rootPosition.y;
-        this.moveFrame = setFrameCount($secondstime);
-    };
-    ANIMATION.prototype.rotate = function ($rotate, $secondstime, $delayTime) {
-        $rotate = $rotate ? $rotate : 0;
-        var distance = $rotate - this.rootRotate;
-        this.rotateFrame = setFrameCount($secondstime);
-    };
-    ANIMATION.prototype.scale = function ($scale, $secondstime, $delayTime) {
-        $scale = $scale ? $scale : 1;
-        var distance = $rotate - this.rootRotate;
-        this.scaleFrame = setFrameCount($secondstime);
+        var distanceWidth = $x - this.centerPosition.x;
+        var distanceHeight = $y - this.centerPosition.y;
+        return [distanceWidth, distanceHeight];
+    }
+    ANIMATION.prototype.setting = function ($x, $y) {
+        var distances = this.settingMove($x, $y);
+        this.delayFrame = setFrameCount(this.delaySecondsTime);
+        this.framesCount = setFrameCount(this.secondsTime);
+        this.timerFrames = this.framesCount;
+        for (var i = 0; i < this.framesCount; i++) {
+            this.moveValues.push({
+                x: this.rootPosition.x + distances[0] * i / (this.framesCount - 1),
+                y: this.rootPosition.y + distances[1] * i / (this.framesCount - 1),
+            });
+        }
+    }; 
+    ANIMATION.prototype.runAt = function (_frame) {
+        var _toPosition = this.moveValues[_frame - 1];
+        console.log(_toPosition);
+        this.element.setAttribute("x", _toPosition.x);
+        this.element.setAttribute("y", _toPosition.y);
     };
 
-    function setFrameCount($secondstime){
-        $secondstime = $secondstime ? $secondstime : 0;
+    function setFrameCount($secondstime) {
+        $secondstime = $secondstime ? $secondstime * 1000 : 0;
         var tickTime = parseInt(1000 / fps, 10);
         var frameCount = parseInt($secondstime / tickTime, 10);
         return frameCount;
     }
-
+    /**
+     * @param {*} $filenames file names 
+     * @param {*} $type type of file
+     */
     var LOAD = function ($filenames, $type) {
+        var _this = this;
+        _this.loadedAudio = true;
         if ($type === "audio") {
-
+            if (_this.loadedImage && _this.loadedAudio) {
+                process.hide();
+            }
         } else if ($type === "image") {
             var loadingImages = [];
             for (var i = 0, l = $filenames.length; i < l; i++) {
@@ -172,6 +227,15 @@
                             processPercent.setAttribute("width", _widthPercent);
                             assetsLoaded = true;
                             new load();
+                        } else {
+                            // hide process bar when load images done
+                            if (process) {
+                                _this.loadedImage = true;
+                                console.log(_this.loadedImage, _this.loadedAudio);
+                                if (_this.loadedImage && _this.loadedAudio) {
+                                    process.hide();
+                                }
+                            }
                         }
                     };
             };
@@ -179,6 +243,8 @@
             new load();
         }
     };
+    LOAD.prototype.loadedAudio = false;
+    LOAD.prototype.loadedImage = false;
 
     /**
      * Timeline for each item
@@ -192,6 +258,7 @@
     TIMELINE.prototype.delayTime = 0;
     TIMELINE.prototype.hasLoop = false;
     TIMELINE.prototype.timelineChildren = [];
+
     /**
      * functions of game
      * click functions
@@ -233,6 +300,7 @@
     var pageMain = new ELEMENT("#page_main");
     var pageHistory = new ELEMENT("#page_history");
     var pageResult = new ELEMENT("#page_result");
+    var process = new ELEMENT("#process");
 
     CLICK([startBtn, historyBtn]);
 
@@ -244,57 +312,111 @@
     /**
      * Run game
      * RUn Timeline
-     */
-    var fps = 25;
-    var isPause = false;
-    var isStop = false;
+     * uncomment if this is product
+     * comment if this is develop mode
+     * include attributes in game
+    */
+    // var fps = 25, isPause = false, isStop = false, done = false, hasLoop = false;
+    // var frame = 0, startTime = 0, endTime = 0, pauseTime = 0, distancePauseTime = 0,
+    //     currentTime = 0, currentFrame = 0, oldFrame = 0, time, secondsTime = 0;
+
     var mainTimeline = new TIMELINE();
     mainTimeline.delayTime = 3;
     mainTimeline.time = 10;
-    var frame = 0;
-    var startTime = 0, currentTime = 0, currentFrame = 0;
+
+    /** 
+     * ===================================
+     * DEVELOP -- uncomment code below when test and debug
+     * include fake attributes in game
+     * ===================================
+    */
+
+    window.fps = 25;
+    window.isPause = false; // has reset
+    window.isStop = false; // has reset
+    window.done = false; // has reset
+    window.hasLoop = true;
+    window.frame = 0;
+    window.startTime = 0; // has reset
+    window.endTime = 0; // has reset
+    window.pauseTime = 0; // has reset
+    window.distancePauseTime = 0; // has reset
+    window.currentTime = 0; // has reset
+    window.currentFrame = 0;
+    window.oldFrame = 0; // has reset
+    window.time = 0;
+    window.secondsTime = 0;
+
+    window.animation = new ANIMATION(document.getElementById("template_item"));
+    window.animation.secondsTime = 10;
+    window.animation.setting(200, 200);
+    mainTimeline.animation = window.animation;
+    //===================================
+
     var tick = 1000 / fps;
-    var time;
-    var secondTime = 0;
     function runGame() {
-        if (!isPause && !isStop && secondsTime >= mainTimeline.delayTime) {
-            startTime = startTime === 0 ? Date.now() : startTime;
-            currentTime = Date.now();
-            time = currentTime - startTime;
-            secondsTime = parseInt(time / 1000, 10);
-            currentFrame = parseInt(time / tick, 10).toFixed(2);
-            console.log(secondsTime);
-            for (var i = 0; i < mainTimeline.timelineChildren.length; i++) {
-
+        if (mainTimeline.animation.timerFrames === 0) {
+            if (!hasLoop) {
+                isStop = true;
+            } else {
+                mainTimeline.animation.timerFrames = mainTimeline.animation.framesCount;
+                startTime = 0;
+                oldFrame = 0;
             }
-
-            if (hasLoop) {
-                startTime = Date.now();
+        }
+        if (!isPause && !isStop) {
+            currentTime = Date.now();
+            startTime = startTime === 0 ? currentTime : (startTime + distancePauseTime);
+            time = currentTime - startTime;
+            secondsTime = parseFloat(time / 1000, 10).toFixed(2);
+            currentFrame = parseInt(time / tick, 10);
+            if (oldFrame != currentFrame) {
+                console.log(currentFrame);
+                animation.timerFrames--;
+                if (secondsTime > mainTimeline.delayTime) {
+                    mainTimeline.animation.runAt(currentFrame);
+                }
+                oldFrame = currentFrame;
+            }
+            // if user pause game after user replay
+            if (pauseTime !== 0) {
+                pauseTime = 0;
+                distancePauseTime = 0;
             }
         }
         // pause game keep position
         if (isPause) {
+            if (pauseTime === 0) {
+                pauseTime = currentTime;
+            }
+            distancePauseTime = currentTime - pauseTime;
             pauseGame();
         }
         // stop game or not
         if (!isStop) {
             requestAnimationFrame(runGame);
-        } else {
-            resetGame();
         }
     }
+    function configRunGame() {
+        isStop = false;
+        isPause = false;
+        resetGame();
+    }
+
     function resetGame() {
-        secondTime = 0;
-        time = 0;
+        secondsTime = 0;
         startTime = 0;
-        currentTime = 0;
-        currentFrame = 0;
+        pauseTime = 0;
+        distancePauseTime = 0;
+        oldFrame = 0;
+        animation.timerFrames = animation.framesCount;
     }
 
     function pauseGame() {
 
     }
     console.log("----RUN GAME----");
+    configRunGame();
     runGame();
 }());
 
