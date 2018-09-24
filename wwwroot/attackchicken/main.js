@@ -1,9 +1,11 @@
 (function () {
     "use strict";
+
+
     /**
-     * ReInstall request animation frame
-     */
-    window.requestAnimationFrame = (function () {
+    * ReInstall request animation frame
+    */
+    var raf = (function () {
         return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
@@ -16,7 +18,6 @@
                     }, 1000 / 60);
             };
     })();
-
     /**
      * Set default config
      */
@@ -25,12 +26,12 @@
     var pages = ["history", "start", "main", "result"];
     var assetsLoaded = false;
     var images = [
-        { name: "start_background" },
+        { name: "start_background", height: 600, width: 360 },
         { name: "start_button_history" },
         { name: "start_button_start" },
         { name: "start_message_box" },
         { name: "start_logo" },
-        { name: "main_background" },
+        { name: "main_background", height: 600, width: 360 },
         { name: "main_egg_white" },
         { name: "main_egg_gold" },
         { name: "main_egg_orange" },
@@ -54,7 +55,8 @@
         { name: "main_time_2" },
         { name: "main_time_3" },
         { name: "main_hammer" },
-        { name: "history_background" },
+        { name: "result_background", height: 600, width: 360 },
+        { name: "history_background", height: 600, width: 360 },
         { name: "history_panel" },
         { name: "history_next_button" },
         { name: "history_back_button" },
@@ -88,16 +90,19 @@
         } else {
             this.target = document.getElementsByTagName(targetString);
         }
-        console.log(this.target, targetString);
     };
     ELEMENT.prototype.target = undefined;
     ELEMENT.prototype.type = "img";
     ELEMENT.prototype.click = function () { };
     ELEMENT.prototype.hide = function () {
-        this.target.classList.add("hidden");
+        if (this.target) {
+            this.target.classList.add("hidden");
+        }
     };
     ELEMENT.prototype.show = function () {
-        this.target.classList.remove("hidden");
+        if (this.target) {
+            this.target.classList.remove("hidden");
+        }
     };
     /**
      * All actions click
@@ -105,14 +110,16 @@
      */
     var CLICK = function ($elements) {
         for (var i = 0, l = $elements.length; i < l; i++) {
-            if ($elements.target) {
-                var e = $elements[i];
-                var t = e.target;
-                $elements[i].click = function (e) {
-                    e.click();
-                };
-                $elements[i].target.addEventListener("click", $elements[i].click, false);
-            }
+            var e = $elements[i];
+            new addEvent(e);
+        }
+    };
+    var addEvent = function ($element) {
+        if ($element.target) {
+            $element.target.addEventListener("click", function ($event) {
+                $element.click();
+                console.log("-->click", $element);
+            }, false);
         }
     };
     CLICK.prototype.enabledTouchSupport = false;
@@ -122,81 +129,212 @@
      * animation common for element
      * @param {*} $element html elements
      */
-    var ANIMATION = function ($element) {
-        this.element = $element;
+    var ANIMATION = function ($element, $config) {
         var _this = this;
-        this.size = {
-            height: parseFloat(this.element.getAttribute("height")) || 0,
-            width: parseFloat(this.element.getAttribute("width")) || 0
-        }
-        this.rootPosition = {
-            x: parseFloat(this.element.getAttribute("x")) || 0,
-            y: parseFloat(this.element.getAttribute("y")) || 0
+        this.element = $element;
+        this.config = {
+            startPosition: {
+                x: 0,
+                y: 0
+            },
+            height: 30,
+            width: 30,
+            startRotate: 0,
+            startScale: 1,
+            delaySecondsTime: 0,
+            fromCenter: false
         };
+        this.config = $config || this.config;
+        this.size = {
+            height: this.config.height || 50,
+            width: this.config.width || 50
+        };
+        this.rootPosition = this.config.startPosition ? this.config.startPosition : {
+            x: 0,
+            y: 0
+        };
+
         this.centerPosition = {
             x: (this.rootPosition.x + this.size.width) / 2,
             y: (this.rootPosition.y + this.size.height) / 2
         };
-        this.delaySecondsTime = 0;
+        this.delaySecondsTime = this.config.delaySecondsTime || 0;
+        this.delayFrame = 0;
         this.secondsTime = 0;
-        this.rootScale = 1;
-        this.rootRotate = 0;
-        this.scaleFrame = 0;
+        this.rootScale = this.config.startScale || 1;
+        this.rootRotate = this.config.startRotate || 0;
         // setting move function
         this.moveValues = [];
-        this.moveFramesCount = 0;
         this.framesCount = 0;
         this.timerFrames = 0;
 
         // setting rotate function
-        this.rotateFrame = 0;
         this.rotateValues = [];
-        this.settingRotate = function ($rotate, $secondstime) {
-            $rotate = $rotate ? $rotate : 0;
-            var distance = $rotate - this.rootRotate;
-            this.rotateFrame = setFrameCount($secondstime);
-        };
-        this.settingScale = function ($scale, $secondstime) {
-            $scale = $scale ? $scale : 1;
-            var distance = $rotate - this.rootRotate;
-            this.scaleFrame = setFrameCount($secondstime);
+
+        // setting scale 
+        this.scaleValues = [];
+        this.tick = this.config.tick || 60;
+
+        this.setFrameCount = function ($secondstime) {
+            $secondstime = $secondstime ? $secondstime * 1000 : 0;
+            var frameCount = Math.round($secondstime / this.tick);
+            return frameCount;
         };
 
-        function runNow() {
-        }
+        this.setSize = function () {
+            this.element.setAttribute("height", this.size.height);
+            this.element.setAttribute("width", this.size.width);
+            this.element.setAttribute("x", (-this.size.width / 2));
+            this.element.setAttribute("y", (-this.size.height / 2));
+        };
+        this.children = [];
+
+        this.onEndRound = undefined;
     };
+    ANIMATION.prototype.currentFrame = 0;
+    ANIMATION.prototype.audio = document.createElement("audio");
     ANIMATION.prototype.settingMove = function ($x, $y) {
         $x = $x ? $x : 0;
-        $x = $y ? $y : 0;
-        var distanceWidth = $x - this.centerPosition.x;
-        var distanceHeight = $y - this.centerPosition.y;
+        $y = $y ? $y : 0;
+        var distanceWidth = $x - this.rootPosition.x;
+        var distanceHeight = $y - this.rootPosition.y;
         return [distanceWidth, distanceHeight];
-    }
-    ANIMATION.prototype.setting = function ($x, $y) {
-        var distances = this.settingMove($x, $y);
-        this.delayFrame = setFrameCount(this.delaySecondsTime);
-        this.framesCount = setFrameCount(this.secondsTime);
+    };
+    ANIMATION.prototype.settingScale = function ($scale) {
+        $scale = $scale ? $scale : 1;
+        return $scale - this.rootScale;
+    };
+    ANIMATION.prototype.settingRotate = function ($rotate) {
+        $rotate = $rotate ? $rotate : 0;
+        return $rotate - this.rootRotate;
+    };
+    ANIMATION.prototype.setting = function ($x, $y, $scale, $round) {
+        var distances = this.settingMove($x || 0, $y || 0);
+        var distancesRotate = this.settingRotate($round * 360 || 0);
+        var distancesScale = this.settingScale($scale || 1);
+        this.delayFrame = this.setFrameCount(this.delaySecondsTime);
+        this.framesCount = this.setFrameCount(this.secondsTime - this.delaySecondsTime);
         this.timerFrames = this.framesCount;
         for (var i = 0; i < this.framesCount; i++) {
             this.moveValues.push({
                 x: this.rootPosition.x + distances[0] * i / (this.framesCount - 1),
                 y: this.rootPosition.y + distances[1] * i / (this.framesCount - 1),
             });
-        }
-    }; 
-    ANIMATION.prototype.runAt = function (_frame) {
-        var _toPosition = this.moveValues[_frame - 1];
-        console.log(_toPosition);
-        this.element.setAttribute("x", _toPosition.x);
-        this.element.setAttribute("y", _toPosition.y);
-    };
 
-    function setFrameCount($secondstime) {
-        $secondstime = $secondstime ? $secondstime * 1000 : 0;
-        var tickTime = parseInt(1000 / fps, 10);
-        var frameCount = parseInt($secondstime / tickTime, 10);
-        return frameCount;
-    }
+            this.scaleValues.push(this.rootScale + distancesScale * i / (this.framesCount - 1));
+            this.rotateValues.push(this.rootRotate + distancesRotate * i / (this.framesCount - 1));
+        }
+        console.log("-->delaySecondsTime", this.delaySecondsTime, this.secondsTime, this.framesCount);
+        this.runAt(1);
+    };
+    ANIMATION.prototype.runAt = function (_frame) {
+        // console.log("-->frame: ", _frame);
+        if (this.element) {
+            this.currentFrame = _frame ? _frame : 1;
+            var _toPosition = this.moveValues[this.currentFrame - 1] || { x: 0, y: 0 };
+            var _toScale = this.scaleValues[this.currentFrame - 1] || 1;
+            var _toRotate = this.rotateValues[this.currentFrame - 1] || 0;
+
+            this.element.setAttribute("transform",
+                "translate(" + _toPosition.x + ", " + _toPosition.y + ")" + "scale(" + _toScale + ") " + "rotate(" + _toRotate + ")" + "translate(" + (-this.size.width / 2) + "," + (-this.size.height / 2) + " )");
+        } else {
+            return;
+        }
+    };
+    ANIMATION.prototype.run = function (_frame) {
+        this.currentFrame = _frame - this.delayFrame;
+        var _f = this.currentFrame;
+        this.runAt(_f);
+        this.timerFrames = this.framesCount - _f;
+        if (this.children.length > 0) {
+            for (var i = 0; i < this.children.length; i++) {
+                this.children[i].run(_f);
+            }
+        }
+
+        if (this.timerFrames === 1) {
+            if (typeof (this.onEndRound) === "function") {
+                this.onEndRound();
+            }
+        }
+    };
+    ANIMATION.prototype.children = [];
+    /**
+    * Timeline for each item
+    * time is seconds
+    */
+    var TIMELINE = function () { };
+    TIMELINE.prototype.action = undefined;
+    TIMELINE.prototype.time = 0;
+    TIMELINE.prototype.fps = 0;
+    TIMELINE.prototype.frame = 0;
+    TIMELINE.prototype.startTime = 0;
+    TIMELINE.prototype.hasLoop = false;
+    TIMELINE.prototype.tick = 1;
+    TIMELINE.prototype.runGame = function () {
+        var _this = this;
+        this.currentTime = Date.now();
+        if (!this.isPause && !this.isStop) {
+            this.startTime = this.startTime === 0 ? this.currentTime : (this.startTime + this.distancePauseTime);
+            this.time = this.currentTime - this.startTime;
+            this.secondsTime = parseFloat(this.time / 1000, 10).toFixed(2);
+            this.currentFrame = Math.ceil(this.time / this.tick, 10);
+            if (this.oldFrame != this.currentFrame) {
+                console.log("-->real time", this.time, this.animation.secondsTime * 1000, this.animation.timerFrames);
+                if (this.secondsTime >= this.animation.delaySecondsTime && this.currentFrame <= this.animation.framesCount) {
+                    // console.log("-->current frame: ", this.currentFrame, this.animation.timerFrames, this.animation.framesCount);
+                    this.animation.run(this.currentFrame);
+                }
+                this.oldFrame = this.currentFrame;
+            }
+            // if user replay game
+            if (this.pauseTime !== 0) {
+                this.pauseTime = 0;
+                this.distancePauseTime = 0;
+            }
+        }
+        if (this.animation.timerFrames <= 0) {
+            if (!this.hasLoop) {
+                this.isStop = true;
+            } else {
+                this.animation.timerFrames = this.animation.framesCount;
+                this.startTime = 0;
+                this.oldFrame = 0;
+            }
+        }
+        // pause game keep position
+        if (this.isPause) {
+            this.pause();
+        }
+        // stop game or not
+        if (!this.isStop) {
+            raf(function () {
+                _this.runGame();
+            });
+        }
+    };
+    TIMELINE.prototype.pause = function () {
+        if (this.pauseTime === 0) {
+            this.pauseTime = this.currentTime;
+        } else {
+            this.distancePauseTime = this.currentTime - this.pauseTime;
+            // console.log("->pause time: ", this.pauseTime, this.currentTime);
+            // console.log("->distance pause time: ", this.distancePauseTime);
+        }
+    };
+    TIMELINE.prototype.configRunGame = function () {
+        this.isStop = false;
+        this.isPause = false;
+        this.resetGame();
+    };
+    TIMELINE.prototype.resetGame = function () {
+        this.secondsTime = 0;
+        this.startTime = 0;
+        this.pauseTime = 0;
+        this.distancePauseTime = 0;
+        this.oldFrame = 0;
+        this.animation.timerFrames = this.animation.framesCount;
+    };
     /**
      * @param {*} $filenames file names 
      * @param {*} $type type of file
@@ -231,9 +369,9 @@
                             // hide process bar when load images done
                             if (process) {
                                 _this.loadedImage = true;
-                                console.log(_this.loadedImage, _this.loadedAudio);
                                 if (_this.loadedImage && _this.loadedAudio) {
                                     process.hide();
+                                    pageStart.show();
                                 }
                             }
                         }
@@ -247,19 +385,6 @@
     LOAD.prototype.loadedImage = false;
 
     /**
-     * Timeline for each item
-     * time is seconds
-     */
-    var TIMELINE = function () { };
-    TIMELINE.prototype.action = undefined;
-    TIMELINE.prototype.time = 0;
-    TIMELINE.prototype.frame = 0;
-    TIMELINE.prototype.startTime = 0;
-    TIMELINE.prototype.delayTime = 0;
-    TIMELINE.prototype.hasLoop = false;
-    TIMELINE.prototype.timelineChildren = [];
-
-    /**
      * functions of game
      * click functions
      * load asset functions
@@ -267,18 +392,21 @@
 
     function startGame() {
         hidePages();
-        mainPage.show();
-        runGame();
+        pageMain.show();
+        // runGame();
+        console.log("-->start game");
+        mainTimeline.configRunGame();
+        mainTimeline.runGame();
     }
 
     function gotoHistory() {
         hidePages();
-        historyPage.show();
+        pageHistory.show();
     }
 
     function endGame() {
         hidePages();
-        resultPage.show();
+        pageResult.show();
     }
 
     function hidePages() {
@@ -292,7 +420,7 @@
     startBtn.click = function (target) {
         startGame();
     };
-    var historyBtn = new ELEMENT("#start_button");
+    var historyBtn = new ELEMENT("#history_button");
     historyBtn.click = function (target) {
         gotoHistory();
     };
@@ -305,119 +433,77 @@
     CLICK([startBtn, historyBtn]);
 
     hidePages();
-    pageStart.show();
+    // pageStart.show();
     new LOAD(images, "image");
 
-
-    /**
-     * Run game
-     * RUn Timeline
-     * uncomment if this is product
-     * comment if this is develop mode
-     * include attributes in game
-    */
-    // var fps = 25, isPause = false, isStop = false, done = false, hasLoop = false;
-    // var frame = 0, startTime = 0, endTime = 0, pauseTime = 0, distancePauseTime = 0,
-    //     currentTime = 0, currentFrame = 0, oldFrame = 0, time, secondsTime = 0;
-
     var mainTimeline = new TIMELINE();
-    mainTimeline.delayTime = 3;
-    mainTimeline.time = 10;
 
-    /** 
-     * ===================================
-     * DEVELOP -- uncomment code below when test and debug
-     * include fake attributes in game
-     * ===================================
-    */
+    window.game = mainTimeline; // if this is developer mode
 
-    window.fps = 25;
-    window.isPause = false; // has reset
-    window.isStop = false; // has reset
-    window.done = false; // has reset
-    window.hasLoop = true;
-    window.frame = 0;
-    window.startTime = 0; // has reset
-    window.endTime = 0; // has reset
-    window.pauseTime = 0; // has reset
-    window.distancePauseTime = 0; // has reset
-    window.currentTime = 0; // has reset
-    window.currentFrame = 0;
-    window.oldFrame = 0; // has reset
-    window.time = 0;
-    window.secondsTime = 0;
+    mainTimeline.fps = 60;
+    mainTimeline.isPause = false; // has reset
+    mainTimeline.isStop = false; // has reset
+    mainTimeline.isDone = false; // has reset
+    mainTimeline.hasLoop = false;
+    mainTimeline.frame = 0;
+    mainTimeline.startTime = 0; // has reset
+    mainTimeline.endTime = 0; // has reset
+    mainTimeline.pauseTime = 0; // has reset
+    mainTimeline.distancePauseTime = 0; // has reset
+    mainTimeline.currentTime = 0; // has reset
+    mainTimeline.currentFrame = 0;
+    mainTimeline.oldFrame = 0; // has reset
+    mainTimeline.time = 0;
+    mainTimeline.secondsTime = 0;
+    mainTimeline.tick = 1000 / mainTimeline.fps;
 
-    window.animation = new ANIMATION(document.getElementById("template_item"));
-    window.animation.secondsTime = 10;
-    window.animation.setting(200, 200);
-    mainTimeline.animation = window.animation;
-    //===================================
 
-    var tick = 1000 / fps;
-    function runGame() {
-        if (mainTimeline.animation.timerFrames === 0) {
-            if (!hasLoop) {
-                isStop = true;
-            } else {
-                mainTimeline.animation.timerFrames = mainTimeline.animation.framesCount;
-                startTime = 0;
-                oldFrame = 0;
-            }
+    var timer = new ANIMATION();
+    timer.secondsTime = 3;
+    timer.tick = mainTimeline.tick;
+    timer.setting();
+    timer.onEndRound = function () {
+        timer = null;
+        var element = document.getElementById("template_item");
+        mainTimeline.animation = new ANIMATION(element);
+        mainTimeline.animation.secondsTime = 5;
+        mainTimeline.animation.tick = mainTimeline.tick;
+        mainTimeline.animation.setting(200, 200, 0, 5);
+
+        var element2 = document.getElementById("template_item2");
+        var anim2 = new ANIMATION(element2);
+        anim2.delaySecondsTime = 3;
+        anim2.secondsTime = 5;
+        anim2.tick = mainTimeline.tick;
+        anim2.setting(200, 300, 2, 5);
+        mainTimeline.animation.children.push(anim2);
+
+
+        var element3 = document.getElementById("template_item3");
+        var anim3 = new ANIMATION(element3);
+        anim3.delaySecondsTime = 2;
+        anim3.secondsTime = 5;
+        anim3.tick = mainTimeline.tick;
+        anim3.setting(300, 200, 3, 5);
+        mainTimeline.animation.children.push(anim3);
+        mainTimeline.configRunGame();
+        mainTimeline.runGame();
+    };
+    mainTimeline.animation = timer;
+
+
+    // when browser is not active
+    document.onvisibilitychange = function ($event) {
+        console.log("-->stop browser: ", document.hidden);
+        mainTimeline.currentTime = Date.now();
+        mainTimeline.pause();
+
+        if (document.hidden) {
+            mainTimeline.isPause = true;
+        } else {
+            mainTimeline.isPause = false;
         }
-        if (!isPause && !isStop) {
-            currentTime = Date.now();
-            startTime = startTime === 0 ? currentTime : (startTime + distancePauseTime);
-            time = currentTime - startTime;
-            secondsTime = parseFloat(time / 1000, 10).toFixed(2);
-            currentFrame = parseInt(time / tick, 10);
-            if (oldFrame != currentFrame) {
-                console.log(currentFrame);
-                animation.timerFrames--;
-                if (secondsTime > mainTimeline.delayTime) {
-                    mainTimeline.animation.runAt(currentFrame);
-                }
-                oldFrame = currentFrame;
-            }
-            // if user pause game after user replay
-            if (pauseTime !== 0) {
-                pauseTime = 0;
-                distancePauseTime = 0;
-            }
-        }
-        // pause game keep position
-        if (isPause) {
-            if (pauseTime === 0) {
-                pauseTime = currentTime;
-            }
-            distancePauseTime = currentTime - pauseTime;
-            pauseGame();
-        }
-        // stop game or not
-        if (!isStop) {
-            requestAnimationFrame(runGame);
-        }
-    }
-    function configRunGame() {
-        isStop = false;
-        isPause = false;
-        resetGame();
-    }
-
-    function resetGame() {
-        secondsTime = 0;
-        startTime = 0;
-        pauseTime = 0;
-        distancePauseTime = 0;
-        oldFrame = 0;
-        animation.timerFrames = animation.framesCount;
-    }
-
-    function pauseGame() {
-
-    }
-    console.log("----RUN GAME----");
-    configRunGame();
-    runGame();
+    };
 }());
 
 

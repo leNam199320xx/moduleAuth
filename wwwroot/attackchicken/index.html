@@ -9,16 +9,33 @@
 
 <body>
     <svg id="game_container" class="game_container">
-        <g id="page_history"></g>
-        <g id="page_start">
-            <rect id="template_item" x="0" y="0" width="30" height="30" fill="blue" />
+        <g id="page_history">
+            <image xlink:href="assets/page_history/history_background.png" width="360" height="600"></image>
         </g>
-        <g id="page_main"></g>
-        <g id="page_result"></g>
-
+        <g id="page_start">
+            <image xlink:href="assets/page_start/start_background.png" width="360" height="600"></image>
+            <g id="start_button">
+                <rect x="50" y="350" width="260" height="50" fill="red" />
+                <text x="180" y="380" width="260" text-anchor="middle">Start</text>
+            </g>
+            <g id="history_button">
+                <rect x="50" y="450" width="260" height="50" fill="green" />
+                <text x="180" y="480" width="260" text-anchor="middle">History</text>
+            </g>
+        </g>
+        <g id="page_main">
+            <image xlink:href="assets/page_main/main_background.png" width="360" height="600"></image>
+            <text id="large_timer">3</text>
+            <rect id="template_item" x="0" y="0" width="30" height="30" fill="blue" />
+            <rect id="template_item2" x="0" y="0" width="30" height="30" fill="red" />
+            <rect id="template_item3" x="0" y="0" width="30" height="30" fill="green" />
+        </g>
+        <g id="page_result">
+            <image xlink:href="assets/page_main/result_background.png" width="360" height="600"></image>
+        </g>
         <g id="process">
             <rect x="40" y="200" width="280" height="40" stroke="red" stroke-width="2" fill="#FFFFFF" />
-            <rect id="process_percent" x="40" y="200" width="100" height="40" stroke="red" stroke-width="2" fill="red" />
+            <rect id="process_percent" x="40" y="200" width="0" height="40" stroke="red" stroke-width="2" fill="red" />
         </g>
     </svg>
     <script src="main.js"></script>
