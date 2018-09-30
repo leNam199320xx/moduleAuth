@@ -40,6 +40,17 @@ export class PeopleSocials extends GeneralColumn {
     socialId: number;
     socialName: string;
     social: Social;
+    peopleSocialsByDates: PeopleSocialsByDate[];
+}
+
+export class PeopleSocialsByDate {
+    peopleSocialsId: number;
+    like: number;
+    follow: number;
+    share: number;
+    view: number;
+    comment: number;
+    createdDate: Date;
 }
 
 export class Social extends GeneralColumn {
@@ -48,6 +59,7 @@ export class Social extends GeneralColumn {
     _enableEditPanel = false;
     _activated = false;
     careers: Career[] = [];
+    careersMap: StatisticCardModel[] = [];
 }
 
 export class StatisticCardModel {

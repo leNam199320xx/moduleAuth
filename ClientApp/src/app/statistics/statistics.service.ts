@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Career, Social, PeopleSocials } from '../core/statistics.model';
+import { Career, Social, PeopleSocials, People, PeopleSocialsByDate } from '../core/statistics.model';
 import { ResponseModel } from '../core/response.model';
 import { BehaviorSubject } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class StatisticsService {
     socials: Social[];
     socialsSubject: BehaviorSubject<Social[]>;
+    peopleSelected: People;
     constructor(private http: HttpClient) { }
 
     getAllPeoples($id: number = 0) {
@@ -31,7 +32,7 @@ export class StatisticsService {
     }
 
 
-    GetDataFromFacebook($p: PeopleSocials) {
+    getDataFromFacebook($p: PeopleSocials) {
         return this.http.post<any>('api/statistics/GetDataFromFacebook', $p);
     }
 
@@ -51,6 +52,10 @@ export class StatisticsService {
 
     deleteSocialOfPeople($p: PeopleSocials) {
         return this.http.post<ResponseModel>('api/statistics/deleteSocialOfPeople', $p);
+    }
+
+    getAllSocialInfoByPeopleId($peopleId: number) {
+        return this.http.get<PeopleSocials[]>('api/statistics/getAllSocialInfoByPeopleId?peopleId=' + $peopleId);
     }
 
     runCrawler() {

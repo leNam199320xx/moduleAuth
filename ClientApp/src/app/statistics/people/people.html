@@ -1,10 +1,23 @@
-<div class='list-icon'>
+<div class='list-icon {{activatedAction}}'>
     <div class='title fs-lg mtb-3 pb-2 txt-r bb-2 b-{{type}} cl-{{type}}' *ngIf='name'>
-        <!-- <button>Xem biểu đồ</button> -->
-        <i class='icons'>star_border</i>
+        <div class='iblock btn btn-circle p-1 b-1 mr-2 b-{{type}}'
+            (click)='btnFilter(type, "like")'>
+            <div [ngClass]='{"activated": activatedAction === "like"}'></div>
+            <i class='icons'>thumb_up</i>
+        </div>
+        <div class='iblock btn btn-circle p-1 b-1 mr-2 b-{{type}}'
+            (click)='btnFilter(type, "follow")'>
+            <div [ngClass]='{"activated": activatedAction === "follow"}'></div>
+            <i class='icons'>person_add</i>
+        </div>
+        <div class='iblock btn btn-circle p-1 b-1 mr-2 b-{{type}}' (click)='btnFilter(type, "view")'>
+            <div [ngClass]='{"activated": activatedAction === "view"}'></div>
+            <i class='icons'>visibility</i>
+        </div>
         {{name}}
+        <i class='icons iblock'>star_border</i>
     </div>
-    <div class="ps-relative scrollbar-custom-3 scrollbar-y mh-600px">
+    <div class="ps-relative">
         <ng-container *ngFor='let card of displayCards; let ix = index;'>
             <div class='item p-1 mb-3 flex align-items-center'>
                 <div class='img-circle img-cover sq-64 iblock ps-relative' [ngStyle]='{"background-image": "url(" + card.avatar + ")"}'>
@@ -42,5 +55,6 @@
         </ng-container>
         <!-- <app-scroll></app-scroll> -->
     </div>
-    <app-paging [page]='pageConfig' (backClick)='back($event)' (nextClick)='next($event)' (loadMoreClick)='loadMore($event)' [hasNumber]='false'></app-paging>
+    <app-paging [page]='pageConfig' (backClick)='back($event)' (nextClick)='next($event)' (loadMoreClick)='loadMore($event)'
+        [hasNumber]='false'></app-paging>
 </div>

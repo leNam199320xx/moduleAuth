@@ -1,5 +1,44 @@
-<div>
-    <svg #svg>
+<div class='graph'>
+    <div *ngIf='peopleInfo' class='people-info'>
+        <div class='avatar'></div>
+        <div>
+            <div class='fullname'>{{peopleInfo.fullName}}</div>
+            <div class='description'>{{peopleInfo.message}}</div>
+        </div>
+    </div>
+    <div>
+        <ng-container *ngFor='let val of displayData'>
+            <div id='id{{val.id}}'>
+                <div>{{val.id}}</div>
+                <div *ngFor='let val2 of val.peopleSocialsByDates'>
+                    <div class='iblock' *ngIf='val2.like'>
+                        <label>Lượt like: </label>{{val2.like}}
+                    </div>
+                    <div class='iblock' *ngIf='val2.share'>
+                        <label>Lượt share: </label>{{val2.share}}
+                    </div>
+                    <div class='iblock' *ngIf='val2.follow'>
+                        <label>Lượt follow: </label>{{val2.follow}}
+                    </div>
+                    <div class='iblock' *ngIf='val2.view'>
+                        <label>Lượt view: </label>{{val2.view}}
+                    </div>
+                    <div class='iblock'>
+                        <label>Thời gian: </label> {{val2.createdDate}}
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class='bg-primary p-2'>
+        <svg class="bg-white" xmlns="http://www.w3.org/2000/svg" #svg>
 
-    </svg>
+        </svg>
+    </div>
+    <button (click)='btnSvgZoomIn()'>zoom in</button>
+    <button (click)='btnSvgZoomOut()'>zoom out</button>
+    <button (click)='btnToLeft()'>Left</button>
+    <button (click)='btnToRight()'>Right</button>
+    <button (click)='btnUp()'>Up</button>
+    <button (click)='btnDown()'>Down</button>
 </div>

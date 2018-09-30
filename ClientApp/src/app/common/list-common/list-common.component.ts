@@ -1,16 +1,10 @@
-import { Component, Input, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CardModel } from './list-common.model';
 import { PageModel } from '../paging/page.model';
 import { ConfigLayoutComponent } from '../config-layout.component';
 import { PagingComponent } from '../paging/paging.component';
 
-@Component(
-    {
-        selector: 'app-list-common',
-        templateUrl: 'list-common.html'
-    }
-)
-export class ListCommonComponent extends ConfigLayoutComponent implements OnInit {
+export abstract class ListCommonComponent extends ConfigLayoutComponent implements OnInit {
     @Input() cards: CardModel[] = [];
     @Input() pageSize = 8;
     @Input() currentPage = 1;

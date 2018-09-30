@@ -636,12 +636,55 @@ namespace angular6DotnetCore.Controllers
         }
 
         [HttpPost("runCrawler")]
-        public async Task<IActionResult> RunCrawler ()
+        public async Task<IActionResult> RunCrawler()
         {
             return Ok(new
             {
                 value = await CrawlerExcute()
             });
+        }
+
+        [HttpGet("getAllSocialInfoByPeopleId")]
+        public async Task<IActionResult> GetAllSocialInfoByPeopleId([FromQuery]int peopleId)
+        {
+            var socials = await _context.PeopleSocials.Where(m => m.PeopleId == peopleId).Select(m => m.Id).ToListAsync();
+            var socValues = await _context.PeopleSocialsByDates.Where(m => socials.Contains(m.PeopleSocialsId)).Select(m => new PeopleSocialsByDate
+            {
+                Id = m.Id,
+                Like = m.Like,
+                Share = m.Share,
+                View = m.View,
+                Follow = m.Follow,
+                CreatedDate = m.CreatedDate,
+                PeopleSocialsId = m.PeopleSocialsId
+            }).OrderByDescending(m => m.CreatedDate).ToListAsync();
+            List<PeopleSocials> results = new List<PeopleSocials>();
+            for (var i = 0; i < socials.Count; i++)
+            {
+                var soc = new PeopleSocials
+                {
+                    Id = socials[i]
+                };
+                var values = new List<PeopleSocialsByDate>();
+                for (var j = 0; j < socValues.Count; j++)
+                {
+                    if (socValues[j].PeopleSocialsId == socials[i])
+                    {
+                        values.Add(new PeopleSocialsByDate
+                        {
+                            Id = socValues[j].Id,
+                            Like = socValues[j].Like,
+                            Share = socValues[j].Share,
+                            View = socValues[j].View,
+                            Follow = socValues[j].Follow,
+                            CreatedDate = socValues[j].CreatedDate
+                        });
+                    }
+                }
+                soc.PeopleSocialsByDates = values;
+                results.Add(soc);
+            }
+            return Ok(results);
         }
     }
 }

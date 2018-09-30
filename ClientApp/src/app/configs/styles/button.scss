@@ -2,7 +2,6 @@
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
@@ -19,30 +18,24 @@ button,
         border-style: solid;
         background: none !important;
     }
-
     &.notoutline {
         border: none;
     }
-
     &.sm {
         padding: 0.2rem;
     }
-
     * {
         font-size: inherit;
     }
-
     &:hover {
         box-shadow: 0px 0px 5px 2px $primary-color;
         .hover {
             visibility: visible;
         }
     }
-
     &.btn-circle {
         border-radius: 50%;
     }
-
     .hover {
         visibility: hidden;
         background-color: rgba($color: $primary-color, $alpha: 0.5);
@@ -52,7 +45,6 @@ button,
         top: 0;
         left: 0;
     }
-
     .activated {
         position: absolute;
         height: calc(100% + 6px);

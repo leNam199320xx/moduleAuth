@@ -16,6 +16,7 @@ export class StatisticsComponent {
     errorMessageOld: MessageModel;
     cards: CardModel[] = [];
     socials: Social[] = this.statisticsService.socials;
+    displayData: StatisticCardModel[] = [];
     socialSelected: Social = new Social();
     datafull: StatisticCardModel[] = [];
     // dataSub: Subject<StatisticCardModel[]> = new Subject();
@@ -33,6 +34,10 @@ export class StatisticsComponent {
             const so = rs as Social[];
             this.statisticsService.socials = so || [];
             this.socials = this.statisticsService.socials;
+            this.socials.forEach(data => {
+                data.careersMap = this.mapData(data.careers);
+                console.log(this.displayData);
+            });
         });
     }
     mapData(careers: Career[]) {
@@ -44,7 +49,7 @@ export class StatisticsComponent {
             _one.peoples.forEach(_p => {
                 const _c = new CardModel();
                 _c.title = '<span>' + _p.fullName + ' (<b>' + _p.shortName + '</b>)' + '</span>';
-                _c.url = _p.url;
+                _c.url = '/graph/' + _p.id;
                 _c.imagesUrl = _p.imagesUrl;
                 _c.avatar = _p.avatar;
                 _c.message = _p.message ? '<i class="fs-sm">' + _p.message + '</i>' : '';

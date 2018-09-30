@@ -34,7 +34,7 @@ export class AdminPeopleSocialComponent {
 
     chechSocialBtn($p: PeopleSocials) {
         if ($p) {
-            this.statisticsService.GetDataFromFacebook($p).subscribe(res => {
+            this.statisticsService.getDataFromFacebook($p).subscribe(res => {
                 console.log(res);
                 $p.like = res.like;
                 $p.follow = res.follow;

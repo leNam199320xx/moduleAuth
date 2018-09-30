@@ -34,7 +34,7 @@ namespace angular6DotnetCore.Models
         public long? Share { get; set; }
         public long? Follow { get; set; }
         public string Url { get; set; }
-        //public virtual List<PeopleSocialsByDate> PeopleSocialsByDates { get; set; }
+        public virtual List<PeopleSocialsByDate> PeopleSocialsByDates { get; set; }
     }
 
     public class PeopleSocialsByDate : GeneralColumn

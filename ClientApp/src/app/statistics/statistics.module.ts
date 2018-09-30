@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { StatisticsComponent } from './statistics.component';
 import { StatisticsService } from './statistics.service';
-import { StatisticPeopleComponent } from './people/people.componen';
+import { StatisticPeopleComponent } from './people/people.component';
 import { StatisticsGraphComponent } from './graph/graph.component';
 import { RouterModule } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
             component: StatisticsComponent
         },
         {
-            path: 'graph',
+            path: 'graph/:peopleId',
             component: StatisticsGraphComponent
         }])
     ],

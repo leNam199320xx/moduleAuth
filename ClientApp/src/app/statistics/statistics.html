@@ -3,7 +3,8 @@
         <div class=''>
             <div class='ps-fixed bg-white b-2 p-3 b-primary'>
                 <div class='txt-center pb-2' *ngFor='let soc of socials'>
-                    <div class='iblock btn btn-circle img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36' (click)='socialBtn(soc)'>
+                    <div class='iblock btn btn-circle img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'
+                        (click)='socialBtn(soc)'>
                         <div [ngClass]='{"activated": soc._activated}'></div>
                     </div>
                     <div>{{soc.name}}</div>
@@ -15,10 +16,10 @@
                         <div class='iblock img svg-{{soc.name.toLowerCase().trim().replace(" ", "-")}} sq-36'></div>
                         <div>{{soc.name}}</div>
                     </div>
-                    <div *ngIf='soc.careers && soc.careers.length > 0'>
-                        <ng-container *ngFor='let item of mapData(soc.careers)'>
-                            <app-statistic-people class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")' [cards]='item.data' [pageSize]='10'
-                                [isLoadMore]='true' [name]='item.name'></app-statistic-people>
+                    <div *ngIf='soc.careersMap && soc.careersMap.length > 0'>
+                        <ng-container *ngFor='let item of soc.careersMap;'>
+                            <app-statistic-people class="mtb-3" [type]='soc.name.toLowerCase().trim().replace(" ", "-")'
+                                [cards]='item.data' [pageSize]='10' [isLoadMore]='true' [name]='item.name'></app-statistic-people>
                         </ng-container>
                     </div>
                 </ng-container>
