@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -165,7 +164,11 @@ namespace angular6DotnetCore.Controllers
                 return BadRequest(message);
             }
         }
-
+        /// <summary>
+        /// For admin
+        /// </summary>
+        /// <param name="socialId"></param>
+        /// <returns></returns>
         [HttpGet("getPeoples")]
         public async Task<IActionResult> GetPeoples([FromQuery] int socialId)
         {
@@ -190,18 +193,6 @@ namespace angular6DotnetCore.Controllers
                     Follow = m.Follow,
                     Total = m.Like ?? 0 + m.Share ?? 0 + m.View ?? 0 + m.Follow ?? 0
                 }).OrderByDescending(m => m.Total).ToListAsync();
-            //var peoples = await _context.PeopleSocials.AsNoTracking().OrderBy(m => m.Index)
-            //    .ThenByDescending(m => new
-            //    {
-            //        Total = m.Like + m.Share + m.View + m.Follow,
-            //        m.Like,
-            //        m.Share,
-            //        m.View,
-            //        m.Follow,
-            //        m.Index,
-            //        m.Id
-            //    })
-            //    .ToListAsync();
             var peoples = await _context.Peoples.AsNoTracking().Select(m => new People
             {
                 Id = m.Id,
@@ -252,17 +243,20 @@ namespace angular6DotnetCore.Controllers
                     }).OrderByDescending(t => t.Total)
                 }).ToList();
 
+                //career = new
+                //{
+                //    id = e.Id,
+                //    name = e.Name,
+                //    peoples = resultPeoples.Where(m => m.socials.Count() > 0)
+                //};
                 career = new
                 {
                     id = e.Id,
                     name = e.Name,
-                    peoples = resultPeoples.Where(m => m.socials.Count() > 0)
+                    peoples = resultPeoples
                 };
 
-                if (resultPeoples != null && resultPeoples.Count > 0)
-                {
-                    listData.Add(career);
-                }
+                listData.Add(career);
             });
             return listData;
         }
@@ -372,14 +366,6 @@ namespace angular6DotnetCore.Controllers
             {
                 try
                 {
-                    //var px = info.GetInfo(DateTime.Now.Ticks.ToString(), p.Url);
-                    //var pupdate = await _context.PeopleSocials.FindAsync(p.Id);
-                    //pupdate.Like = px.Like;
-                    //pupdate.Follow = px.Follow;
-                    //pupdate.View = px.View;
-                    //pupdate.Share = px.Share;
-                    //_context.Entry(pupdate).State = EntityState.Modified;
-                    //var num = await _context.SaveChangesAsync();
                     var item = await info.UpdateUser(_context, p);
                     if (item != null)
                     {

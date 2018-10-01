@@ -23,6 +23,7 @@ export class People extends GeneralColumn {
     message: string;
     avatar: string;
     careerId: number;
+    countryCode = 'VN';
     socials: PeopleSocials[] = [];
     _enabledAddSocial = false;
     _enabledUpdatePeople = false;

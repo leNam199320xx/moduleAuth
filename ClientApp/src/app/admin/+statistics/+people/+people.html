@@ -23,5 +23,13 @@
         <label class='txt-r'>Ảnh nhỏ</label>
         <input placeholder="Nhập Đường dẫn ảnh nhỏ" [(ngModel)]='newPeople.thumbnailUrl' />
     </div>
+    <div class="grp">
+        <label class="txt-r">Quốc gia</label>
+        <select [(ngModel)]='newPeople.countryCode'>
+            <ng-container *ngFor="let c of countries">
+                <option value="{{c.ISO2}}">{{c.CountryName}}</option>
+            </ng-container>
+        </select>
+    </div>
     <button (click)='saveBtn()'>Save</button>
 </div>

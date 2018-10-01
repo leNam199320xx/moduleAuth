@@ -1,6 +1,8 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { People } from '../../../core/statistics.model';
 import { AdminPeopleService } from './+people.service';
+import { SharedService } from '../../../shared/shared.service';
+import { CountryModel } from '../../../statistics/country/country.model';
 
 @Component({
     selector: 'app-admin-people',
@@ -11,10 +13,15 @@ export class AdminPeopleComponent implements OnInit {
     @Input() careerId: number;
     @Input() isUpdate = false;
     @Output() closeEvent: EventEmitter<boolean> = new EventEmitter();
-    constructor(private peopleService: AdminPeopleService) {
+    countries: CountryModel[] = [];
+    constructor(private peopleService: AdminPeopleService,
+        private sharedService: SharedService) {
 
     }
     ngOnInit() {
+        this.sharedService.countriesSub.subscribe(res => {
+            this.countries = res;
+        });
     }
     saveBtn() {
         if (!this.careerId) {

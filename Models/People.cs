@@ -21,6 +21,34 @@ namespace angular6DotnetCore.Models
         public string CountryCode { get; set; }
     }
 
+    public class Adward: GeneralColumn
+    {
+        public string AdwardName { get; set; }
+        public string Tags { get; set; }
+        public string Message { get; set; }
+        public string IconUrl { get; set; }
+        public string BackgroundUrl { get; set; }
+        public virtual string[] GetTags()
+        {
+            return Tags.Split(",");
+        }
+    }
+
+    public class PeopleAdwards
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int AdwardId { get; set; }
+        [ForeignKey("AdwardId")]
+        public virtual Adward Adward { get; set; }
+        public int PeopleId { get; set; }
+        [ForeignKey("PeopleId")]
+        public virtual People People { get; set; }
+        public int? Year { get; set; }
+        public DateTime? DetailTime { get; set; }
+    }
+
     public class PeopleSocials : GeneralColumn
     {
         public int PeopleId { get; set; }

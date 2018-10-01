@@ -14,6 +14,8 @@ namespace angular6DotnetCore.Models
         public virtual DbSet<People> Peoples { get; set; }
         public virtual DbSet<Career> Careers { get; set; }
         public virtual DbSet<Social> Socials { get; set; }
+        public virtual DbSet<Adward> Adwards { get; set; }
+        public virtual DbSet<PeopleAdwards> PeopleAdwards { get; set; }
         public virtual DbSet<PeopleSocials> PeopleSocials { get; set; }
         public virtual DbSet<PeopleSocialsByDate> PeopleSocialsByDates { get; set; }
     }
