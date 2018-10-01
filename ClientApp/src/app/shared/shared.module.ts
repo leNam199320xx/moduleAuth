@@ -12,6 +12,7 @@ import { PageListComponent } from '../page/list/page-list.component';
 import { ListIconComponent } from '../common/list-icon/list-icon.component';
 import { ListLinkComponent } from '../common/list-link/list-link.component';
 import { ListPostComponent } from '../common/list-post/list-post.component';
+import { ListCommonComponent } from '../common/list-common/list-common.component';
 import { PostComponent } from '../common/post/post.component';
 import { PagingComponent } from '../common/paging/paging.component';
 import { ListDialogComponent } from '../common/list-common/dialog/dialog.component';
@@ -40,6 +41,7 @@ import { SharedService } from './shared.service';
         ListDialogComponent,
         ListExtendPanelComponent,
         ListItemComponent,
+        ListCommonComponent,
         CardCommonComponent,
         PostComponent,
         PostSimpleComponent,
