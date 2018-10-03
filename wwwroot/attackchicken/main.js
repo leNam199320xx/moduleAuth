@@ -208,6 +208,23 @@
         $rotate = $rotate ? $rotate : 0;
         return $rotate - this.rootRotate;
     };
+    ANIMATION.prototype.go =  function ($options) {
+        var distances = this.settingMove($options.x || 0, $options.y || 0);
+        var distancesRotate = this.settingRotate($options.round * 360 || 0);
+        var distancesScale = this.settingScale($options.scale || 1);
+        var delayFrame = this.setFrameCount($options.delaySecondsTime);
+        var framesCount = this.setFrameCount($options.secondsTime - $options.delaySecondsTime);
+        var timerFrames = framesCount;
+        for (var i = 0; i < framesCount; i++) {
+            this.moveValues.push({
+                x: this.rootPosition.x + distances[0] * i / (this.framesCount - 1),
+                y: this.rootPosition.y + distances[1] * i / (this.framesCount - 1),
+            });
+
+            this.scaleValues.push(this.rootScale + distancesScale * i / (this.framesCount - 1));
+            this.rotateValues.push(this.rootRotate + distancesRotate * i / (this.framesCount - 1));
+        }
+    };
     ANIMATION.prototype.setting = function ($x, $y, $scale, $round) {
         var distances = this.settingMove($x || 0, $y || 0);
         var distancesRotate = this.settingRotate($round * 360 || 0);
@@ -224,7 +241,6 @@
             this.scaleValues.push(this.rootScale + distancesScale * i / (this.framesCount - 1));
             this.rotateValues.push(this.rootRotate + distancesRotate * i / (this.framesCount - 1));
         }
-        console.log("-->delaySecondsTime", this.delaySecondsTime, this.secondsTime, this.framesCount);
         this.runAt(1);
     };
     ANIMATION.prototype.runAt = function (_frame) {
@@ -429,7 +445,9 @@
     var pageHistory = new ELEMENT("#page_history");
     var pageResult = new ELEMENT("#page_result");
     var process = new ELEMENT("#process");
-
+    document.body.addEventListener("mousedown", function ($event){
+        console.log($event.target);
+    });
     CLICK([startBtn, historyBtn]);
 
     hidePages();
