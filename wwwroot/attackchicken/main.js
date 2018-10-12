@@ -1,19 +1,19 @@
-(function() {
+(function () {
     "use strict";
 
 
     /**
      * ReInstall request animation frame
      */
-    var raf = (function() {
+    var raf = (function () {
         return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             window.oRequestAnimationFame ||
             window.msRequestAnimationFrame ||
-            function(callback, element) {
+            function (callback, element) {
                 return window.setTimeout(
-                    function() {
+                    function () {
                         callback(Date.now());
                     }, 1000 / 60);
             };
@@ -26,163 +26,163 @@
     var pages = ["history", "start", "main", "result"];
     var assetsLoaded = false;
     var images = [{
-            index: 0,
-            name: "start_background",
-            height: 600,
-            width: 360
-        },
-        {
-            index: 1,
-            name: "start_button_history"
-        },
-        {
-            index: 2,
-            name: "start_button_start"
-        },
-        {
-            index: 3,
-            name: "start_message_box"
-        },
-        {
-            index: 4,
-            name: "start_logo"
-        },
-        {
-            index: 5,
-            name: "main_background",
-            height: 600,
-            width: 360
-        },
-        {
-            index: 6,
-            name: "main_egg_white"
-        },
-        {
-            index: 7,
-            name: "main_egg_gold"
-        },
-        {
-            index: 8,
-            name: "main_egg_orange"
-        },
-        {
-            index: 9,
-            name: "main_egg_broken"
-        },
-        {
-            index: 10,
-            name: "main_num_0"
-        },
-        {
-            index: 11,
-            name: "main_num_1"
-        },
-        {
-            index: 12,
-            name: "main_num_2"
-        },
-        {
-            index: 13,
-            name: "main_num_3"
-        },
-        {
-            index: 14,
-            name: "main_num_4"
-        },
-        {
-            index: 15,
-            name: "main_num_5"
-        },
-        {
-            index: 16,
-            name: "main_num_6"
-        },
-        {
-            index: 17,
-            name: "main_num_7"
-        },
-        {
-            index: 18,
-            name: "main_num_8"
-        },
-        {
-            index: 19,
-            name: "main_num_9"
-        },
-        {
-            index: 20,
-            name: "main_gift_box",
-            height: 60,
-            width: 60
-        },
-        {
-            index: 21,
-            name: "main_chicken_wing_up",
-            height: 100,
-            width: 100
-        },
-        {
-            index: 22,
-            name: "main_chicken_wing_down",
-            height: 100,
-            width: 100
-        },
-        {
-            index: 23,
-            name: "main_chicken_inclined_45deg",
-            height: 100,
-            width: 100
-        },
-        {
-            index: 24,
-            name: "main_chicken_inclined_45deg_wingup",
-            height: 100,
-            width: 100
-        },
-        {
-            index: 25,
-            name: "main_time_1"
-        },
-        {
-            index: 26,
-            name: "main_time_2"
-        },
-        {
-            index: 27,
-            name: "main_time_3"
-        },
-        {
-            index: 28,
-            name: "main_hammer"
-        },
-        {
-            index: 29,
-            name: "result_background",
-            height: 600,
-            width: 360
-        },
-        {
-            index: 30,
-            name: "history_background",
-            height: 600,
-            width: 360
-        },
-        {
-            index: 31,
-            name: "history_panel"
-        },
-        {
-            index: 32,
-            name: "history_next_button"
-        },
-        {
-            index: 33,
-            name: "history_back_button"
-        },
-        {
-            index: 34,
-            name: "history_home_button"
-        }
+        index: 0,
+        name: "start_background",
+        height: 600,
+        width: 360
+    },
+    {
+        index: 1,
+        name: "start_button_history"
+    },
+    {
+        index: 2,
+        name: "start_button_start"
+    },
+    {
+        index: 3,
+        name: "start_message_box"
+    },
+    {
+        index: 4,
+        name: "start_logo"
+    },
+    {
+        index: 5,
+        name: "main_background",
+        height: 600,
+        width: 360
+    },
+    {
+        index: 6,
+        name: "main_egg_white"
+    },
+    {
+        index: 7,
+        name: "main_egg_gold"
+    },
+    {
+        index: 8,
+        name: "main_egg_orange"
+    },
+    {
+        index: 9,
+        name: "main_egg_broken"
+    },
+    {
+        index: 10,
+        name: "main_num_0"
+    },
+    {
+        index: 11,
+        name: "main_num_1"
+    },
+    {
+        index: 12,
+        name: "main_num_2"
+    },
+    {
+        index: 13,
+        name: "main_num_3"
+    },
+    {
+        index: 14,
+        name: "main_num_4"
+    },
+    {
+        index: 15,
+        name: "main_num_5"
+    },
+    {
+        index: 16,
+        name: "main_num_6"
+    },
+    {
+        index: 17,
+        name: "main_num_7"
+    },
+    {
+        index: 18,
+        name: "main_num_8"
+    },
+    {
+        index: 19,
+        name: "main_num_9"
+    },
+    {
+        index: 20,
+        name: "main_gift_box",
+        height: 60,
+        width: 60
+    },
+    {
+        index: 21,
+        name: "main_chicken_wing_up",
+        height: 100,
+        width: 100
+    },
+    {
+        index: 22,
+        name: "main_chicken_wing_down",
+        height: 100,
+        width: 100
+    },
+    {
+        index: 23,
+        name: "main_chicken_inclined_45deg",
+        height: 100,
+        width: 100
+    },
+    {
+        index: 24,
+        name: "main_chicken_inclined_45deg_wingup",
+        height: 100,
+        width: 100
+    },
+    {
+        index: 25,
+        name: "main_time_1"
+    },
+    {
+        index: 26,
+        name: "main_time_2"
+    },
+    {
+        index: 27,
+        name: "main_time_3"
+    },
+    {
+        index: 28,
+        name: "main_hammer"
+    },
+    {
+        index: 29,
+        name: "result_background",
+        height: 600,
+        width: 360
+    },
+    {
+        index: 30,
+        name: "history_background",
+        height: 600,
+        width: 360
+    },
+    {
+        index: 31,
+        name: "history_panel"
+    },
+    {
+        index: 32,
+        name: "history_next_button"
+    },
+    {
+        index: 33,
+        name: "history_back_button"
+    },
+    {
+        index: 34,
+        name: "history_home_button"
+    }
     ];
 
     /**
@@ -192,7 +192,7 @@
     // var process = document.getElementById("process");
     var processPercent = document.getElementById("process_percent");
     var ns = "http://www.w3.org/2000/svg";
-    if (typeof(container) !== "object") {
+    if (typeof (container) !== "object") {
         container = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         container.id = "game_container";
         container.classList.add("game_container");
@@ -204,11 +204,11 @@
     /**
      * Common actions and animations
      */
-    var EVENT = function() {
+    var EVENT = function () {
         this.type = "";
         this.attack = undefined;
     };
-    var ELEMENT = function(targetString) {
+    var ELEMENT = function (targetString) {
         var _this = this;
         if (targetString) {
             if (targetString.indexOf("#") === 0) {
@@ -222,11 +222,11 @@
             this.target = document.createElementNS("http://www.w3.org/2000/svg", "g");
         }
         this.children = [];
-        this.add = function($newElement) {
+        this.add = function ($newElement) {
             this.target.appendChild($newElement.target);
             this.children.push($newElement);
         };
-        this.addEvent = function($config) {
+        this.addEvent = function ($config) {
             $config = $config || new EVENT();
             var isAdd = true;
             for (var i = 0; i < this.events.length; i++) {
@@ -237,7 +237,7 @@
             }
             if (isAdd) {
                 this.events.push($config);
-                this.target.addEventListener($config.type, function($event) {
+                this.target.addEventListener($config.type, function ($event) {
                     $event.yourElement = _this;
                     for (var i = 0; i < _this.events.length; i++) {
                         if (_this.events[i].type === $config.type) {
@@ -249,12 +249,12 @@
             }
         };
         this.events = [];
-        this.hide = function() {
+        this.hide = function () {
             if (this.target) {
                 this.target.classList.add("hidden");
             }
         };
-        this.show = function() {
+        this.show = function () {
             if (this.target) {
                 this.target.classList.remove("hidden");
             }
@@ -264,7 +264,7 @@
         this.type = "g";
         this.width = 0;
         this.height = 0;
-        this.createSvgElement = function($type, $config, $parent) {
+        this.createSvgElement = function ($type, $config, $parent) {
             this.config = $config || this.config;
             this.height = this.config.height || 0;
             this.width = this.config.width || 0;
@@ -290,7 +290,7 @@
      * animation common for element
      * @param {*} $element html elements
      */
-    var ANIMATION = function($element, $config) {
+    var ANIMATION = function ($element, $config) {
         var _this = this;
         this.element = $element;
         $config = $config || {};
@@ -320,7 +320,7 @@
 
         this.tick = this.config.tick || 60;
 
-        this.setFrameCount = function($secondstime) {
+        this.setFrameCount = function ($secondstime) {
             $secondstime = $secondstime ? $secondstime * 1000 : 0;
             var frameCount = Math.round($secondstime / this.tick);
             return frameCount;
@@ -334,7 +334,7 @@
     };
     ANIMATION.prototype.currentFrame = 0;
     ANIMATION.prototype.audio = document.createElement("audio");
-    ANIMATION.prototype.settingMove = function($x, $y) {
+    ANIMATION.prototype.settingMove = function ($x, $y) {
         var lastConfig = this.values[this.values.length - 1] || this.config;
         $x = $x ? $x : 0;
         $y = $y ? $y : 0;
@@ -342,17 +342,17 @@
         var distanceHeight = $y - lastConfig.y;
         return [distanceWidth, distanceHeight];
     };
-    ANIMATION.prototype.settingScale = function($scale) {
+    ANIMATION.prototype.settingScale = function ($scale) {
         var lastConfig = this.values[this.values.length - 1] || this.config;
         $scale = $scale ? $scale : 1;
         return $scale - lastConfig.scale;
     };
-    ANIMATION.prototype.settingRotate = function($rotate) {
+    ANIMATION.prototype.settingRotate = function ($rotate) {
         var lastConfig = this.values[this.values.length - 1] || this.config;
         $rotate = $rotate ? $rotate : 0;
         return $rotate - lastConfig.rotate;
     };
-    ANIMATION.prototype.calculateWithCorner = function(startX, startY, distance, cornerValue) {
+    ANIMATION.prototype.calculateWithCorner = function (startX, startY, distance, cornerValue) {
         // a^2 + b^2 = c^2
         // a = x, b =y, c=distance
         var radian = cornerValue * (Math.PI / 180);
@@ -365,7 +365,7 @@
             y: startY + Math.sin(radian) * distance
         };
     };
-    ANIMATION.prototype.goto = function($options) {
+    ANIMATION.prototype.goto = function ($options) {
         var lastConfig = this.values[this.values.length - 1] || this.config;
 
         $options.x = $options.x || lastConfig.x;
@@ -375,6 +375,9 @@
         $options.corner = $options.corner || lastConfig.corner;
         $options.time = $options.time || lastConfig.time;
         $options.speed = $options.speed || lastConfig.speed;
+        if($options.name == "fake") {
+            console.log($options);
+        }
         var distance = 0;
         var time = $options.time || lastConfig.time || 1;
         var speed = $options.speed || lastConfig.speed;
@@ -386,8 +389,8 @@
                 $options.x = point.x;
                 $options.y = point.y;
             } else {
-                distance = Math.sqrt(Math.pow($options.x - lastConfig.x, 2) + Math.pow($options.y - lastConfig.y, 2));               
-                time =  distance / speed;
+                distance = Math.sqrt(Math.pow($options.x - lastConfig.x, 2) + Math.pow($options.y - lastConfig.y, 2));
+                time = distance / speed;
             }
         }
         var distances = this.settingMove($options.x, $options.y);
@@ -395,38 +398,83 @@
         var distancesScale = this.settingScale($options.scale || lastConfig.scale);
         var delayFrame = this.setFrameCount($options.delay || 0);
         var framesCount = this.setFrameCount(time);
+
+        
         for (var i = 0; i < framesCount; i++) {
-            this.values.push({
-                x: lastConfig.x + distances[0] * i / (framesCount - 1),
-                y: lastConfig.y + distances[1] * i / (framesCount - 1),
-                scale: lastConfig.scale + distancesScale * i / (framesCount - 1) || lastConfig.scale,
-                rotate: lastConfig.rotate + distancesRotate * i / (framesCount - 1) || lastConfig.rotate,
-                delayFrame: delayFrame,
-                speed: $options.speed,
-                corner: $options.corner,
-                time: time
-            });
+            var x = lastConfig.x + distances[0] * i / (framesCount - 1);
+            var y = lastConfig.y + distances[1] * i / (framesCount - 1);
+            var scale = lastConfig.scale + distancesScale * i / (framesCount - 1) || lastConfig.scale;
+            var rotate = lastConfig.rotate + distancesRotate * i / (framesCount - 1) || lastConfig.rotate;
+            var isCrashXRight = false;
+            var isCrashXLeft = false;
+            var isCrashYBottom = false;
+            var isCrashYTop = false;
+
+            if (this.viewbox) {
+                if (x < this.viewbox.x) {
+                    isCrashXLeft = true;
+                }
+                if (x > this.viewbox.width + this.viewbox.x) {
+                    isCrashXRight = true;
+                }
+
+                if (y < this.viewbox.y) {
+                    isCrashYTop = true;
+                }
+                if (y > this.viewbox.height + this.viewbox.y) {
+                    isCrashYBottom = true;
+                }
+            }
+
+            // console.log(isCrashX, isCrashY);
+            if (!isCrashXLeft && !isCrashXRight && !isCrashYTop && !isCrashYBottom) {
+                this.values.push({
+                    x: x,
+                    y: y,
+                    scale: scale,
+                    rotate: rotate,
+                    delayFrame: delayFrame,
+                    speed: $options.speed,
+                    corner: $options.corner,
+                    time: time
+                });
+            } else {
+                var crashTime = (i + 1) * this.tick / 1000;
+                console.log("crash: ", crashTime, i, x, y);
+                this.goto({
+                    time: time - crashTime,
+                    corner: 180 - $options.corner,
+                    speed: speed,
+                    name: "fake"
+                });
+                break;
+            }
+
+            if($options.name == "fake") {
+                console.log(time, this.values);
+            }
+    
         }
         this.framesCount += framesCount;
         this.timerFrames = this.framesCount;
         return this;
     };
-    ANIMATION.prototype.setting = function() {
+    ANIMATION.prototype.setting = function () {
         this.runAt(0);
     };
-    ANIMATION.prototype.runAt = function(_frame) {
+    ANIMATION.prototype.runAt = function (_frame) {
         if (this.element) {
             this.currentFrame = _frame ? _frame : 1;
-            var _toPosition = this.values[this.currentFrame - 1] || this.config;
+            var _toPosition = this.values[this.currentFrame - 1] || this.values[this.values.length - 1] || this.config;
             this.element.setAttribute("transform",
                 "translate(" + _toPosition.x + ", " + _toPosition.y + ")" + "scale(" + _toPosition.scale + ") " + "rotate(" + _toPosition.rotate + ")" + "translate(" + (-this.config.width / 2) + "," + (-this.config.height / 2) + " )");
         }
-        var outresult = typeof(this.onOutput) == "function" ? this.onOutput() : undefined;
+        var outresult = typeof (this.onOutput) == "function" ? this.onOutput() : undefined;
         if (!this.element) {
             return;
         }
     };
-    ANIMATION.prototype.run = function(_frame) {
+    ANIMATION.prototype.run = function (_frame) {
         // console.log("timer: ", this.timerFrames);
         if (this.timerFrames < 1) {
             return;
@@ -441,7 +489,7 @@
             }
         }
         if (this.timerFrames === 1) {
-            if (typeof(this.onEndRound) === "function") {
+            if (typeof (this.onEndRound) === "function") {
                 this.onEndRound();
             }
         }
@@ -451,7 +499,7 @@
      * Timeline for each item
      * time is seconds
      */
-    var TIMELINE = function() {};
+    var TIMELINE = function () { };
     TIMELINE.prototype.action = undefined;
     TIMELINE.prototype.time = 0;
     TIMELINE.prototype.fps = 0;
@@ -460,7 +508,7 @@
     TIMELINE.prototype.hasLoop = false;
     TIMELINE.prototype.tick = 1;
     TIMELINE.prototype.animation = undefined;
-    TIMELINE.prototype.runGame = function() {
+    TIMELINE.prototype.runGame = function () {
         var _this = this;
         this.currentTime = Date.now();
         if (!this.isPause && !this.isStop) {
@@ -494,24 +542,24 @@
         }
         // stop game or not
         if (!this.isStop) {
-            raf(function() {
+            raf(function () {
                 _this.runGame();
             });
         }
     };
-    TIMELINE.prototype.pause = function() {
+    TIMELINE.prototype.pause = function () {
         if (this.pauseTime === 0) {
             this.pauseTime = this.currentTime;
         } else {
             this.distancePauseTime = this.currentTime - this.pauseTime;
         }
     };
-    TIMELINE.prototype.configRunGame = function() {
+    TIMELINE.prototype.configRunGame = function () {
         this.isStop = false;
         this.isPause = false;
         this.resetGame();
     };
-    TIMELINE.prototype.resetGame = function() {
+    TIMELINE.prototype.resetGame = function () {
         this.startTime = 0;
         this.pauseTime = 0;
         this.distancePauseTime = 0;
@@ -525,7 +573,7 @@
      * @param {*} $filenames file names 
      * @param {*} $type type of file
      */
-    var LOAD = function($filenames, $type) {
+    var LOAD = function ($filenames, $type) {
         var _this = this;
         this.loadedAudio = true;
         this.loadedImage = false;
@@ -561,9 +609,9 @@
             }
             var loadingCount = loadingImages.length;
             var loadedCount = 0;
-            var loadImages = function() {
+            var loadImages = function () {
                 loadingImages[loadedCount].src = loadingImages[loadedCount].srcString;
-                loadingImages[loadedCount].onload = loadingImages[loadedCount].onerror = function() {
+                loadingImages[loadedCount].onload = loadingImages[loadedCount].onerror = function () {
                     loadedCount++;
                     if (loadedCount < loadingCount) {
                         var _widthPercent = (((loadedCount + 1) / loadingCount) * 280);
@@ -625,7 +673,7 @@
     var startBtn = new ELEMENT("#start_button");
     startBtn.addEvent({
         type: "click",
-        attack: function($event) {
+        attack: function ($event) {
             console.log($event);
             startGame();
         }
@@ -633,7 +681,7 @@
     var historyBtn = new ELEMENT("#history_button");
     historyBtn.addEvent({
         type: "click",
-        attack: function($event) {
+        attack: function ($event) {
             console.log($event);
             gotoHistory();
         }
@@ -645,7 +693,7 @@
     var process = new ELEMENT("#process");
 
 
-    document.body.addEventListener("mousedown", function($event) {});
+    document.body.addEventListener("mousedown", function ($event) { });
 
     hidePages();
     // pageStart.show();
@@ -672,7 +720,7 @@
     mainTimeline.tick = 1000 / mainTimeline.fps;
 
     // when browser is not active
-    document.onvisibilitychange = function($event) {
+    document.onvisibilitychange = function ($event) {
         if (mainTimeline.isStop) {
             return;
         }
@@ -688,19 +736,19 @@
     /**
      * Chicken model
      */
-    var CHICKEN = function() {
+    var CHICKEN = function () {
         this.staticElement = new ELEMENT();
         this.moveElement = new ELEMENT();
         this.endElement = new ELEMENT();
         this.name = "default";
     };
 
-    var EGG = function() {
+    var EGG = function () {
         this.element = new ELEMENT();
         this.value = 0;
     };
 
-    var CHICKEN_GROUP = function($name) {
+    var CHICKEN_GROUP = function ($name) {
         this.name = $name;
         this.element = new ELEMENT();
         this.chicken = new CHICKEN();
@@ -708,7 +756,7 @@
         this.avtivated = false;
         this.animation = new ANIMATION();
     };
-    CHICKEN_GROUP.prototype.setting = function() {
+    CHICKEN_GROUP.prototype.setting = function () {
         this.element.add(this.chicken.staticElement);
         this.element.add(this.chicken.moveElement);
         this.element.add(this.chicken.endElement);
@@ -718,7 +766,7 @@
         this.chicken.endElement.hide();
         this.configAnimation();
     };
-    CHICKEN_GROUP.prototype.configAnimation = function() {
+    CHICKEN_GROUP.prototype.configAnimation = function () {
         this.animation.tick = mainTimeline.tick;
         this.animation.delaySecondsTime = 0;
         this.animation.element = this.element.target;
@@ -728,8 +776,8 @@
     };
     var gameIntro = new ELEMENT("#game_intro");
     var gamePlay = new ELEMENT("#game_play");
-    gamePlay.click = function($event) {};
-    gameIntro.click = function($event) {};
+    gamePlay.click = function ($event) { };
+    gameIntro.click = function ($event) { };
 
     window.gamePlay = gamePlay;
     window.gameIntro = gameIntro;
@@ -741,22 +789,22 @@
     var chicken6 = new CHICKEN_GROUP();
     gamePlay.addEvent({
         type: "click",
-        attack: function(params) {
+        attack: function (params) {
             console.log(params);
         }
     });
-    loadedAssets.onEnd = function() {
+    loadedAssets.onEnd = function () {
         var dataChicken = loadedAssets.images[22];
         var type = "image";
         var center = {
             x: width / 2,
             y: height / 2
         };
-        var viewarea = {
-            minX: 50,
-            minY: 50,
-            maxX: width - 50,
-            maxY: height - 50
+        var viewbox = {
+            x: 0,
+            y: 0,
+            width: width,
+            height: height
         };
         chicken1.element.createSvgElement("g");
         chicken1.chicken.staticElement.createSvgElement(type, dataChicken);
@@ -764,6 +812,7 @@
         chicken1.chicken.endElement.createSvgElement(type, dataChicken);
         chicken1.animation.config.x = center.x;
         chicken1.animation.config.y = center.y;
+        chicken1.animation.viewbox = viewbox;
         chicken1.setting();
         gamePlay.add(chicken1.element);
 
@@ -773,6 +822,7 @@
         chicken2.chicken.endElement.createSvgElement(type, dataChicken);
         chicken2.animation.config.x = center.x;
         chicken2.animation.config.y = center.y;
+        chicken2.animation.viewbox = viewbox;
         chicken2.setting();
         gamePlay.add(chicken2.element);
 
@@ -782,6 +832,7 @@
         chicken3.chicken.endElement.createSvgElement(type, dataChicken);
         chicken3.animation.config.x = center.x;
         chicken3.animation.config.y = center.y;
+        chicken3.animation.viewbox = viewbox;
         chicken3.setting();
         gamePlay.add(chicken3.element);
 
@@ -791,6 +842,7 @@
         chicken4.chicken.endElement.createSvgElement(type, dataChicken);
         chicken4.animation.config.x = center.x;
         chicken4.animation.config.y = center.y;
+        chicken4.animation.viewbox = viewbox;
         chicken4.setting();
         gamePlay.add(chicken4.element);
 
@@ -800,6 +852,7 @@
         chicken5.chicken.endElement.createSvgElement(type, dataChicken);
         chicken5.animation.config.x = center.x;
         chicken5.animation.config.y = center.y;
+        chicken5.animation.viewbox = viewbox;
         chicken5.setting();
         gamePlay.add(chicken5.element);
 
@@ -809,6 +862,7 @@
         chicken6.chicken.endElement.createSvgElement(type, dataChicken);
         chicken6.animation.config.x = center.x;
         chicken6.animation.config.y = center.y;
+        chicken6.animation.viewbox = viewbox;
         chicken6.setting();
         gamePlay.add(chicken6.element);
 
@@ -818,18 +872,18 @@
         timer.goto({
             time: 1
         });
-        timer.onOutput = function() {
+        timer.onOutput = function () {
             elementTimerStart.target.textContent = timer.timerFrames - 1;
         };
 
         mainTimeline.animation = timer;
-        timer.onEndRound = function() {
+        timer.onEndRound = function () {
             console.log("end round");
             var element = new ELEMENT();
             var anim = new ANIMATION();
             anim.tick = mainTimeline.tick;
             anim.setting();
-            anim.onOutput = function() {};
+            anim.onOutput = function () { };
             anim.goto({
                 time: 10
             });
@@ -843,18 +897,16 @@
 
             chicken1.animation.goto({
                 corner: -60, // deg
-                speed: 10, // pixel/s
-                time: 2
+                speed: 100, // pixel/s
+                time: 5
             });
             anim.children.push(chicken1.animation);
-            // chicken2.animation.goto({
-            //     x: 100,
-            //     y: 50
-            // }).goto({
-            //     x: 300,
-            //     y: 300
-            // });
-            // anim.children.push(chicken2.animation);
+            chicken2.animation.goto({
+                corner: 60, // deg
+                speed: 20, // pixel/s
+                time: 5
+            });
+            anim.children.push(chicken2.animation);
             // chicken3.animation.goto({
             //     x: 10,
             //     y: 50
