@@ -1,23 +1,6 @@
 (function () {
     "use strict";
 
-
-    /**
-     * ReInstall request animation frame
-     */
-    var raf = (function () {
-        return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.oRequestAnimationFame ||
-            window.msRequestAnimationFrame ||
-            function (callback, element) {
-                return window.setTimeout(
-                    function () {
-                        callback(Date.now());
-                    }, 1000 / 60);
-            };
-    })();
     /**
      * Set default config
      */
@@ -25,165 +8,131 @@
     var width = 360;
     var pages = ["history", "start", "main", "result"];
     var assetsLoaded = false;
+    var maxItems = 6;
     var images = [{
         index: 0,
         name: "start_background",
         height: 600,
         width: 360
-    },
-    {
+    }, {
         index: 1,
         name: "start_button_history"
-    },
-    {
+    }, {
         index: 2,
         name: "start_button_start"
-    },
-    {
+    }, {
         index: 3,
         name: "start_message_box"
-    },
-    {
+    }, {
         index: 4,
         name: "start_logo"
-    },
-    {
+    }, {
         index: 5,
         name: "main_background",
         height: 600,
         width: 360
-    },
-    {
+    }, {
         index: 6,
         name: "main_egg_white"
-    },
-    {
+    }, {
         index: 7,
         name: "main_egg_gold"
-    },
-    {
+    }, {
         index: 8,
         name: "main_egg_orange"
-    },
-    {
+    }, {
         index: 9,
         name: "main_egg_broken"
-    },
-    {
+    }, {
         index: 10,
         name: "main_num_0"
-    },
-    {
+    }, {
         index: 11,
         name: "main_num_1"
-    },
-    {
+    }, {
         index: 12,
         name: "main_num_2"
-    },
-    {
+    }, {
         index: 13,
         name: "main_num_3"
-    },
-    {
+    }, {
         index: 14,
         name: "main_num_4"
-    },
-    {
+    }, {
         index: 15,
         name: "main_num_5"
-    },
-    {
+    }, {
         index: 16,
         name: "main_num_6"
-    },
-    {
+    }, {
         index: 17,
         name: "main_num_7"
-    },
-    {
+    }, {
         index: 18,
         name: "main_num_8"
-    },
-    {
+    }, {
         index: 19,
         name: "main_num_9"
-    },
-    {
+    }, {
         index: 20,
         name: "main_gift_box",
         height: 60,
         width: 60
-    },
-    {
+    }, {
         index: 21,
         name: "main_chicken_wing_up",
         height: 100,
         width: 100
-    },
-    {
+    }, {
         index: 22,
         name: "main_chicken_wing_down",
         height: 100,
         width: 100
-    },
-    {
+    }, {
         index: 23,
         name: "main_chicken_inclined_45deg",
         height: 100,
         width: 100
-    },
-    {
+    }, {
         index: 24,
         name: "main_chicken_inclined_45deg_wingup",
         height: 100,
         width: 100
-    },
-    {
+    }, {
         index: 25,
         name: "main_time_1"
-    },
-    {
+    }, {
         index: 26,
         name: "main_time_2"
-    },
-    {
+    }, {
         index: 27,
         name: "main_time_3"
-    },
-    {
+    }, {
         index: 28,
         name: "main_hammer"
-    },
-    {
+    }, {
         index: 29,
         name: "result_background",
         height: 600,
         width: 360
-    },
-    {
+    }, {
         index: 30,
         name: "history_background",
         height: 600,
         width: 360
-    },
-    {
+    }, {
         index: 31,
         name: "history_panel"
-    },
-    {
+    }, {
         index: 32,
         name: "history_next_button"
-    },
-    {
+    }, {
         index: 33,
         name: "history_back_button"
-    },
-    {
+    }, {
         index: 34,
         name: "history_home_button"
-    }
-    ];
+    }];
 
     /**
      * Load component
@@ -201,374 +150,7 @@
     container.setAttribute("viewBox", "0 0 " + width + " " + height);
     container.setAttribute("width", width);
     container.setAttribute("heght", height);
-    /**
-     * Common actions and animations
-     */
-    var EVENT = function () {
-        this.type = "";
-        this.attack = undefined;
-    };
-    var ELEMENT = function (targetString) {
-        var _this = this;
-        if (targetString) {
-            if (targetString.indexOf("#") === 0) {
-                this.target = document.getElementById(targetString.replace("#", ""));
-            } else if (targetString.indexOf(".") === 0) {
-                this.target = document.getElementsByClassName(targetString.replace(".", ""));
-            } else {
-                this.target = document.getElementsByTagName(targetString);
-            }
-        } else {
-            this.target = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        }
-        this.children = [];
-        this.add = function ($newElement) {
-            this.target.appendChild($newElement.target);
-            this.children.push($newElement);
-        };
-        this.addEvent = function ($config) {
-            $config = $config || new EVENT();
-            var isAdd = true;
-            for (var i = 0; i < this.events.length; i++) {
-                if (this.events[i].type === $config.type) {
-                    isAdd = false;
-                    break;
-                }
-            }
-            if (isAdd) {
-                this.events.push($config);
-                this.target.addEventListener($config.type, function ($event) {
-                    $event.yourElement = _this;
-                    for (var i = 0; i < _this.events.length; i++) {
-                        if (_this.events[i].type === $config.type) {
-                            _this.events[i].attack(_this);
-                            break;
-                        }
-                    }
-                }, false);
-            }
-        };
-        this.events = [];
-        this.hide = function () {
-            if (this.target) {
-                this.target.classList.add("hidden");
-            }
-        };
-        this.show = function () {
-            if (this.target) {
-                this.target.classList.remove("hidden");
-            }
-        };
-        this.config = {};
-        this.parent = {};
-        this.type = "g";
-        this.width = 0;
-        this.height = 0;
-        this.createSvgElement = function ($type, $config, $parent) {
-            this.config = $config || this.config;
-            this.height = this.config.height || 0;
-            this.width = this.config.width || 0;
-            this.parent = $parent;
-            this.type = $type;
-            this.target = document.createElementNS("http://www.w3.org/2000/svg", this.type || "g");
-            this.target.setAttribute("x", this.config.x || 0);
-            this.target.setAttribute("y", this.config.y || 0);
-            this.target.setAttribute("height", this.height);
-            this.target.setAttribute("width", this.width);
-            var time = Date.now();
-            this.target.id = "id_" + time;
-            if (this.config.link) {
-                this.target.setAttributeNS("http://www.w3.org/1999/xlink", "href", this.config.link);
-            }
-            if (this.parent) {
-                this.parent.appendChild(this.target);
-            }
-        };
-    };
 
-    /**
-     * animation common for element
-     * @param {*} $element html elements
-     */
-    var ANIMATION = function ($element, $config) {
-        var _this = this;
-        this.element = $element;
-        $config = $config || {};
-        this.config = {
-            x: $config.x || 0,
-            y: $config.y || 0,
-            scale: $config.scale || 1,
-            rotate: $config.rotate || 0,
-            height: $config.height || 50,
-            width: $config.width || 50,
-            delay: 0,
-            time: 0, // can not input when use speed mode
-            corner: undefined, // corner move , when corner is seted then x, y only red
-            speed: undefined // speed of item , default is disable, when set it then enable
-        };
-        this.viewbox = undefined;
-        this.centerPosition = {
-            x: (this.config.x + this.config.width) / 2,
-            y: (this.config.y + this.config.height) / 2
-        };
-        this.delayFrame = 0;
-        this.secondsTime = 0;
-        // setting move function
-        this.values = [];
-        this.framesCount = 0;
-        this.timerFrames = 0;
-
-        this.tick = this.config.tick || 60;
-
-        this.setFrameCount = function ($secondstime) {
-            $secondstime = $secondstime ? $secondstime * 1000 : 0;
-            var frameCount = Math.round($secondstime / this.tick);
-            return frameCount;
-        };
-        this.children = [];
-
-        this.onEndRound = undefined;
-        this.onOutput = undefined;
-        // only read
-        this._configs = [];
-    };
-    ANIMATION.prototype.currentFrame = 0;
-    ANIMATION.prototype.audio = document.createElement("audio");
-    ANIMATION.prototype.settingMove = function ($x, $y) {
-        var lastConfig = this.values[this.values.length - 1] || this.config;
-        $x = $x ? $x : 0;
-        $y = $y ? $y : 0;
-        var distanceWidth = $x - lastConfig.x;
-        var distanceHeight = $y - lastConfig.y;
-        return [distanceWidth, distanceHeight];
-    };
-    ANIMATION.prototype.settingScale = function ($scale) {
-        var lastConfig = this.values[this.values.length - 1] || this.config;
-        $scale = $scale ? $scale : 1;
-        return $scale - lastConfig.scale;
-    };
-    ANIMATION.prototype.settingRotate = function ($rotate) {
-        var lastConfig = this.values[this.values.length - 1] || this.config;
-        $rotate = $rotate ? $rotate : 0;
-        return $rotate - lastConfig.rotate;
-    };
-    ANIMATION.prototype.calculateWithCorner = function (startX, startY, distance, cornerValue) {
-        // a^2 + b^2 = c^2
-        // a = x, b =y, c=distance
-        var radian = cornerValue * (Math.PI / 180);
-        console.log("radian", radian);
-        console.log("startX", startX);
-        console.log("startY", startY);
-        console.log("distance", distance);
-        return {
-            x: startX + Math.cos(radian) * distance,
-            y: startY + Math.sin(radian) * distance
-        };
-    };
-    ANIMATION.prototype.goto = function ($options) {
-        var lastConfig = this.values[this.values.length - 1] || this.config;
-
-        $options.x = $options.x || lastConfig.x;
-        $options.y = $options.y || lastConfig.y;
-        $options.rotate = $options.rotate || lastConfig.rotate;
-        $options.scale = $options.scale || lastConfig.scale;
-        $options.corner = $options.corner || lastConfig.corner;
-        $options.time = $options.time || lastConfig.time;
-        $options.speed = $options.speed || lastConfig.speed;
-        if($options.name == "fake") {
-            console.log($options);
-        }
-        var distance = 0;
-        var time = $options.time || lastConfig.time || 1;
-        var speed = $options.speed || lastConfig.speed;
-        if (speed) {
-            if (this.config.corner || $options.corner) {
-                // console.log($options);
-                distance = time * $options.speed;
-                var point = this.calculateWithCorner(lastConfig.x, lastConfig.y, distance, $options.corner);
-                $options.x = point.x;
-                $options.y = point.y;
-            } else {
-                distance = Math.sqrt(Math.pow($options.x - lastConfig.x, 2) + Math.pow($options.y - lastConfig.y, 2));
-                time = distance / speed;
-            }
-        }
-        var distances = this.settingMove($options.x, $options.y);
-        var distancesRotate = this.settingRotate($options.rotate * 360 || lastConfig.rotate * 360);
-        var distancesScale = this.settingScale($options.scale || lastConfig.scale);
-        var delayFrame = this.setFrameCount($options.delay || 0);
-        var framesCount = this.setFrameCount(time);
-
-        
-        for (var i = 0; i < framesCount; i++) {
-            var x = lastConfig.x + distances[0] * i / (framesCount - 1);
-            var y = lastConfig.y + distances[1] * i / (framesCount - 1);
-            var scale = lastConfig.scale + distancesScale * i / (framesCount - 1) || lastConfig.scale;
-            var rotate = lastConfig.rotate + distancesRotate * i / (framesCount - 1) || lastConfig.rotate;
-            var isCrashXRight = false;
-            var isCrashXLeft = false;
-            var isCrashYBottom = false;
-            var isCrashYTop = false;
-
-            if (this.viewbox) {
-                if (x < this.viewbox.x) {
-                    isCrashXLeft = true;
-                }
-                if (x > this.viewbox.width + this.viewbox.x) {
-                    isCrashXRight = true;
-                }
-
-                if (y < this.viewbox.y) {
-                    isCrashYTop = true;
-                }
-                if (y > this.viewbox.height + this.viewbox.y) {
-                    isCrashYBottom = true;
-                }
-            }
-
-            // console.log(isCrashX, isCrashY);
-            if (!isCrashXLeft && !isCrashXRight && !isCrashYTop && !isCrashYBottom) {
-                this.values.push({
-                    x: x,
-                    y: y,
-                    scale: scale,
-                    rotate: rotate,
-                    delayFrame: delayFrame,
-                    speed: $options.speed,
-                    corner: $options.corner,
-                    time: time
-                });
-            } else {
-                var crashTime = (i + 1) * this.tick / 1000;
-                console.log("crash: ", crashTime, i, x, y);
-                this.goto({
-                    time: time - crashTime,
-                    corner: 180 - $options.corner,
-                    speed: speed,
-                    name: "fake"
-                });
-                break;
-            }
-
-            if($options.name == "fake") {
-                console.log(time, this.values);
-            }
-    
-        }
-        this.framesCount += framesCount;
-        this.timerFrames = this.framesCount;
-        return this;
-    };
-    ANIMATION.prototype.setting = function () {
-        this.runAt(0);
-    };
-    ANIMATION.prototype.runAt = function (_frame) {
-        if (this.element) {
-            this.currentFrame = _frame ? _frame : 1;
-            var _toPosition = this.values[this.currentFrame - 1] || this.values[this.values.length - 1] || this.config;
-            this.element.setAttribute("transform",
-                "translate(" + _toPosition.x + ", " + _toPosition.y + ")" + "scale(" + _toPosition.scale + ") " + "rotate(" + _toPosition.rotate + ")" + "translate(" + (-this.config.width / 2) + "," + (-this.config.height / 2) + " )");
-        }
-        var outresult = typeof (this.onOutput) == "function" ? this.onOutput() : undefined;
-        if (!this.element) {
-            return;
-        }
-    };
-    ANIMATION.prototype.run = function (_frame) {
-        // console.log("timer: ", this.timerFrames);
-        if (this.timerFrames < 1) {
-            return;
-        }
-        this.currentFrame = _frame - this.delayFrame;
-        var _f = this.currentFrame;
-        this.runAt(_f);
-        this.timerFrames = this.framesCount - _f;
-        if (this.children.length > 0) {
-            for (var i = 0; i < this.children.length; i++) {
-                this.children[i].run(_f);
-            }
-        }
-        if (this.timerFrames === 1) {
-            if (typeof (this.onEndRound) === "function") {
-                this.onEndRound();
-            }
-        }
-    };
-    ANIMATION.prototype.children = [];
-    /**
-     * Timeline for each item
-     * time is seconds
-     */
-    var TIMELINE = function () { };
-    TIMELINE.prototype.action = undefined;
-    TIMELINE.prototype.time = 0;
-    TIMELINE.prototype.fps = 0;
-    TIMELINE.prototype.frame = 0;
-    TIMELINE.prototype.startTime = 0;
-    TIMELINE.prototype.hasLoop = false;
-    TIMELINE.prototype.tick = 1;
-    TIMELINE.prototype.animation = undefined;
-    TIMELINE.prototype.runGame = function () {
-        var _this = this;
-        this.currentTime = Date.now();
-        if (!this.isPause && !this.isStop) {
-            this.startTime = this.startTime === 0 ? this.currentTime : (this.startTime + this.distancePauseTime);
-            this.time = this.currentTime - this.startTime;
-            this.currentFrame = Math.ceil(this.time / this.tick, 10);
-            if (this.oldFrame != this.currentFrame || this.currentFrame == 0) {
-                if (this.animation && this.currentFrame <= this.animation.framesCount) {
-                    this.animation.run(this.currentFrame);
-                }
-                this.oldFrame = this.currentFrame;
-            }
-            // if user replay game
-            if (this.pauseTime !== 0) {
-                this.pauseTime = 0;
-                this.distancePauseTime = 0;
-            }
-        }
-        if (this.animation && this.animation.timerFrames <= 0) {
-            if (!this.hasLoop) {
-                this.isStop = true;
-            } else {
-                this.animation.timerFrames = this.animation.framesCount;
-                this.startTime = 0;
-                this.oldFrame = 0;
-            }
-        }
-        // pause game keep position
-        if (this.isPause) {
-            this.pause();
-        }
-        // stop game or not
-        if (!this.isStop) {
-            raf(function () {
-                _this.runGame();
-            });
-        }
-    };
-    TIMELINE.prototype.pause = function () {
-        if (this.pauseTime === 0) {
-            this.pauseTime = this.currentTime;
-        } else {
-            this.distancePauseTime = this.currentTime - this.pauseTime;
-        }
-    };
-    TIMELINE.prototype.configRunGame = function () {
-        this.isStop = false;
-        this.isPause = false;
-        this.resetGame();
-    };
-    TIMELINE.prototype.resetGame = function () {
-        this.startTime = 0;
-        this.pauseTime = 0;
-        this.distancePauseTime = 0;
-        this.oldFrame = 0;
-        if (this.animation) {
-            this.animation.timerFrames = this.animation.framesCount;
-        }
-    };
-    TIMELINE.prototype.assets = [];
     /**
      * @param {*} $filenames file names 
      * @param {*} $type type of file
@@ -732,61 +314,12 @@
             mainTimeline.isPause = false;
         }
     };
-
-    /**
-     * Chicken model
-     */
-    var CHICKEN = function () {
-        this.staticElement = new ELEMENT();
-        this.moveElement = new ELEMENT();
-        this.endElement = new ELEMENT();
-        this.name = "default";
-    };
-
-    var EGG = function () {
-        this.element = new ELEMENT();
-        this.value = 0;
-    };
-
-    var CHICKEN_GROUP = function ($name) {
-        this.name = $name;
-        this.element = new ELEMENT();
-        this.chicken = new CHICKEN();
-        this.egg = new EGG();
-        this.avtivated = false;
-        this.animation = new ANIMATION();
-    };
-    CHICKEN_GROUP.prototype.setting = function () {
-        this.element.add(this.chicken.staticElement);
-        this.element.add(this.chicken.moveElement);
-        this.element.add(this.chicken.endElement);
-        this.element.add(this.egg.element);
-        this.egg.element.hide();
-        this.chicken.moveElement.hide();
-        this.chicken.endElement.hide();
-        this.configAnimation();
-    };
-    CHICKEN_GROUP.prototype.configAnimation = function () {
-        this.animation.tick = mainTimeline.tick;
-        this.animation.delaySecondsTime = 0;
-        this.animation.element = this.element.target;
-        this.animation.config.width = 100;
-        this.animation.config.height = 100;
-        this.animation.setting();
-    };
     var gameIntro = new ELEMENT("#game_intro");
     var gamePlay = new ELEMENT("#game_play");
     gamePlay.click = function ($event) { };
     gameIntro.click = function ($event) { };
-
     window.gamePlay = gamePlay;
     window.gameIntro = gameIntro;
-    var chicken1 = new CHICKEN_GROUP();
-    var chicken2 = new CHICKEN_GROUP();
-    var chicken3 = new CHICKEN_GROUP();
-    var chicken4 = new CHICKEN_GROUP();
-    var chicken5 = new CHICKEN_GROUP();
-    var chicken6 = new CHICKEN_GROUP();
     gamePlay.addEvent({
         type: "click",
         attack: function (params) {
@@ -806,65 +339,6 @@
             width: width,
             height: height
         };
-        chicken1.element.createSvgElement("g");
-        chicken1.chicken.staticElement.createSvgElement(type, dataChicken);
-        chicken1.chicken.moveElement.createSvgElement(type, dataChicken);
-        chicken1.chicken.endElement.createSvgElement(type, dataChicken);
-        chicken1.animation.config.x = center.x;
-        chicken1.animation.config.y = center.y;
-        chicken1.animation.viewbox = viewbox;
-        chicken1.setting();
-        gamePlay.add(chicken1.element);
-
-        chicken2.element.createSvgElement("g");
-        chicken2.chicken.staticElement.createSvgElement(type, dataChicken);
-        chicken2.chicken.moveElement.createSvgElement(type, dataChicken);
-        chicken2.chicken.endElement.createSvgElement(type, dataChicken);
-        chicken2.animation.config.x = center.x;
-        chicken2.animation.config.y = center.y;
-        chicken2.animation.viewbox = viewbox;
-        chicken2.setting();
-        gamePlay.add(chicken2.element);
-
-        chicken3.element.createSvgElement("g");
-        chicken3.chicken.staticElement.createSvgElement(type, dataChicken);
-        chicken3.chicken.moveElement.createSvgElement(type, dataChicken);
-        chicken3.chicken.endElement.createSvgElement(type, dataChicken);
-        chicken3.animation.config.x = center.x;
-        chicken3.animation.config.y = center.y;
-        chicken3.animation.viewbox = viewbox;
-        chicken3.setting();
-        gamePlay.add(chicken3.element);
-
-        chicken4.element.createSvgElement("g");
-        chicken4.chicken.staticElement.createSvgElement(type, dataChicken);
-        chicken4.chicken.moveElement.createSvgElement(type, dataChicken);
-        chicken4.chicken.endElement.createSvgElement(type, dataChicken);
-        chicken4.animation.config.x = center.x;
-        chicken4.animation.config.y = center.y;
-        chicken4.animation.viewbox = viewbox;
-        chicken4.setting();
-        gamePlay.add(chicken4.element);
-
-        chicken5.element.createSvgElement("g");
-        chicken5.chicken.staticElement.createSvgElement(type, dataChicken);
-        chicken5.chicken.moveElement.createSvgElement(type, dataChicken);
-        chicken5.chicken.endElement.createSvgElement(type, dataChicken);
-        chicken5.animation.config.x = center.x;
-        chicken5.animation.config.y = center.y;
-        chicken5.animation.viewbox = viewbox;
-        chicken5.setting();
-        gamePlay.add(chicken5.element);
-
-        chicken6.element.createSvgElement("g");
-        chicken6.chicken.staticElement.createSvgElement(type, dataChicken);
-        chicken6.chicken.moveElement.createSvgElement(type, dataChicken);
-        chicken6.chicken.endElement.createSvgElement(type, dataChicken);
-        chicken6.animation.config.x = center.x;
-        chicken6.animation.config.y = center.y;
-        chicken6.animation.viewbox = viewbox;
-        chicken6.setting();
-        gamePlay.add(chicken6.element);
 
         var elementTimerStart = new ELEMENT("#large_timer");
         var timer = new ANIMATION();
@@ -876,89 +350,51 @@
             elementTimerStart.target.textContent = timer.timerFrames - 1;
         };
 
+        var anim = new ANIMATION();
+        anim.tick = mainTimeline.tick;
+        anim.setting();
+        anim.onOutput = function () { };
+        anim.goto({
+            time: 10
+        });
+        var corners = randomArrayNoLoop(maxItems);
+        var step = 30;
+        var row = 0;
+        var col = 0;
+        for (var i = 0; i < maxItems; i++) {
+            row = Math.floor(i / 3);
+            col = i - row * 3;
+            var chicken_group = new CHICKEN_GROUP();
+            chicken_group.element.createSvgElement("g");
+            chicken_group.chicken.staticElement.createSvgElement(type, dataChicken);
+            chicken_group.chicken.moveElement.createSvgElement(type, dataChicken);
+            chicken_group.chicken.endElement.createSvgElement(type, dataChicken);
+            chicken_group.animation.config.x = 80 + col * 100;
+            chicken_group.animation.config.y = center.y - 100 + row * 160;
+            chicken_group.animation.viewbox = viewbox;
+            chicken_group.setting(mainTimeline.tick);
+            gamePlay.add(chicken_group.element);
+            anim.children.push(chicken_group.animation);
+        }
         mainTimeline.animation = timer;
+        function endGame($event) {
+            console.log($event);
+        };
         timer.onEndRound = function () {
-            console.log("end round");
-            var element = new ELEMENT();
-            var anim = new ANIMATION();
-            anim.tick = mainTimeline.tick;
-            anim.setting();
-            anim.onOutput = function () { };
-            anim.goto({
-                time: 10
-            });
-            // speed pixel/s
-            chicken1.animation.config.speed = 50;
-            chicken2.animation.config.speed = 50;
-            chicken3.animation.config.speed = 50;
-            chicken4.animation.config.speed = 50;
-            chicken5.animation.config.speed = 50;
-            chicken6.animation.config.speed = 50;
-
-            chicken1.animation.goto({
-                corner: -60, // deg
-                speed: 100, // pixel/s
-                time: 5
-            });
-            anim.children.push(chicken1.animation);
-            chicken2.animation.goto({
-                corner: 60, // deg
-                speed: 20, // pixel/s
-                time: 5
-            });
-            anim.children.push(chicken2.animation);
-            // chicken3.animation.goto({
-            //     x: 10,
-            //     y: 50
-            // }).goto({
-            //     x: 300,
-            //     y: 30
-            // });
-            // anim.children.push(chicken3.animation);
-            // chicken4.animation.goto({
-            //     x: 1,
-            //     y: 250
-            // }).goto({
-            //     x: 35,
-            //     y: 340
-            // });
-            // anim.children.push(chicken4.animation);
-            // chicken5.animation.goto({
-            //     x: 300,
-            //     y: 50
-            // }).goto({
-            //     x: 310,
-            //     y: 30
-            // });
-            // anim.children.push(chicken5.animation);
-            // chicken6.animation.goto({
-            //     x: 10,
-            //     y: 500
-            // }).goto({
-            //     x: 30,
-            //     y: 200
-            // });
-            // anim.children.push(chicken6.animation);
-
+            for (var i = 0; i < maxItems; i++) {
+                anim.children[i].reset();
+                anim.children[i].config.x = center.x;
+                anim.children[i].config.y = center.y;
+                anim.children[i].goto({
+                    corner: corners[i] * step, // deg
+                    speed: 300, // pixel/s
+                    time: 10
+                });
+            }
             mainTimeline.animation = anim;
             mainTimeline.configRunGame();
             mainTimeline.runGame();
+            anim.onEndRound = endGame;
         };
     };
 }());
-
-// var cs = function () { };
-// cs.prototype.cs = "123";
-// var test = function () {
-
-// };
-// test.prototype.text = "";
-// test.prototype.child = new cs();
-// var t1 = new test();
-// var t2 = new test();
-// var t3 = new test();
-
-// t1.text = "hello";
-// t1.child.text = "123";
-// t2.child.cs = "333";
-// console.log(t1, t2, t3);
