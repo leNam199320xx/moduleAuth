@@ -49,7 +49,7 @@ function mathRound($number, $numberafterdot) {
 }
 var EVENT = function () {
     this.type = "";
-    this.attack = undefined;
+    this.attack = function () { }
 };
 var ELEMENT = function (targetString) {
     var _this = this;
@@ -69,29 +69,6 @@ var ELEMENT = function (targetString) {
         this.target.appendChild($newElement.target);
         this.children.push($newElement);
     };
-    this.addEvent = function ($config) {
-        $config = $config || new EVENT();
-        var isAdd = true;
-        for (var i = 0; i < this.events.length; i++) {
-            if (this.events[i].type === $config.type) {
-                isAdd = false;
-                break;
-            }
-        }
-        if (isAdd) {
-            this.events.push($config);
-            this.target.addEventListener($config.type, function ($event) {
-                $event.yourElement = _this;
-                for (var i = 0; i < _this.events.length; i++) {
-                    if (_this.events[i].type === $config.type) {
-                        _this.events[i].attack(_this);
-                        break;
-                    }
-                }
-            }, false);
-        }
-    };
-    this.events = [];
     this.hide = function () {
         if (this.target) {
             this.target.classList.add("hidden");
@@ -430,29 +407,118 @@ var EGG = function () {
     this.value = 0;
 };
 
-var CHICKEN_GROUP = function ($name) {
+var CHICKEN_GROUP = function ($name, $value) {
     this.name = $name;
+    this.value = $value;
+    this.event = function (e) { };
     this.element = new ELEMENT();
     this.chicken = new CHICKEN();
     this.egg = new EGG();
     this.avtivated = false;
     this.animation = new ANIMATION();
+    var _this = this;
+    this.setting = function ($tick) {
+        this.element.add(this.chicken.staticElement);
+        this.element.add(this.chicken.moveElement);
+        this.element.add(this.chicken.endElement);
+        this.element.add(this.egg.element);
+        this.element.target.setAttribute("name", this.name);
+        this.element.target.addEventListener("click", function (e) {
+            _this.event(_this, e);
+        });
+        this.egg.element.hide();
+        this.chicken.moveElement.hide();
+        this.chicken.endElement.hide();
+        this.configAnimation($tick);
+    };
+    this.configAnimation = function ($tick) {
+        this.animation.tick = $tick;
+        this.animation.delaySecondsTime = 0;
+        this.animation.element = this.element.target;
+        this.animation.config.width = 100;
+        this.animation.config.height = 100;
+        this.animation.setting();
+    };
+    this.addEvent = function (e) {
+        if (typeof (e) == "function") {
+            this.event = e;
+        }
+    };
 };
-CHICKEN_GROUP.prototype.setting = function ($tick) {
-    this.element.add(this.chicken.staticElement);
-    this.element.add(this.chicken.moveElement);
-    this.element.add(this.chicken.endElement);
-    this.element.add(this.egg.element);
-    this.egg.element.hide();
-    this.chicken.moveElement.hide();
-    this.chicken.endElement.hide();
-    this.configAnimation($tick);
-};
-CHICKEN_GROUP.prototype.configAnimation = function ($tick) {
-    this.animation.tick = $tick;
-    this.animation.delaySecondsTime = 0;
-    this.animation.element = this.element.target;
-    this.animation.config.width = 100;
-    this.animation.config.height = 100;
-    this.animation.setting();
+/**
+ * @param {*} $filenames file names 
+ * @param {*} $type type of file
+ */
+var LOAD = function ($filenames, $type) {
+    var _this = this;
+    this.loadedAudio = true;
+    this.loadedImage = false;
+    this.onEnd = undefined;
+    this.images = [];
+    this.audios = [];
+    var loadedImageAssets = [];
+    var loadedAudioAssets = [];
+    this.loaded = false;
+    this.processPercentElement = undefined;
+    this.processElement = undefined;
+    this.onLoaded = undefined;
+    this.run = function () {
+        if ($type === "audio") {
+            if (_this.loadedImage && _this.loadedAudio) {
+                if (_this.onEnd && !_this.loaded) {
+                    _this.images = loadedImageAssets;
+                    _this.audios = loadedAudioAssets;
+                    _this.loaded = true;
+                    _this.onEnd();
+                }
+                if (this.processElement) { this.processElement.hide(); }
+            }
+        } else if ($type === "image") {
+            var loadingImages = [];
+            for (var i = 0, l = $filenames.length; i < l; i++) {
+                var img = new Image();
+                img.srcString = "assets/page_" + $filenames[i].name.split("_")[0] + "/" + $filenames[i].name + (($filenames[i].ext) || ".png");
+                loadingImages.push(img);
+
+                var svgImg = {
+                    height: $filenames[i].height || img.height,
+                    width: $filenames[i].width || img.width,
+                    link: img.srcString
+                };
+                loadedImageAssets.push(svgImg);
+            }
+            var loadingCount = loadingImages.length;
+            var loadedCount = 0;
+            var loadImages = function () {
+                loadingImages[loadedCount].src = loadingImages[loadedCount].srcString;
+                loadingImages[loadedCount].onload = loadingImages[loadedCount].onerror = function () {
+                    loadedCount++;
+                    if (loadedCount < loadingCount) {
+                        var _widthPercent = (((loadedCount + 1) / loadingCount) * 280);
+                        if (this.processPercentElement) { this.processPercentElement.setAttribute("width", _widthPercent); }
+                        assetsLoaded = true;
+                        new loadImages();
+                    } else {
+                        // hide process bar when load images done
+                        if (process) {
+                            _this.loadedImage = true;
+                            if (_this.loadedImage && _this.loadedAudio && !_this.loaded) {
+                                if (_this.onEnd) {
+                                    _this.images = loadedImageAssets;
+                                    _this.audios = loadedAudioAssets;
+                                    _this.loaded = true;
+                                    _this.onEnd();
+                                }
+                                _this.processElement.hide();
+                                if(typeof(_this.onLoaded) == "function") {
+                                    _this.onLoaded(_this);
+                                }
+                            }
+                        }
+                    }
+                };
+            };
+            new loadImages();
+        }
+    }
 };

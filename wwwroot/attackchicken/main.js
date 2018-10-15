@@ -137,90 +137,19 @@
     /**
      * Load component
      */
-    var container = document.getElementById("game_container");
+    var container = new ELEMENT("#game_container");
     // var process = document.getElementById("process");
     var processPercent = document.getElementById("process_percent");
     var ns = "http://www.w3.org/2000/svg";
-    if (typeof (container) !== "object") {
-        container = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        container.id = "game_container";
-        container.classList.add("game_container");
+    if (typeof (container.target) !== "object") {
+        container.target = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        container.target.id = "game_container";
+        container.target.classList.add("game_container");
     }
 
-    container.setAttribute("viewBox", "0 0 " + width + " " + height);
-    container.setAttribute("width", width);
-    container.setAttribute("heght", height);
-
-    /**
-     * @param {*} $filenames file names 
-     * @param {*} $type type of file
-     */
-    var LOAD = function ($filenames, $type) {
-        var _this = this;
-        this.loadedAudio = true;
-        this.loadedImage = false;
-        this.onEnd = undefined;
-        this.images = [];
-        this.audios = [];
-        var loadedImageAssets = [];
-        var loadedAudioAssets = [];
-        this.loaded = false;
-        if ($type === "audio") {
-            if (_this.loadedImage && _this.loadedAudio) {
-                if (_this.onEnd && !_this.loaded) {
-                    _this.images = loadedImageAssets;
-                    _this.audios = loadedAudioAssets;
-                    _this.loaded = true;
-                    _this.onEnd();
-                }
-                process.hide();
-            }
-        } else if ($type === "image") {
-            var loadingImages = [];
-            for (var i = 0, l = $filenames.length; i < l; i++) {
-                var img = new Image();
-                img.srcString = "assets/page_" + $filenames[i].name.split("_")[0] + "/" + $filenames[i].name + (($filenames[i].ext) || ".png");
-                loadingImages.push(img);
-
-                var svgImg = {
-                    height: $filenames[i].height || img.height,
-                    width: $filenames[i].width || img.width,
-                    link: img.srcString
-                };
-                loadedImageAssets.push(svgImg);
-            }
-            var loadingCount = loadingImages.length;
-            var loadedCount = 0;
-            var loadImages = function () {
-                loadingImages[loadedCount].src = loadingImages[loadedCount].srcString;
-                loadingImages[loadedCount].onload = loadingImages[loadedCount].onerror = function () {
-                    loadedCount++;
-                    if (loadedCount < loadingCount) {
-                        var _widthPercent = (((loadedCount + 1) / loadingCount) * 280);
-                        processPercent.setAttribute("width", _widthPercent);
-                        assetsLoaded = true;
-                        new loadImages();
-                    } else {
-                        // hide process bar when load images done
-                        if (process) {
-                            _this.loadedImage = true;
-                            if (_this.loadedImage && _this.loadedAudio && !_this.loaded) {
-                                if (_this.onEnd) {
-                                    _this.images = loadedImageAssets;
-                                    _this.audios = loadedAudioAssets;
-                                    _this.loaded = true;
-                                    _this.onEnd();
-                                }
-                                process.hide();
-                                pageStart.show();
-                            }
-                        }
-                    }
-                };
-            };
-            new loadImages();
-        }
-    };
+    container.target.setAttribute("viewBox", "0 0 " + width + " " + height);
+    container.target.setAttribute("width", width);
+    container.target.setAttribute("heght", height);
 
     /**
      * functions of game
@@ -253,21 +182,10 @@
     }
 
     var startBtn = new ELEMENT("#start_button");
-    startBtn.addEvent({
-        type: "click",
-        attack: function ($event) {
-            console.log($event);
-            startGame();
-        }
-    });
+    startBtn.target.addEventListener("click", startGame, false);
     var historyBtn = new ELEMENT("#history_button");
-    historyBtn.addEvent({
-        type: "click",
-        attack: function ($event) {
-            console.log($event);
-            gotoHistory();
-        }
-    });
+    historyBtn.target.addEventListener("click", gotoHistory, false);
+
     var pageStart = new ELEMENT("#page_start");
     var pageMain = new ELEMENT("#page_main");
     var pageHistory = new ELEMENT("#page_history");
@@ -280,6 +198,12 @@
     hidePages();
     // pageStart.show();
     var loadedAssets = new LOAD(images, "image");
+    loadedAssets.processPercentElement = processPercent;
+    loadedAssets.processElement = process;
+    loadedAssets.onLoaded = function($event) {
+        pageStart.show();
+    };
+    loadedAssets.run();
     var mainTimeline = new TIMELINE();
 
     window.game = mainTimeline; // if this is developer mode
@@ -316,16 +240,9 @@
     };
     var gameIntro = new ELEMENT("#game_intro");
     var gamePlay = new ELEMENT("#game_play");
-    gamePlay.click = function ($event) { };
-    gameIntro.click = function ($event) { };
+
     window.gamePlay = gamePlay;
     window.gameIntro = gameIntro;
-    gamePlay.addEvent({
-        type: "click",
-        attack: function (params) {
-            console.log(params);
-        }
-    });
     loadedAssets.onEnd = function () {
         var dataChicken = loadedAssets.images[22];
         var type = "image";
@@ -361,10 +278,18 @@
         var step = 30;
         var row = 0;
         var col = 0;
+        var started = false;
+        var selectedValue = -1;
+        var attack = function (e) {
+            if (started) {
+                mainTimeline.isStop = true;
+            }
+            selectedValue = e.value;
+        };
         for (var i = 0; i < maxItems; i++) {
             row = Math.floor(i / 3);
             col = i - row * 3;
-            var chicken_group = new CHICKEN_GROUP();
+            var chicken_group = new CHICKEN_GROUP("chicken_" + (i + 1), i);
             chicken_group.element.createSvgElement("g");
             chicken_group.chicken.staticElement.createSvgElement(type, dataChicken);
             chicken_group.chicken.moveElement.createSvgElement(type, dataChicken);
@@ -372,14 +297,15 @@
             chicken_group.animation.config.x = 80 + col * 100;
             chicken_group.animation.config.y = center.y - 100 + row * 160;
             chicken_group.animation.viewbox = viewbox;
+            chicken_group.addEvent(attack);
             chicken_group.setting(mainTimeline.tick);
             gamePlay.add(chicken_group.element);
             anim.children.push(chicken_group.animation);
         }
         mainTimeline.animation = timer;
         function endGame($event) {
-            console.log($event);
-        };
+            started = false;
+        }
         timer.onEndRound = function () {
             for (var i = 0; i < maxItems; i++) {
                 anim.children[i].reset();
@@ -395,6 +321,7 @@
             mainTimeline.configRunGame();
             mainTimeline.runGame();
             anim.onEndRound = endGame;
+            started = true;
         };
     };
 }());
