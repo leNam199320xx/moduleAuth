@@ -15,6 +15,21 @@ var raf = (function () {
         };
 })();
 
+Array.prototype.shuffle = function () {
+    var input = this;
+
+    for (var i = input.length - 1; i >= 0; i--) {
+
+        var randomIndex = Math.floor(Math.random() * (i + 1));
+        var itemAtIndex = input[randomIndex];
+
+        input[randomIndex] = input[i];
+        input[i] = itemAtIndex;
+    }
+    return input;
+};
+
+
 function random($from, $to, $step) {
     var step = $step || 1;
     var from = $from;
@@ -71,12 +86,14 @@ var ELEMENT = function (targetString) {
     };
     this.hide = function () {
         if (this.target) {
-            this.target.classList.add("hidden");
+            this.target.style.display = "none";
         }
     };
     this.show = function () {
         if (this.target) {
-            this.target.classList.remove("hidden");
+            console.log(this.target);
+            this.target.style.display = "block";
+            // this.target.classList.remove("hidden");
         }
     };
     this.config = {};
@@ -402,14 +419,19 @@ var CHICKEN = function () {
     this.name = "default";
 };
 
+var CHICKEN_VALUE = function(){
+    this.value = 1;
+    this.name = "normal";
+}
+
 var EGG = function () {
     this.element = new ELEMENT();
     this.value = 0;
 };
 
 var CHICKEN_GROUP = function ($name, $value) {
-    this.name = $name;
-    this.value = $value;
+    this.name = $name || "default";
+    this.value = new CHICKEN_VALUE();
     this.event = function (e) { };
     this.element = new ELEMENT();
     this.chicken = new CHICKEN();
@@ -417,6 +439,9 @@ var CHICKEN_GROUP = function ($name, $value) {
     this.avtivated = false;
     this.animation = new ANIMATION();
     var _this = this;
+    if($value) {
+        this.value = $value;
+    }
     this.setting = function ($tick) {
         this.element.add(this.chicken.staticElement);
         this.element.add(this.chicken.moveElement);
@@ -510,7 +535,7 @@ var LOAD = function ($filenames, $type) {
                                     _this.onEnd();
                                 }
                                 _this.processElement.hide();
-                                if(typeof(_this.onLoaded) == "function") {
+                                if (typeof (_this.onLoaded) == "function") {
                                     _this.onLoaded(_this);
                                 }
                             }

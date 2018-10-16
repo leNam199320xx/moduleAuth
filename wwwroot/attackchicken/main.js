@@ -134,6 +134,8 @@
         name: "history_home_button"
     }];
 
+    var chickenValues = [{ value: 5 }, { value: 10 }, { value: 50 }, { value: 100 }, { value: 0, name: "special" }, { value: -1, name: "broken" }];
+    
     /**
      * Load component
      */
@@ -158,24 +160,24 @@
      */
 
     function startGame() {
-        hidePages();
+        pageStart.hide();
         pageMain.show();
         mainTimeline.configRunGame();
         mainTimeline.runGame();
     }
 
     function gotoHistory() {
-        hidePages();
+        pageStart.hide();
+        pageResult.hide();
         pageHistory.show();
     }
 
     function endGame() {
-        hidePages();
+        pageMain.hide();
         pageResult.show();
     }
 
     function hidePages() {
-        pageStart.hide();
         pageMain.hide();
         pageHistory.hide();
         pageResult.hide();
@@ -200,7 +202,7 @@
     var loadedAssets = new LOAD(images, "image");
     loadedAssets.processPercentElement = processPercent;
     loadedAssets.processElement = process;
-    loadedAssets.onLoaded = function($event) {
+    loadedAssets.onLoaded = function ($event) {
         pageStart.show();
     };
     loadedAssets.run();
@@ -278,18 +280,19 @@
         var step = 30;
         var row = 0;
         var col = 0;
-        var started = false;
-        var selectedValue = -1;
+        var isStarting = false;
+        var selectedValue;
         var attack = function (e) {
-            if (started) {
+            if (isStarting) {
                 mainTimeline.isStop = true;
+                selectedValue = e.value;
             }
-            selectedValue = e.value;
         };
+        chickenValues = chickenValues.shuffle();
         for (var i = 0; i < maxItems; i++) {
             row = Math.floor(i / 3);
             col = i - row * 3;
-            var chicken_group = new CHICKEN_GROUP("chicken_" + (i + 1), i);
+            var chicken_group = new CHICKEN_GROUP("chicken_" + (i + 1), chickenValues[i]);
             chicken_group.element.createSvgElement("g");
             chicken_group.chicken.staticElement.createSvgElement(type, dataChicken);
             chicken_group.chicken.moveElement.createSvgElement(type, dataChicken);
@@ -304,7 +307,8 @@
         }
         mainTimeline.animation = timer;
         function endGame($event) {
-            started = false;
+            isStarting = false;
+
         }
         timer.onEndRound = function () {
             for (var i = 0; i < maxItems; i++) {
@@ -321,7 +325,7 @@
             mainTimeline.configRunGame();
             mainTimeline.runGame();
             anim.onEndRound = endGame;
-            started = true;
+            isStarting = true;
         };
     };
 }());
