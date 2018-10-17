@@ -426,7 +426,19 @@ var CHICKEN_VALUE = function(){
 
 var EGG = function () {
     this.element = new ELEMENT();
+    this.animation = new ANIMATION();
     this.value = 0;
+    this.width = 60;
+    this.height = 80;
+    this.configAnimation = function ($tick) {
+        this.tick = $tick || this.tick;
+        this.animation.tick = this.tick;
+        this.animation.delaySecondsTime = 0;
+        this.animation.element = this.element.target;
+        this.animation.config.width = this.width;
+        this.animation.config.height = this.height;
+        this.animation.setting();
+    };
 };
 
 var CHICKEN_GROUP = function ($name, $value) {
@@ -435,9 +447,11 @@ var CHICKEN_GROUP = function ($name, $value) {
     this.event = function (e) { };
     this.element = new ELEMENT();
     this.chicken = new CHICKEN();
-    this.egg = new EGG();
     this.avtivated = false;
     this.animation = new ANIMATION();
+    this.width = 100;
+    this.height = 100;
+    this.tick = 1000 / 60;
     var _this = this;
     if($value) {
         this.value = $value;
@@ -446,7 +460,6 @@ var CHICKEN_GROUP = function ($name, $value) {
         this.element.add(this.chicken.staticElement);
         this.element.add(this.chicken.moveElement);
         this.element.add(this.chicken.endElement);
-        this.element.add(this.egg.element);
         this.element.target.setAttribute("name", this.name);
         this.element.target.addEventListener("click", function (e) {
             _this.event(_this, e);
@@ -457,11 +470,12 @@ var CHICKEN_GROUP = function ($name, $value) {
         this.configAnimation($tick);
     };
     this.configAnimation = function ($tick) {
-        this.animation.tick = $tick;
+        this.tick = $tick || this.tick;
+        this.animation.tick = this.tick;
         this.animation.delaySecondsTime = 0;
         this.animation.element = this.element.target;
-        this.animation.config.width = 100;
-        this.animation.config.height = 100;
+        this.animation.config.width = this.width;
+        this.animation.config.height = this.height;
         this.animation.setting();
     };
     this.addEvent = function (e) {
