@@ -308,8 +308,9 @@
         mainTimeline.animation = timer;
         function endGame($event) {
             isStarting = false;
-
+            drag.enabled = isStarting;
         }
+        
         timer.onEndRound = function () {
             for (var i = 0; i < maxItems; i++) {
                 anim.children[i].reset();
@@ -326,6 +327,12 @@
             mainTimeline.runGame();
             anim.onEndRound = endGame;
             isStarting = true;
+            drag.enabled = isStarting;
         };
     };
+    var drag = new DRAGEVENT();
+    drag.cursorElement = container;
+    drag.setup();
+
+    mainTimeline.drag = drag;
 }());

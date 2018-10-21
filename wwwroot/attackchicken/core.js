@@ -64,7 +64,7 @@ function mathRound($number, $numberafterdot) {
 }
 var EVENT = function () {
     this.type = "";
-    this.attack = function () { }
+    this.attack = function () { };
 };
 var ELEMENT = function (targetString) {
     var _this = this;
@@ -129,6 +129,8 @@ var ELEMENT = function (targetString) {
     */
 var TIMELINE = function () {
     this.onend = undefined;
+    this.drag = new DRAGEVENT();
+    this.move = undefined;
 };
 TIMELINE.prototype.action = undefined;
 TIMELINE.prototype.time = 0;
@@ -148,6 +150,13 @@ TIMELINE.prototype.runGame = function () {
         if (this.oldFrame != this.currentFrame || this.currentFrame == 0) {
             if (this.animation && this.currentFrame <= this.animation.framesCount) {
                 this.animation.run(this.currentFrame);
+
+                if (this.drag.started) {
+                    console.log(this.drag.x, this.drag.y);
+                    if (typeof(this.move) == "function"){
+                        this.move(this.drag);
+                    }
+                }
             }
             this.oldFrame = this.currentFrame;
         }
@@ -410,8 +419,8 @@ ANIMATION.prototype.run = function (_frame) {
 };
 ANIMATION.prototype.children = [];
 /**
-   * Chicken model
-   */
+ * Chicken model
+ */
 var CHICKEN = function () {
     this.staticElement = new ELEMENT();
     this.moveElement = new ELEMENT();
@@ -419,10 +428,10 @@ var CHICKEN = function () {
     this.name = "default";
 };
 
-var CHICKEN_VALUE = function(){
+var CHICKEN_VALUE = function () {
     this.value = 1;
     this.name = "normal";
-}
+};
 
 var EGG = function () {
     this.element = new ELEMENT();
@@ -453,7 +462,7 @@ var CHICKEN_GROUP = function ($name, $value) {
     this.height = 100;
     this.tick = 1000 / 60;
     var _this = this;
-    if($value) {
+    if ($value) {
         this.value = $value;
     }
     this.setting = function ($tick) {
@@ -464,7 +473,6 @@ var CHICKEN_GROUP = function ($name, $value) {
         this.element.target.addEventListener("click", function (e) {
             _this.event(_this, e);
         });
-        this.egg.element.hide();
         this.chicken.moveElement.hide();
         this.chicken.endElement.hide();
         this.configAnimation($tick);
@@ -559,5 +567,66 @@ var LOAD = function ($filenames, $type) {
             };
             new loadImages();
         }
+    };
+};
+
+var DRAGEVENT = function () {
+    this.cursorElement = new ELEMENT();
+    this.x = 0;
+    this.y = 0;
+    this.viewbox = {};
+    this.newX = 0;
+    this.newY = 0;
+    this.started = false;
+    this.enabled = false;
+};
+DRAGEVENT.prototype.setup = function () {
+    var _this = this;
+    this.x = undefined;
+    this.y = undefined;
+    this.newX = undefined;
+    this.newY = undefined;
+    if (this.cursorElement.target) {
+        this.cursorElement.target.onmousedown = function ($event) {
+            if (_this.enabled) {
+                console.log("down");
+                _this.started = true;
+                _this.x = $event.offsetX;
+                _this.y = $event.offsetY;
+            }
+        };
+        this.cursorElement.target.onmousemove = function ($event) {
+            if (_this.started) {
+                console.log("move");
+                _this.x = $event.offsetX;
+                _this.y = $event.offsetY;
+            }
+        };
+        this.cursorElement.target.onmouseout = function ($event) {
+            if (_this.started) {
+                console.log("out");
+            }
+        };
+        this.cursorElement.target.onmouseup = function ($event) {
+            if (_this.started) {
+                console.log("up");
+                _this.started = false;
+                _this.x = $event.offsetX;
+                _this.y = $event.offsetY;
+            }
+        };
+        this.cursorElement.target.onmouseenter = function ($event) {
+            if (_this.started) {
+                console.log("enter");
+            }
+        };
+        this.cursorElement.target.onclick = function ($event) {
+            if (_this.started) {
+                console.log("click");
+            }
+        };
     }
+};
+
+DRAGEVENT.prototype.getPosition = function () {
 };
