@@ -67,7 +67,7 @@ var EVENT = function () {
     this.attack = function () { };
 };
 var ELEMENT = function (targetString) {
-    var _this = this;
+    this.target = undefined;
     if (targetString) {
         if (targetString.indexOf("#") === 0) {
             this.target = document.getElementById(targetString.replace("#", ""));
@@ -91,7 +91,6 @@ var ELEMENT = function (targetString) {
     };
     this.show = function () {
         if (this.target) {
-            console.log(this.target);
             this.target.style.display = "block";
             // this.target.classList.remove("hidden");
         }
@@ -119,6 +118,14 @@ var ELEMENT = function (targetString) {
         }
         if (this.parent) {
             this.parent.appendChild(this.target);
+        }
+    };
+
+    this.setPosition = function ($x, $y) {
+        if (this.target) {
+            this.target.setAttribute("x", $x || 0);
+            this.target.setAttribute("y", $y || 0);
+            console.log($x, $y);
         }
     };
 };
@@ -150,10 +157,8 @@ TIMELINE.prototype.runGame = function () {
         if (this.oldFrame != this.currentFrame || this.currentFrame == 0) {
             if (this.animation && this.currentFrame <= this.animation.framesCount) {
                 this.animation.run(this.currentFrame);
-
                 if (this.drag.started) {
-                    console.log(this.drag.x, this.drag.y);
-                    if (typeof(this.move) == "function"){
+                    if (typeof (this.move) == "function") {
                         this.move(this.drag);
                     }
                 }
@@ -375,8 +380,7 @@ ANIMATION.prototype.goto = function ($options) {
         this.goto({
             time: mathRound(time - crashTime, 3),
             corner: corner,
-            speed: speed,
-            name: "fake"
+            speed: speed
         });
     }
     this.framesCount += framesCount;
@@ -390,12 +394,19 @@ ANIMATION.prototype.runAt = function (_frame) {
     if (this.element) {
         this.currentFrame = _frame ? _frame : 1;
         var _toPosition = this.values[this.currentFrame - 1] || this.values[this.values.length - 1] || this.config;
-        this.element.setAttribute("transform",
-            "translate(" + _toPosition.x + ", " + _toPosition.y + ")" + "scale(" + _toPosition.scale + ") " + "rotate(" + _toPosition.rotate + ")" + "translate(" + (-this.config.width / 2) + "," + (-this.config.height / 2) + " )");
+        this.set(_toPosition);
+        //this.element.setAttribute("transform",
+        //    "translate(" + _toPosition.x + ", " + _toPosition.y + ")" + "scale(" + _toPosition.scale + ") " + "rotate(" + _toPosition.rotate + ")" + "translate(" + (-this.config.width / 2) + "," + (-this.config.height / 2) + " )");
     }
     var outresult = typeof (this.onOutput) == "function" ? this.onOutput() : undefined;
     if (!this.element) {
         return;
+    }
+};
+ANIMATION.prototype.set = function ($position) {
+    if (this.element) {
+        this.element.setAttribute("transform",
+            "translate(" + ($position.x || 0) + ", " + ($position.y || 0) + ")" + "scale(" + ($position.scale || 1) + ") " + "rotate(" + ($position.rotate || 0) + ")" + "translate(" + (-this.config.width / 2) + "," + (-this.config.height / 2) + " )");
     }
 };
 ANIMATION.prototype.run = function (_frame) {
@@ -589,7 +600,6 @@ DRAGEVENT.prototype.setup = function () {
     if (this.cursorElement.target) {
         this.cursorElement.target.onmousedown = function ($event) {
             if (_this.enabled) {
-                console.log("down");
                 _this.started = true;
                 _this.x = $event.offsetX;
                 _this.y = $event.offsetY;
@@ -597,19 +607,16 @@ DRAGEVENT.prototype.setup = function () {
         };
         this.cursorElement.target.onmousemove = function ($event) {
             if (_this.started) {
-                console.log("move");
                 _this.x = $event.offsetX;
                 _this.y = $event.offsetY;
             }
         };
         this.cursorElement.target.onmouseout = function ($event) {
             if (_this.started) {
-                console.log("out");
             }
         };
         this.cursorElement.target.onmouseup = function ($event) {
             if (_this.started) {
-                console.log("up");
                 _this.started = false;
                 _this.x = $event.offsetX;
                 _this.y = $event.offsetY;
@@ -617,12 +624,10 @@ DRAGEVENT.prototype.setup = function () {
         };
         this.cursorElement.target.onmouseenter = function ($event) {
             if (_this.started) {
-                console.log("enter");
             }
         };
         this.cursorElement.target.onclick = function ($event) {
             if (_this.started) {
-                console.log("click");
             }
         };
     }

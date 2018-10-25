@@ -109,7 +109,9 @@
         name: "main_time_3"
     }, {
         index: 28,
-        name: "main_hammer"
+        name: "main_hammer",
+        height: 200,
+        width: 200
     }, {
         index: 29,
         name: "result_background",
@@ -242,6 +244,8 @@
     };
     var gameIntro = new ELEMENT("#game_intro");
     var gamePlay = new ELEMENT("#game_play");
+    var cursorElement = new ELEMENT();
+    var cursorAnimation = new ANIMATION();
 
     window.gamePlay = gamePlay;
     window.gameIntro = gameIntro;
@@ -272,7 +276,6 @@
         var anim = new ANIMATION();
         anim.tick = mainTimeline.tick;
         anim.setting();
-        anim.onOutput = function () { };
         anim.goto({
             time: 10
         });
@@ -329,10 +332,27 @@
             isStarting = true;
             drag.enabled = isStarting;
         };
+       
+        cursorElement.createSvgElement("image", loadedAssets.images[28]);
+
+        cursorAnimation.tick = mainTimeline.tick;
+        cursorAnimation.config.height = 200;
+        cursorAnimation.config.width = 200;
+        cursorAnimation.element = cursorElement.target;
+        cursorAnimation.setting();
+        gamePlay.add(cursorElement);
     };
+       
+
     var drag = new DRAGEVENT();
     drag.cursorElement = container;
     drag.setup();
 
     mainTimeline.drag = drag;
+    mainTimeline.move = function ($target) {
+        var dragNew= new DRAGEVENT();
+        dragNew = $target;
+        console.log(cursorAnimation);
+        cursorAnimation.set(dragNew);
+    };
 }());

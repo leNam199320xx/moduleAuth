@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>angular6DotnetCore</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>3d9e809d-cece-4bd5-97d1-2ec77b6aa765</ProjectGuid>
+  <FullPath>D:\web_angular\moduleAuth\angular6DotnetCore.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="D:\web_angular\moduleAuth\.sonarqube\out\0\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePath">D:\web_angular\moduleAuth\bin\Debug\netcoreapp2.1\angular6DotnetCore.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPath">D:\web_angular\moduleAuth\.sonarqube\out\0</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+  <TargetFramework>netcoreapp2.1</TargetFramework>
+</ProjectInfo>

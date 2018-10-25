@@ -1,0 +1,6 @@
+projectKey=prj-admin
+serverUrl=http://localhost:9000
+serverVersion=6.7.5.38563
+dashboardUrl=http://localhost:9000/dashboard/index/prj-admin
+ceTaskId=AWarna_iptMXE0DsV-Kq
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWarna_iptMXE0DsV-Kq
