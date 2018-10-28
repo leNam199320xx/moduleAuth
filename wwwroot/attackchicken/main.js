@@ -110,8 +110,8 @@
     }, {
         index: 28,
         name: "main_hammer",
-        height: 200,
-        width: 200
+        height: 100,
+        width: 100
     }, {
         index: 29,
         name: "result_background",
@@ -137,7 +137,7 @@
     }];
 
     var chickenValues = [{ value: 5 }, { value: 10 }, { value: 50 }, { value: 100 }, { value: 0, name: "special" }, { value: -1, name: "broken" }];
-    
+
     /**
      * Load component
      */
@@ -154,12 +154,6 @@
     container.target.setAttribute("viewBox", "0 0 " + width + " " + height);
     container.target.setAttribute("width", width);
     container.target.setAttribute("heght", height);
-
-    /**
-     * functions of game
-     * click functions
-     * load asset functions
-     */
 
     function startGame() {
         pageStart.hide();
@@ -249,6 +243,7 @@
 
     window.gamePlay = gamePlay;
     window.gameIntro = gameIntro;
+    // when assets are loaded
     loadedAssets.onEnd = function () {
         var dataChicken = loadedAssets.images[22];
         var type = "image";
@@ -264,21 +259,26 @@
         };
 
         var elementTimerStart = new ELEMENT("#large_timer");
+        // setup output time
         var timer = new ANIMATION();
         timer.tick = mainTimeline.tick;
         timer.goto({
             time: 1
         });
+        // output time
         timer.onOutput = function () {
             elementTimerStart.target.textContent = timer.timerFrames - 1;
+
         };
 
+        // setup main animation
         var anim = new ANIMATION();
         anim.tick = mainTimeline.tick;
         anim.setting();
         anim.goto({
             time: 10
         });
+        // random corner to move
         var corners = randomArrayNoLoop(maxItems);
         var step = 30;
         var row = 0;
@@ -291,6 +291,7 @@
                 selectedValue = e.value;
             }
         };
+        // random value of chicken
         chickenValues = chickenValues.shuffle();
         for (var i = 0; i < maxItems; i++) {
             row = Math.floor(i / 3);
@@ -313,7 +314,8 @@
             isStarting = false;
             drag.enabled = isStarting;
         }
-        
+
+        // when timer stop then game is started
         timer.onEndRound = function () {
             for (var i = 0; i < maxItems; i++) {
                 anim.children[i].reset();
@@ -325,34 +327,35 @@
                     time: 10
                 });
             }
+            elementTimerStart.hide();
             mainTimeline.animation = anim;
             mainTimeline.configRunGame();
             mainTimeline.runGame();
             anim.onEndRound = endGame;
+
+            // enabled dragging cursor
             isStarting = true;
             drag.enabled = isStarting;
         };
-       
-        cursorElement.createSvgElement("image", loadedAssets.images[28]);
 
+        cursorElement.createSvgElement("image", loadedAssets.images[28]);
         cursorAnimation.tick = mainTimeline.tick;
-        cursorAnimation.config.height = 200;
-        cursorAnimation.config.width = 200;
+        cursorAnimation.config.height = 100;
+        cursorAnimation.config.width = 100;
         cursorAnimation.element = cursorElement.target;
         cursorAnimation.setting();
         gamePlay.add(cursorElement);
+        cursorElement.show();
     };
-       
-
+    // setup drag event
     var drag = new DRAGEVENT();
     drag.cursorElement = container;
     drag.setup();
-
+    // add to timeline
     mainTimeline.drag = drag;
     mainTimeline.move = function ($target) {
-        var dragNew= new DRAGEVENT();
+        var dragNew = new DRAGEVENT();
         dragNew = $target;
-        console.log(cursorAnimation);
         cursorAnimation.set(dragNew);
     };
 }());

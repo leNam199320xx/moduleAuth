@@ -588,8 +588,23 @@ var DRAGEVENT = function () {
     this.viewbox = {};
     this.newX = 0;
     this.newY = 0;
-    this.started = false;
+    this.started = true;
     this.enabled = false;
+    this.onDown = function ($action) {
+        if (typeof ($action) == "function") {
+            $action(this);
+        }
+    };
+    this.onMove = function ($action) {
+        if (typeof ($action) == "function") {
+            $action(this);
+        }
+    };
+    this.onEnd = function ($action) {
+        if (typeof ($action) == "function") {
+            $action(this);
+        }
+    };
 };
 DRAGEVENT.prototype.setup = function () {
     var _this = this;
@@ -600,15 +615,21 @@ DRAGEVENT.prototype.setup = function () {
     if (this.cursorElement.target) {
         this.cursorElement.target.onmousedown = function ($event) {
             if (_this.enabled) {
-                _this.started = true;
+                //_this.started = true;
                 _this.x = $event.offsetX;
                 _this.y = $event.offsetY;
+                if (typeof (_this.onDown) == "function") {
+                    _this.onDown();
+                }
             }
         };
         this.cursorElement.target.onmousemove = function ($event) {
             if (_this.started) {
                 _this.x = $event.offsetX;
                 _this.y = $event.offsetY;
+                if (typeof (_this.onDown) == "function") {
+                    _this.onMove();
+                }
             }
         };
         this.cursorElement.target.onmouseout = function ($event) {
@@ -617,9 +638,12 @@ DRAGEVENT.prototype.setup = function () {
         };
         this.cursorElement.target.onmouseup = function ($event) {
             if (_this.started) {
-                _this.started = false;
+                //_this.started = false;
                 _this.x = $event.offsetX;
                 _this.y = $event.offsetY;
+                if (typeof (_this.onEnd) == "function") {
+                    _this.onEnd();
+                }
             }
         };
         this.cursorElement.target.onmouseenter = function ($event) {
