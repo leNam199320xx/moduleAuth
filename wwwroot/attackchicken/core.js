@@ -138,6 +138,7 @@ var TIMELINE = function () {
     this.onend = undefined;
     this.drag = new DRAGEVENT();
     this.move = undefined;
+    this.forceAnimation = new ANIMATION();
 };
 TIMELINE.prototype.action = undefined;
 TIMELINE.prototype.time = 0;
@@ -156,12 +157,7 @@ TIMELINE.prototype.runGame = function () {
         this.currentFrame = Math.ceil(this.time / this.tick, 10);
         if (this.oldFrame != this.currentFrame || this.currentFrame == 0) {
             if (this.animation && this.currentFrame <= this.animation.framesCount) {
-                this.animation.run(this.currentFrame);
-                if (this.drag.started) {
-                    if (typeof (this.move) == "function") {
-                        this.move(this.drag);
-                    }
-                }
+                this.animation.run(this.currentFrame);           
             }
             this.oldFrame = this.currentFrame;
         }
@@ -171,6 +167,7 @@ TIMELINE.prototype.runGame = function () {
             this.distancePauseTime = 0;
         }
     }
+
     if (this.animation && this.animation.timerFrames <= 0) {
         if (!this.hasLoop) {
             this.isStop = true;
@@ -178,6 +175,12 @@ TIMELINE.prototype.runGame = function () {
             this.animation.timerFrames = this.animation.framesCount;
             this.startTime = 0;
             this.oldFrame = 0;
+        }
+    }
+    // item moved
+    if (this.drag.started) {
+        if (typeof (this.move) == "function") {
+            this.move(this.drag);
         }
     }
     // pause game keep position
@@ -250,6 +253,7 @@ var ANIMATION = function ($element, $config) {
     this.timerFrames = 0;
 
     this.tick = this.config.tick || 60;
+    this.isPaused = false;
 
     this.setFrameCount = function ($secondstime) {
         $secondstime = $secondstime ? $secondstime * 1000 : 0;
@@ -391,7 +395,7 @@ ANIMATION.prototype.setting = function () {
     this.runAt(0);
 };
 ANIMATION.prototype.runAt = function (_frame) {
-    if (this.element) {
+    if (this.element && !this.isPaused) {
         this.currentFrame = _frame ? _frame : 1;
         var _toPosition = this.values[this.currentFrame - 1] || this.values[this.values.length - 1] || this.config;
         this.set(_toPosition);

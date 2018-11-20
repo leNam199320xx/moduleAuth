@@ -1,0 +1,162 @@
+body {
+    background: #DDDDDD;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+.site {
+    max-width: 1300px;
+    margin: auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.tagimage {
+    display: flex;
+    padding: 10px;
+}
+
+.tagimage:hover {
+    box-shadow: 5px 10px 100px #888888;
+}
+
+.tagimage img {
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.tagimage h3 {
+    display: inline-block;
+    margin: 0;
+    padding: 5px;
+}
+
+.card:hover, button:hover, a:hover, ul:hover {
+    transform: translate(-1px, -1px);
+}
+
+.card {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.card:hover {
+    box-shadow: 5px 10px 100px #888888;
+}
+
+button {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background: white;
+    border: solid 2px #888888;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+button:hover {
+    border-color: rgba(25, 151, 255);
+    color: rgba(25, 151, 255);
+    font-weight: bold;
+    box-shadow: 5px 10px 40px #888888;
+}
+
+a {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: white;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+a:hover {
+    color: rgb(25, 151, 255);
+    box-shadow: 5px 10px 40px #888888;
+}
+
+input {
+    border: solid 2px #888888;
+    padding: 10px;
+    font-size: inherit;
+}
+
+input:focus {
+    box-shadow: 5px 10px 40px #888888;
+}
+
+ul {
+    /* box-shadow: 0px 0px 10px #AAAAAA; */
+    list-style: none;
+    padding: 0;
+}
+
+ul:hover {
+    box-shadow: 5px 10px 40px #888888;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+li a {
+    background: inherit;
+    width: 100%;
+    display: block;
+    padding: 0;
+}
+
+li a:hover {
+    background: inherit;
+    box-shadow: none;
+    transform: none;
+}
+
+.menu {
+    font-size: 1.25rem;
+    padding: 10px;
+}
+
+.img-box {
+    background: #DDDDDD;
+    padding: 5px;
+    position: relative;
+}
+
+.img-box img {
+    width: 100%;
+}
+
+.img-box .des {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: calc(100%);
+    color: white;
+}
+
+.img-box .des h1, .img-box .des h3 {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    background: rgba(50, 50, 50, 0.5);
+}
+
+.img-item {}
+
+.img-item img {
+    width: 100%;
+}
+
+.img-item h3 {
+    padding: 10px;
+    margin: 0;
+}

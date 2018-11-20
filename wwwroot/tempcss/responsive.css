@@ -1,0 +1,46 @@
+.responsive {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 640px) {
+    .col-1, .col-2, .col-3 {
+        width: 50%;
+    }
+    .col-4, .col-5, .col-6 {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 641px) and (max-width: 1007px) {
+    .col-1, .col-2 {
+        width: calc(100% * 1 / 3);
+    }
+    .col-3, .col-4 {
+        width: calc(100% * 2 / 3);
+    }
+    .col-5, .col-6 {
+        width: calc(100% * 3 / 3);
+    }
+}
+
+@media only screen and (min-width: 1008px) {
+    .col-1 {
+        width: calc(100% * 1 / 6);
+    }
+    .col-2 {
+        width: calc(100% * 2 / 6);
+    }
+    .col-3 {
+        width: calc(100% * 3 / 6);
+    }
+    .col-4 {
+        width: calc(100% * 4 / 6);
+    }
+    .col-5 {
+        width: calc(100% * 5 / 6);
+    }
+    .col-6 {
+        width: calc(100% * 6 / 6);
+    }
+}

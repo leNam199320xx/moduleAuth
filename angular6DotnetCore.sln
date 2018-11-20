@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "angular6DotnetCore", "angular6DotnetCore.csproj", "{3D9E809D-CECE-4BD5-97D1-2EC77B6AA765}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectAll", "..\ConnectAll\ConnectAll.csproj", "{3C494DAE-88A6-4B53-8D01-748B9040A593}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3D9E809D-CECE-4BD5-97D1-2EC77B6AA765}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D9E809D-CECE-4BD5-97D1-2EC77B6AA765}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D9E809D-CECE-4BD5-97D1-2EC77B6AA765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C494DAE-88A6-4B53-8D01-748B9040A593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C494DAE-88A6-4B53-8D01-748B9040A593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C494DAE-88A6-4B53-8D01-748B9040A593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C494DAE-88A6-4B53-8D01-748B9040A593}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
